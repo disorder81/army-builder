@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'sinatra/reloader' if development?
+require 'mongo'
 
 =begin
   public folder: carpeta para ficheros estáticos. No es necesario
@@ -7,6 +8,11 @@ require 'sinatra/reloader' if development?
   recursos estático. Se puede cambiar en configure con:
   :public_folder, File.dirname(__FILE__) + '/custom_location'
 =end
+
+#{ user: "heroku_app17961664", account: "heroku_app17961664" }
+
+db = Mongo::Connection.from_uri('mongodb://test:test@ds043158.mongolab.com:43158/heroku_app17961664')
+
 
 # Verbo 'url' behavior (opcional?)
 get '/' do
@@ -43,7 +49,7 @@ end
 
 # Cuando se envían datos vía POST no hace falta definir el parámetro
 # ya van directamente en el params.
-post '/login' do
+post '/login' do                                                       s
   username = params[:username]
   password = params[:password]
 end
