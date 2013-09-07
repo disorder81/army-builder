@@ -9,10 +9,19 @@ require 'mongo'
   :public_folder, File.dirname(__FILE__) + '/custom_location'
 =end
 
-#{ user: "heroku_app17961664", account: "heroku_app17961664" }
+configure do
+  CONNECTION 		= Mongo::Connection.from_uri('mongodb://test:test@ds043158.mongolab.com:43158/heroku_app17961664')
+  DB 				= CONNECTION.db("heroku_app17961664")
+  #ARMIES			= DB["armies"]
+  UNITS 			= DB["units"]
+  #WEAPONS 		= DB["weapons"]
+  #SPECIAL_RULES 	= DB["special_rules"]
+#  set :haml, :format => :html5
+end
 
-db = Mongo::Connection.from_uri('mongodb://test:test@ds043158.mongolab.com:43158/heroku_app17961664')
-
+get '/units' do
+  @units = UNITS.find
+end
 
 # Verbo 'url' behavior (opcional?)
 get '/' do
