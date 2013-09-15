@@ -20,6 +20,6 @@ end
 
 get '/api/units' do
   content_type :json
-  @units = UNITS.find.to_a
-  JSON.pretty_generate(@units)
+  @units = UNITS.find.to_a.to_json
+  #JSON.pretty_generate(@units)
 end
