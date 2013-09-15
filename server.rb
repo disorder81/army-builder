@@ -13,13 +13,19 @@ configure do
 #  set :haml, :format => :html5
 end
 
+# De momento todas las respuestas son json
+before do
+  #content_type :json
+end
+
 get '/' do
+  content_type 'html'
   # TODO: si es estático debería servirlo un Apache, etc.
   send_file File.expand_path('index.html', settings.public_folder)
 end
 
 get '/api/units' do
-  content_type :json
+  #content_type :json
   @units = UNITS.find.to_a.to_json
   #JSON.pretty_generate(@units)
 end
