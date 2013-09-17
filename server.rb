@@ -5,7 +5,7 @@ require 'json'
 
 #set :environment => 'local'
 
-configure :development do
+configure do
   CONNECTION  = Mongo::Connection.from_uri('mongodb://test:test@ds043158.mongolab.com:43158/heroku_app17961664')
   DB 				  = CONNECTION.db('heroku_app17961664')
   #ARMIES			= DB["armies"]
@@ -36,7 +36,7 @@ get '/' do
 end
 
 get '/api/units' do
-  #content_type :json
+  content_type :json
   @units = UNITS.find.to_a.to_json
   #JSON.pretty_generate(@units)
 end
