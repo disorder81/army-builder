@@ -10,8 +10,10 @@ require 'mongo'
 =end
 
 configure do
-  CONNECTION  = Mongo::Connection.from_uri('mongodb://test:test@ds043158.mongolab.com:43158/heroku_app17961664')
-  DB 				  = CONNECTION.db("heroku_app17961664")
+  #CONNECTION  = Mongo::Connection.from_uri('mongodb://test:test@ds043158.mongolab.com:43158/heroku_app17961664')
+  CONNECTION  = Mongo::Connection.from_uri('mongodb://test:test@localhost:27017/w40')
+  #DB 				  = CONNECTION.db("heroku_app17961664")
+  DB 				  = CONNECTION.db("w40")
   #ARMIES			= DB["armies"]
   UNITS 			= DB["units"]
   #WEAPONS 		= DB["weapons"]
