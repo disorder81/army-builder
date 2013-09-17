@@ -15,12 +15,14 @@ configure :development do
 #  set :haml, :format => :html5
 end
 
+=begin
 configure :local do
   #system('mongod --dbpath c:\dev\data\mongodb')
   CONNECTION  = Mongo::Connection.from_uri('mongodb://test:test@localhost/w40')
   DB 				  = CONNECTION.db('w40')
   UNITS 			= DB['units']
 end
+=end
 
 # De momento todas las respuestas son json
 before do
