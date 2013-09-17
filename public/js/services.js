@@ -1,7 +1,12 @@
-/**
- * Created with JetBrains RubyMine.
- * User: undertaker
- * Date: 15/09/13
- * Time: 19:21
- * To change this template use File | Settings | File Templates.
- */
+angular.module('phonecatServices', ['ngResource']).
+    factory('Phone', function($resource){
+        return $resource('phones/:phoneId.json', {}, {
+            query: {method:'GET', params:{phoneId:'phones'}, isArray:true}
+        });
+    });
+/*angular.module('phonecatServices', ['ngResource']).
+    factory('Phone', function($resource){
+        return $resource('/api/units', {}, {
+            query: {method:'GET', isArray:true}
+        });
+    });  */

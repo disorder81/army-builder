@@ -1,4 +1,4 @@
-function PhoneListCtrl($scope, $http) {
+/*function PhoneListCtrl($scope, $http) {
     $http.get('phones/phones.json').success(function(data) {
     //$http.get('/api/units').success(function(data) {
         $scope.phones = data;
@@ -11,7 +11,7 @@ function PhoneDetailCtrl($scope, $routeParams, $http) {
     $http.get('phones/' + $routeParams.phoneId + '.json').success(function(data) {
         $scope.phone = data;
     });
-}
+}     */
 
 //PhoneListCtrl.$inject = ['$scope', '$http'];
 /*function PhoneListCtrl($scope) {
@@ -30,3 +30,24 @@ function PhoneDetailCtrl($scope, $routeParams, $http) {
     $scope.orderProp = 'age';
 
 }          */
+
+function PhoneListCtrl($scope, Phone) {
+    $scope.phones = Phone.query();
+    $scope.orderProp = 'age';
+}
+
+//PhoneListCtrl.$inject = ['$scope', 'Phone'];
+
+
+
+function PhoneDetailCtrl($scope, $routeParams, Phone) {
+    $scope.phone = Phone.get({phoneId: $routeParams.phoneId}, function(phone) {
+        $scope.mainImageUrl = phone.images[0];
+    });
+
+    $scope.setImage = function(imageUrl) {
+        $scope.mainImageUrl = imageUrl;
+    }
+}
+
+//PhoneDetailCtrl.$inject = ['$scope', '$routeParams', 'Phone'];
