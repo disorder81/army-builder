@@ -3,7 +3,9 @@ require 'sinatra/reloader' if development?
 require 'mongo'
 require 'json'
 
-configure do
+#set :environment => 'local'
+
+configure :development do
   CONNECTION  = Mongo::Connection.from_uri('mongodb://test:test@ds043158.mongolab.com:43158/heroku_app17961664')
   DB 				  = CONNECTION.db('heroku_app17961664')
   #ARMIES			= DB["armies"]
@@ -11,6 +13,13 @@ configure do
   #WEAPONS 		= DB["weapons"]
   #SPECIAL_RULES 	= DB["special_rules"]
 #  set :haml, :format => :html5
+end
+
+configure :local do
+  #system('mongod --dbpath c:\dev\data\mongodb')
+  CONNECTION  = Mongo::Connection.from_uri('mongodb://test:test@localhost/w40')
+  DB 				  = CONNECTION.db('w40')
+  UNITS 			= DB['units']
 end
 
 # De momento todas las respuestas son json

@@ -7,6 +7,7 @@ GEM
       bson (~> 1.9.2)
     daemons (1.1.9)
     eventmachine (1.0.0)
+    eventmachine (1.0.0-x86-mingw32)
     json (1.7.5)
     mongo (1.9.2)
       bson (~> 1.9.2)
@@ -35,6 +36,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   bson_ext (= 1.9.2)
