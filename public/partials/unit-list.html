@@ -1,0 +1,13 @@
+<input ng-model="query">
+<select ng-model="orderProp">
+    <option value="name">Alphabetical</option>
+    <option value="cost">Cost</option>
+</select>
+<ul class="units">
+    <li ng-repeat="unit in units | filter:query | orderBy:orderProp" class="thumbnail">
+        <a href="#/units/{{unit._id}}" class="thumb"><img ng-src="{{phone.imageUrl}}"></a>
+        <a href="#/units/{{unit._id}}">{{ unit.name }}</a><span>{{ unit.cost }}</span>
+        <p>{{ unit.snippet }}</p>
+    </li>
+</ul>
+<p>Total number of phones: {{ units.length }}</p>
