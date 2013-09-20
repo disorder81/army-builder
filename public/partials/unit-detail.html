@@ -1,0 +1,18 @@
+<h2>{{ unit.name }}</h2>
+<span>{{ unit.cost }}</span>
+<table border="1">
+    <thead>
+        <tr>
+            <th ng-repeat="(key, value) in unit.stats">
+                {{ key }}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td ng-repeat="(key, value) in unit.stats">
+                 {{ value }}
+            </td>
+        </tr>
+    </tbody>
+</table>

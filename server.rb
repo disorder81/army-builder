@@ -40,3 +40,9 @@ get '/api/units' do
   @units = UNITS.find.to_a.to_json
   #JSON.pretty_generate(@units)
 end
+
+get '/api/units/:id' do
+  content_type :json
+  @units = UNITS.find_one({_id: params[:id]}).to_json
+  #JSON.pretty_generate(@units)
+end
