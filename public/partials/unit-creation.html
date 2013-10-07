@@ -1,0 +1,27 @@
+<form ng-submit="save(unit)">
+<!--<form action="/api/units" method="POST">-->
+    <fieldset>
+        <legend>Detalles</legend>
+        <p><label>Nombre: <input name="nombre" type="text" ng-model="unit.name" required></label></p>
+        <p><label>Coste: <input name="coste" type="number" ng-model="unit.cost" required></label></p>
+        <p><label>Descripcion: <input name="descripcion" type="text" ng-model="unit.description"></label></p>
+    </fieldset>
+    <fieldset>
+        <legend>Tipo</legend>
+        <input type="radio" name="tipo" value="a" ng-model="unit.type">a</input>
+        <input type="radio" name="tipo" value="b" ng-model="unit.type">b</input>
+        <input type="radio" name="tipo" value="c" ng-model="unit.type">c</input>
+        <input type="radio" name="tipo" value="d" ng-model="unit.type">d</input>
+        <input type="radio" name="tipo" value="e" ng-model="unit.type">e</input>
+        <input type="radio" name="tipo" value="f" ng-model="unit.type">f</input>
+    </fieldset>
+    <fieldset>
+        <legend>Cosas</legend>
+        <a href="" ng-click="add()">Añadir</a>
+        <p ng-repeat="cosa in unit.cosas">Cosa</p>
+    </fieldset>
+    <!--<button ng-click="save(unit)">Guardar</button>-->
+    <button type="submit">Guardar</button>
+    <button ng-click="cancel()">Cancelar</button>
+</form>
+<pre>{{ unit }}</pre>

@@ -17,6 +17,7 @@ configure do
 end
 =end
 
+# RACK_ENV=local
 configure do
   #system('mongod --dbpath c:\dev\data\mongodb')
   CONNECTION  = Mongo::Connection.from_uri('mongodb://test:test@localhost/w40')
@@ -39,6 +40,12 @@ get '/api/units' do
   content_type :json
   @units = UNITS.find.to_a.to_json
   #JSON.pretty_generate(@units)
+end
+
+post '/api/units' do
+  # Probar > http://stackoverflow.com/questions/12131763/sinatra-controller-params-method-coming-in-empty-on-json-post-request
+  @json = JSON.parse(request.body.read)
+  puts @json
 end
 
 get '/api/units/:id' do

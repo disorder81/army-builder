@@ -1,8 +1,12 @@
-angular.module('army-builder', ['phonecatFilters', 'armyBuilderServices']).
+angular.module('armyBuilder', ['phonecatFilters', 'armyBuilderServices']).
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.
-            when('/units', {templateUrl: 'partials/unit-list.html', controller: UnitListCtrl}).
-            when('/units/:unitId', {templateUrl: 'partials/unit-detail.html', controller: UnitDetailCtrl}).
+            when('/units', {templateUrl: 'partials/army-detail.html', controller: 'ArmyCtrl'}).
+            when('/units/new', {templateUrl: 'partials/unit-creation.html', controller: 'UnitCreationCtrl'}).
+            when('/units/:unitId', {templateUrl: 'partials/unit-detail.html', controller: 'UnitDetailCtrl'}).
             otherwise({redirectTo: '/units'});
     }]);
+
+
+
 
