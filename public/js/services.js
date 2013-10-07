@@ -4,3 +4,4 @@ angular.module('armyBuilderServices', ['ngResource']).
             query: {method: 'GET', isArray: true}
         });
     });
+

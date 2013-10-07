@@ -1,22 +1,27 @@
-<h2>Crear</h2>
-<form method="POST" action="/api/units" novalidate>
+<form ng-submit="save(unit)">
+<!--<form action="/api/units" method="POST">-->
     <fieldset>
         <legend>Detalles</legend>
-        <p><label>Nombre: <input name="nombre" type="text" required></label></p>
-        <p><label>Coste: <input name="coste" type="number" required></label></p>
-        <p><label>Descripcion: <textarea name="descripcion" required></textarea></label></p>
+        <p><label>Nombre: <input name="nombre" type="text" ng-model="unit.name" required></label></p>
+        <p><label>Coste: <input name="coste" type="number" ng-model="unit.cost" required></label></p>
+        <p><label>Descripcion: <input name="descripcion" type="text" ng-model="unit.description"></label></p>
     </fieldset>
     <fieldset>
         <legend>Tipo</legend>
-        <p><label><input type=radio name=tipo> cg </label></p>
-        <p><label><input type=radio name=tipo> elite </label></p>
-        <p><label><input type=radio name=tipo> tropa de línea </label></p>
-        <p><label><input type=radio name=tipo> transporte asignado </label></p>
-        <p><label><input type=radio name=tipo> ataque rápido </label></p>
-        <p><label><input type=radio name=tipo> apoyo pesado </label></p>
+        <input type="radio" name="tipo" value="a" ng-model="unit.type">a</input>
+        <input type="radio" name="tipo" value="b" ng-model="unit.type">b</input>
+        <input type="radio" name="tipo" value="c" ng-model="unit.type">c</input>
+        <input type="radio" name="tipo" value="d" ng-model="unit.type">d</input>
+        <input type="radio" name="tipo" value="e" ng-model="unit.type">e</input>
+        <input type="radio" name="tipo" value="f" ng-model="unit.type">f</input>
     </fieldset>
     <fieldset>
-        <legend>Estadísticas</legend>
+        <legend>Cosas</legend>
+        <a href="" ng-click="add()">Añadir</a>
+        <p ng-repeat="cosa in unit.cosas">Cosa</p>
     </fieldset>
-    <input type="submit" value="Submit">
+    <!--<button ng-click="save(unit)">Guardar</button>-->
+    <button type="submit">Guardar</button>
+    <button ng-click="cancel()" type="button">Cancelar</button>
 </form>
+<pre>{{ unit }}</pre>
