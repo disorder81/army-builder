@@ -21,7 +21,7 @@ angular.module('armyBuilder')
         var master = {
             name: 'nombre',
             cost: 0,
-            description: 'adasdasdd',
+            description: 'descripcion',
             type: 'hq',
             stats: {
                 ws: 3,
