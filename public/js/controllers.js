@@ -29,8 +29,15 @@ angular.module('armyBuilder')
 
         $scope.save = function(unit) {
             var u = new Unit(unit);
-            u.$save();
-            //$location.path('/');
+            u.$save([],
+                function() {
+                    console.log('ok');
+                    $location.path('/');
+                },
+                function(){
+                    console.log('ko');
+                }
+            );
         }
 
         $scope.add = function() {
