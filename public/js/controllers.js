@@ -22,8 +22,20 @@ angular.module('armyBuilder')
             name: 'nombre',
             cost: 0,
             description: 'adasdasdd',
-            cosas: [
-                {tipo: 'tipo', valor: 'valor'}
+            type: 'hq',
+            stats: {
+                ws: 3,
+                bs: 3,
+                s: 3,
+                t: 3,
+                w: 3,
+                i: 3,
+                a: 3,
+                ld: 3,
+                sv: 3
+            },
+            wargear: [
+                {id: 'id'}
             ]
         }
 
@@ -41,7 +53,7 @@ angular.module('armyBuilder')
         }
 
         $scope.add = function() {
-            $scope.unit.cosas.push({tipo:'', valor: ''});
+            $scope.unit.wargear.push({id:'id'});
         }
 
         $scope.cancel = function() {

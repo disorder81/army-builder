@@ -4,7 +4,7 @@
         <legend>Detalles</legend>
         <p><label>Nombre: <input name="nombre" type="text" ng-model="unit.name" required></label></p>
         <p><label>Coste: <input name="coste" type="number" ng-model="unit.cost" required></label></p>
-        <p><label>Descripcion: <input name="descripcion" type="text" ng-model="unit.description"></label></p>
+        <p><label>Descripcion: <textarea name="descripcion" ng-model="unit.description"></textarea></label></p>
     </fieldset>
     <fieldset>
         <legend>Tipo</legend>
@@ -16,9 +16,40 @@
         <input type="radio" name="tipo" value="f" ng-model="unit.type">f</input>
     </fieldset>
     <fieldset>
-        <legend>Cosas</legend>
+        <legend>Stats</legend>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>HA</th>
+                    <th>HP</th>
+                    <th>F</th>
+                    <th>R</th>
+                    <th>H</th>
+                    <th>I</th>
+                    <th>A</th>
+                    <th>L</th>
+                    <th>S</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input name="ws" ng-model="unit.stats.ws" type="number"></td>
+                    <td><input name="bs" ng-model="unit.stats.bs" type="number"></td>
+                    <td><input name="s" ng-model="unit.stats.s" type="number"></td>
+                    <td><input name="t" ng-model="unit.stats.t" type="number"></td>
+                    <td><input name="w" ng-model="unit.stats.w" type="number"></td>
+                    <td><input name="i" ng-model="unit.stats.i" type="number"></td>
+                    <td><input name="a" ng-model="unit.stats.a" type="number"></td>
+                    <td><input name="ld" ng-model="unit.stats.ld" type="number"></td>
+                    <td><input name="sv" ng-model="unit.stats.sv" type="number"></td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend>Equipo</legend>
         <a href="" ng-click="add()">Añadir</a>
-        <p ng-repeat="cosa in unit.cosas">Cosa</p>
+        <p ng-repeat="gear in unit.wargear">Cosa</p>
     </fieldset>
     <!--<button ng-click="save(unit)">Guardar</button>-->
     <button type="submit">Guardar</button>
