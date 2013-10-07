@@ -1,10 +1,10 @@
 <h2>Crear</h2>
-<form>
+<form method="POST" action="/api/units" novalidate>
     <fieldset>
         <legend>Detalles</legend>
-        <p><label>Nombre: <input required></label></p>
-        <p><label>Coste: <input required></label></p>
-        <p><label>Descripcion: <textarea required></textarea></label></p>
+        <p><label>Nombre: <input name="nombre" type="text" required></label></p>
+        <p><label>Coste: <input name="coste" type="number" required></label></p>
+        <p><label>Descripcion: <textarea name="descripcion" required></textarea></label></p>
     </fieldset>
     <fieldset>
         <legend>Tipo</legend>
@@ -18,4 +18,5 @@
     <fieldset>
         <legend>Estadísticas</legend>
     </fieldset>
+    <input type="submit" value="Submit">
 </form>

@@ -41,8 +41,13 @@ get '/api/units' do
   #JSON.pretty_generate(@units)
 end
 
+post '/api/units' do
+  puts params
+end
+
 get '/api/units/:id' do
   content_type :json
   @units = UNITS.find_one({_id: params[:id]}).to_json
   #JSON.pretty_generate(@units)
 end
+
