@@ -56,3 +56,11 @@ get '/api/units/:id' do
   @units = UNITS.find_one({_id: params[:id]}).to_json
   #JSON.pretty_generate(@units)
 end
+
+delete '/api/units/:id' do
+  DB.collection('units').remove({_id: params[:id]})
+end
+
+put '/api/units/:id' do
+  puts 'put'
+end

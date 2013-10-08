@@ -1,12 +1,17 @@
 
 angular.module('armyBuilder')
 
-    .controller('ArmyCtrl', function($scope, $location, Unit){
+    .controller('ArmyCtrl', function($scope, $location, $routeParams, Unit){
         $scope.units = Unit.query();
         $scope.orderProp = 'name';
 
         $scope.newUnit = function() {
             $location.path('/units/new');
+        }
+
+        $scope.deleteUnit = function(unit) {
+            //Unit.delete({id: unit._id.$oid});
+            Unit.delete({unitId: unit._id.$oid});
         }
     })
 
