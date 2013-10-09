@@ -11,7 +11,8 @@ angular.module('armyBuilder')
 
         $scope.deleteUnit = function(unit) {
             //Unit.delete({id: unit._id.$oid});
-            Unit.delete({unitId: unit._id.$oid});
+            unit.$delete({unitId: unit._id.$oid}, function(){console.log('ok');}, function(){console.log('ko');});
+            console.log(unit._id.$oid);
         }
     })
 
@@ -41,7 +42,8 @@ angular.module('armyBuilder')
             },
             wargear: [
                 {id: 'id'}
-            ]
+            ],
+            specialRules: []
         }
 
         $scope.save = function(unit) {

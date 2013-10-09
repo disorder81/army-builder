@@ -46,19 +46,28 @@ end
 post '/api/units' do
   # Probar > http://stackoverflow.com/questions/12131763/sinatra-controller-params-method-coming-in-empty-on-json-post-request
   #@json = JSON.parse(request.body.read)
-  oid = DB.collection('units').insert(JSON.parse(request.body.read.to_s))
+  content_type :json
+  oid = UNITS.insert(JSON.parse(request.body.read.to_s))
   puts oid
   #"{\"id\": \"#{oid.to_s}\"}"
 end
 
 get '/api/units/:id' do
   content_type :json
-  @units = UNITS.find_one({_id: params[:id]}).to_json
+  #@units = UNITS.find_one({_id: params[:id]}).to_json
+  @units = UNITS.find_one({_id: BSON::ObjectId(params[:id])}).to_json
   #JSON.pretty_generate(@units)
 end
 
 delete '/api/units/:id' do
-  DB.collection('units').remove({_id: params[:id]})
+  content_type :json
+  #puts params[:id]
+  #DB.collection('units').remove({_id: params[:id]})
+  #UNITS.remove("name" => "test")
+  @return = UNITS.remove({_id: BSON::ObjectId(params[:id])})
+
+  puts @return
+  {:success => true}.to_json
 end
 
 put '/api/units/:id' do
