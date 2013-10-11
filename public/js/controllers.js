@@ -68,5 +68,9 @@ angular.module('armyBuilder')
         }
 
         $scope.cancel();
+    })
+
+    .controller('WeaponCtrl', function($scope, $location, Weapon){
+        $scope.weapons = Weapon.query();
     });
 

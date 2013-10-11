@@ -23,6 +23,7 @@ configure do
   CONNECTION  = Mongo::Connection.from_uri('mongodb://test:test@localhost/w40')
   DB 				  = CONNECTION.db('w40')
   UNITS 			= DB['units']
+  WEAPONS     = DB['weapons']
 end
 
 
@@ -72,4 +73,9 @@ end
 
 put '/api/units/:id' do
   puts 'put'
+end
+
+get '/api/weapons' do
+  content_type :json
+  @weapons = WEAPONS.find.to_a.to_json
 end
