@@ -28,7 +28,14 @@ angular.module('armyBuilder')
             name: 'nombre',
             cost: 0,
             description: 'descripcion',
-            type: 'hq',
+            section: 'hq',
+            type: 'infantry',
+            subtypes: [],
+            unique: false,
+            composition: {
+                min: 1,
+                max: 3
+            },
             stats: {
                 ws: 3,
                 bs: 3,
@@ -66,6 +73,10 @@ angular.module('armyBuilder')
         $scope.cancel = function() {
             $scope.unit = angular.copy(master);
         }
+
+        $scope.$watch('unit.type', function(){
+            $scope.unit.stats = {};
+        });
 
         $scope.cancel();
     })

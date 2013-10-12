@@ -1,4 +1,4 @@
-<form ng-submit="save(unit)">
+<form ng-submit="save(unit)" xmlns="http://www.w3.org/1999/html">
 <!--<form action="/api/units" method="POST">-->
     <fieldset>
         <legend>Detalles</legend>
@@ -7,17 +7,62 @@
         <p><label>Descripcion: <textarea name="descripcion" ng-model="unit.description"></textarea></label></p>
     </fieldset>
     <fieldset>
+        <legend>Seccion</legend>
+        <input type="radio" name="seccion" value="hq" ng-model="unit.section">CG</input>
+        <input type="radio" name="seccion" value="elite" ng-model="unit.section">Elite</input>
+        <input type="radio" name="seccion" value="line" ng-model="unit.section">Tropas de línea</input>
+        <input type="radio" name="seccion" value="designated-transport" ng-model="unit.section">Transportes asignados</input>
+        <input type="radio" name="seccion" value="fast-attack" ng-model="unit.section">Ataque rápido</input>
+        <input type="radio" name="seccion" value="heavy-support" ng-model="unit.section">Apoyo pesado</input>
+    </fieldset>
+    <fieldset>
         <legend>Tipo</legend>
-        <input type="radio" name="tipo" value="a" ng-model="unit.type">a</input>
-        <input type="radio" name="tipo" value="b" ng-model="unit.type">b</input>
-        <input type="radio" name="tipo" value="c" ng-model="unit.type">c</input>
-        <input type="radio" name="tipo" value="d" ng-model="unit.type">d</input>
-        <input type="radio" name="tipo" value="e" ng-model="unit.type">e</input>
-        <input type="radio" name="tipo" value="f" ng-model="unit.type">f</input>
+        <select ng-model="unit.type">
+            <option value="ar">Artillería</option>
+            <option value="be">Bestia</option>
+            <option value="mo">Moto</option>
+            <option value="cb">Caballería</option>
+            <option value="mre">Moto a reacción Eldar</option>
+            <option value="cm">Criatura monstruosa</option>
+            <option value="cmv">Criatura monstruosa voladora</option>
+            <option value="in">Infantería</option>
+            <option value="ur">Unidad a reacción</option>
+            <option value="mr">Moto a reacción</option>
+            <option value="sa">Unidad de salto</option>
+            <option value="pj">Personaje</option>
+            <option value="vehicle">Vehículo</option>
+        </select>
+
+        <input type="radio" name="type" value="ar" ng-model="unit.type">Artillería</input>
+        <input type="radio" name="type" value="be" ng-model="unit.type">Bestia</input>
+        <input type="radio" name="type" value="mo" ng-model="unit.type">Moto</input>
+        <input type="radio" name="type" value="cb" ng-model="unit.type">Caballería</input>
+        <input type="radio" name="type" value="mre" ng-model="unit.type">Moto a reacción Eldar</input>
+        <input type="radio" name="type" value="cm" ng-model="unit.type">Criatura monstruosa</input>
+        <input type="radio" name="type" value="cmv" ng-model="unit.type">Criatura monstruosa voladora</input>
+        <input type="radio" name="type" value="in" ng-model="unit.type">Infantería</input>
+        <input type="radio" name="type" value="ur" ng-model="unit.type">Unidad a reacción</input>
+        <input type="radio" name="type" value="mr" ng-model="unit.type">Moto a reacción</input>
+        <input type="radio" name="type" value="sa" ng-model="unit.type">Unidad de salto</input>
+        <input type="radio" name="type" value="pj" ng-model="unit.type">Personaje</input>
+
+
+
+        <input type="radio" name="type" value="vehicle" ng-model="unit.type">Vehículo</input>
+
+
+
+        <p ng-show="unit.type == 'vehicle'">Subtipos</p>
+    </fieldset>
+    <fieldset>
+        <legend>Composición</legend>
+        <input type="checkbox" name="composition" ng-model="unit.unique">Único</input>
+        <label>Min: <input name="min" type="number" ng-model="unit.composition.min" ng-readonly="unit.unique" required></label>
+        <label>Max: <input name="min" type="number" ng-model="unit.composition.max" ng-readonly="unit.unique" required></label>
     </fieldset>
     <fieldset>
         <legend>Stats</legend>
-        <table border="1">
+        <table border="1" ng-show="unit.type != 'vehicle'">
             <thead>
                 <tr>
                     <th>HA</th>
@@ -33,16 +78,38 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input name="ws" ng-model="unit.stats.ws" type="number"></td>
-                    <td><input name="bs" ng-model="unit.stats.bs" type="number"></td>
-                    <td><input name="s" ng-model="unit.stats.s" type="number"></td>
-                    <td><input name="t" ng-model="unit.stats.t" type="number"></td>
-                    <td><input name="w" ng-model="unit.stats.w" type="number"></td>
-                    <td><input name="i" ng-model="unit.stats.i" type="number"></td>
-                    <td><input name="a" ng-model="unit.stats.a" type="number"></td>
-                    <td><input name="ld" ng-model="unit.stats.ld" type="number"></td>
-                    <td><input name="sv" ng-model="unit.stats.sv" type="number"></td>
+                    <td><input name="ws" ng-model="unit.stats.ws" type="number" min="1" max="10"></td>
+                    <td><input name="bs" ng-model="unit.stats.bs" type="number" min="1" max="10"></td>
+                    <td><input name="s" ng-model="unit.stats.s" type="number" min="1" max="10"></td>
+                    <td><input name="t" ng-model="unit.stats.t" type="number" min="1" max="10"></td>
+                    <td><input name="w" ng-model="unit.stats.w" type="number" min="1" max="10"></td>
+                    <td><input name="i" ng-model="unit.stats.i" type="number" min="1" max="10"></td>
+                    <td><input name="a" ng-model="unit.stats.a" type="number" min="1" max="10"></td>
+                    <td><input name="ld" ng-model="unit.stats.ld" type="number" min="1" max="10"></td>
+                    <td><input name="sv" ng-model="unit.stats.sv" type="number" min="1" max="10"></td>
                 </tr>
+            </tbody>
+        </table>
+        <table border="1" ng-show="unit.type == 'vehicle'">
+            <thead>
+            <tr>
+                <th>HP</th>
+                <th>BF</th>
+                <th>BL</th>
+                <th>BP</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="ws" ng-model="unit.stats.ws" type="number"></td>
+                <td><input name="bs" ng-model="unit.stats.bs" type="number"></td>
+                <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="s" ng-model="unit.stats.s" type="number"></td>
+                <td><input name="f" ng-model="unit.stats.f" type="number"></td>
+                <td><input name="s" ng-model="unit.stats.s" type="number"></td>
+                <td><input name="r" ng-model="unit.stats.r" type="number"></td>
+                <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="i" ng-model="unit.stats.i" type="number"></td>
+                <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="a" ng-model="unit.stats.a" type="number"></td>
+            </tr>
             </tbody>
         </table>
     </fieldset>
