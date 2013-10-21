@@ -8,32 +8,23 @@
     </fieldset>
     <fieldset>
         <legend>Seccion</legend>
-        <input type="radio" name="seccion" value="hq" ng-model="unit.section">CG</input>
+        <input ng-repeat="section in sections" type="radio" name="seccion" value="{{ section.name }}" ng-model="unit.section">Pera</input>
+        <!--<input type="radio" name="seccion" value="hq" ng-model="unit.section">CG</input>
         <input type="radio" name="seccion" value="elite" ng-model="unit.section">Elite</input>
         <input type="radio" name="seccion" value="line" ng-model="unit.section">Tropas de línea</input>
         <input type="radio" name="seccion" value="designated-transport" ng-model="unit.section">Transportes asignados</input>
         <input type="radio" name="seccion" value="fast-attack" ng-model="unit.section">Ataque rápido</input>
-        <input type="radio" name="seccion" value="heavy-support" ng-model="unit.section">Apoyo pesado</input>
+        <input type="radio" name="seccion" value="heavy-support" ng-model="unit.section">Apoyo pesado</input> -->
     </fieldset>
     <fieldset>
         <legend>Tipo</legend>
-        <select ng-model="unit.type">
-            <option value="ar">Artillería</option>
-            <option value="be">Bestia</option>
-            <option value="mo">Moto</option>
-            <option value="cb">Caballería</option>
-            <option value="mre">Moto a reacción Eldar</option>
-            <option value="cm">Criatura monstruosa</option>
-            <option value="cmv">Criatura monstruosa voladora</option>
-            <option value="in">Infantería</option>
-            <option value="ur">Unidad a reacción</option>
-            <option value="mr">Moto a reacción</option>
-            <option value="sa">Unidad de salto</option>
-            <option value="pj">Personaje</option>
-            <option value="vehicle">Vehículo</option>
+        <select ng-model="unit.type" multiple>
+            <option ng-repeat="type in types" value="{{ type.key }}" disabled>{{ type.name }}</option>
         </select>
 
-        <input type="radio" name="type" value="ar" ng-model="unit.type">Artillería</input>
+        <input type="radio" name="type" value="vehicle" ng-model="unit.type">Vehículo</input>
+
+        <!--<input type="radio" name="type" value="ar" ng-model="unit.type">Artillería</input>
         <input type="radio" name="type" value="be" ng-model="unit.type">Bestia</input>
         <input type="radio" name="type" value="mo" ng-model="unit.type">Moto</input>
         <input type="radio" name="type" value="cb" ng-model="unit.type">Caballería</input>
@@ -44,13 +35,20 @@
         <input type="radio" name="type" value="ur" ng-model="unit.type">Unidad a reacción</input>
         <input type="radio" name="type" value="mr" ng-model="unit.type">Moto a reacción</input>
         <input type="radio" name="type" value="sa" ng-model="unit.type">Unidad de salto</input>
-        <input type="radio" name="type" value="pj" ng-model="unit.type">Personaje</input>
+        <input type="radio" name="type" value="pj" ng-model="unit.type">Personaje</input> -->
 
-
-
-        <input type="radio" name="type" value="vehicle" ng-model="unit.type">Vehículo</input>
-
-
+        <!--<input type="checkbox" name="type" value="ar" ng-model="unit.type">Artillería</input>
+        <input type="checkbox" name="type" value="be" ng-model="unit.type">Bestia</input>
+        <input type="checkbox" name="type" value="mo" ng-model="unit.type">Moto</input>
+        <input type="checkbox" name="type" value="cb" ng-model="unit.type">Caballería</input>
+        <input type="checkbox" name="type" value="mre" ng-model="unit.type">Moto a reacción Eldar</input>
+        <input type="checkbox" name="type" value="cm" ng-model="unit.type">Criatura monstruosa</input>
+        <input type="checkbox" name="type" value="cmv" ng-model="unit.type">Criatura monstruosa voladora</input>
+        <input type="checkbox" name="type" value="in" ng-model="unit.type">Infantería</input>
+        <input type="checkbox" name="type" value="ur" ng-model="unit.type">Unidad a reacción</input>
+        <input type="checkbox" name="type" value="mr" ng-model="unit.type">Moto a reacción</input>
+        <input type="checkbox" name="type" value="sa" ng-model="unit.type">Unidad de salto</input>
+        <input type="checkbox" name="type" value="pj" ng-model="unit.type">Personaje</input>  -->
 
         <p ng-show="unit.type == 'vehicle'">Subtipos</p>
     </fieldset>
