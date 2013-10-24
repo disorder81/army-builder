@@ -24,50 +24,34 @@ angular.module('armyBuilder')
 
     .controller('UnitCreationCtrl', function($scope, $location, Unit) {
 
-        /*<option value="ar">Artillería</option>
-        <option value="be">Bestia</option>
-        <option value="mo">Moto</option>
-        <option value="cb">Caballería</option>
-        <option value="mre">Moto a reacción Eldar</option>
-        <option value="cm">Criatura monstruosa</option>
-        <option value="cmv">Criatura monstruosa voladora</option>
-        <option value="in">Infantería</option>
-        <option value="ur">Unidad a reacción</option>
-        <option value="mr">Moto a reacción</option>
-        <option value="sa">Unidad de salto</option>
-        <option value="pj">Personaje</option>
-        <option value="vehicle">Vehículo</option> */
-
         // TODO: Core
         $scope.types = [
-            {key: "ar", name: "Artilleria"},
-            {key: "be", name: "Bestia"},
-            {key: "mo", name: "Moto"},
-            {key: "cb", name: "Caballería"},
-            {key: "mre", name: "Moto a reacción Eldar"},
-            {key: "cm", name: "Criatura monstruosa"},
-            {key: "cmv", name: "Criatura monstruosa voladora"},
-            {key: "in", name: "Infantería"},
-            {key: "ur", name: "Unidad a reacción"},
-            {key: "mr", name: "Moto a reacción"},
-            {key: "sa", name: "Unidad de salto"},
-            {key: "pj", name: "Personaje"},
-            {key: "vehicle", name: "Vehicle"}];
+            {value: "ar", name: "Artilleria"},
+            {value: "be", name: "Bestia"},
+            {value: "mo", name: "Moto"},
+            {value: "cb", name: "Caballería"},
+            {value: "mre", name: "Moto a reacción Eldar"},
+            {value: "cm", name: "Criatura monstruosa"},
+            {value: "cmv", name: "Criatura monstruosa voladora"},
+            {value: "in", name: "Infantería"},
+            {value: "ur", name: "Unidad a reacción"},
+            {value: "mr", name: "Moto a reacción"},
+            {value: "sa", name: "Unidad de salto"},
+            {value: "pj", name: "Personaje"},
+            {value: "vehicle", name: "Vehicle", subtypes: [
+                {value: "walker", name: "Andador"},
+                {value: "tank", name: "Tanque"},
+                {value: "flyer", name: "Volador"},
+                {value: "hover", name: "Gravítico"}]}];
 
-        /*<input type="radio" name="seccion" value="hq" ng-model="unit.section">CG</input>
-        <input type="radio" name="seccion" value="elite" ng-model="unit.section">Elite</input>
-        <input type="radio" name="seccion" value="line" ng-model="unit.section">Tropas de línea</input>
-        <input type="radio" name="seccion" value="designated-transport" ng-model="unit.section">Transportes asignados</input>
-        <input type="radio" name="seccion" value="fast-attack" ng-model="unit.section">Ataque rápido</input>
-        <input type="radio" name="seccion" value="heavy-support" ng-model="unit.section">Apoyo pesado</input>*/
-
+        // TODO: Core
         $scope.sections = [
-            {key: "hq", name: "CG"},
-            {key: "elite", name: "Elite"},
-            {key: "line", name: "Tropas de línea"},
-            {key: "designated-transport", name: "Transportes asignados"},
-            {key: "fast-attack", name: "Ataque rápido"},
-            {key: "heavy-support", name: "Apoyo pesado"}];
+            {value: "hq", name: "CG"},
+            {value: "elite", name: "Elite"},
+            {value: "line", name: "Tropas de línea"},
+            {value: "designated-transport", name: "Transportes asignados"},
+            {value: "fast-attack", name: "Ataque rápido"},
+            {value: "heavy-support", name: "Apoyo pesado"}];
 
         var master = {
             name: 'nombre',
@@ -129,4 +113,3 @@ angular.module('armyBuilder')
     .controller('WeaponCtrl', function($scope, $location, Weapon){
         $scope.weapons = Weapon.query();
     });
-

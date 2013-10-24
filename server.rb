@@ -26,7 +26,6 @@ configure do
   WEAPONS     = DB['weapons']
 end
 
-
 # De momento todas las respuestas son json
 before do
   #content_type :json
