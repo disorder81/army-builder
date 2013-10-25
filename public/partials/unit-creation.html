@@ -14,22 +14,22 @@
     </fieldset>
     <fieldset>
         <legend>Tipo</legend>
-        <ul>
+        <!--<ul>
             <li ng-repeat="type in types">
                 {{ type.name }}
                 <ul ng-switch="type.subtypes">
                     <li ng-repeat="subtype in type.subtypes">{{ subtype.name }}</li>
                 </ul>
             </li>
-        </ul>
-        <select ng-model="unit.type" multiple>
-            <option ng-repeat="type in types" value="{{ type.value }}">{{ type.name }}</option>
-            <div ng-repeat="subtype in type.subtypes">
-                <p>{{ subtype.name }}</p>
-            </div>
-        </select>
-        <input type="radio" name="type" value="vehicle" ng-model="unit.type">Vehículo</input>
-        <p ng-show="unit.type == 'vehicle'">Subtipos</p>
+        </ul>-->
+
+        <label ng-repeat="type in types">
+            <input type="radio" name="type" value="{{ type.value }}" ng-model="unit.type">{{ type.name }}</input>
+            <select ng-model="unit.subtypes" multiple>
+                <option ng-repeat="subtype in type.subtypes" value="{{ subtype.value }}">{{ subtype.name }}</option>
+            </select>
+        </label>
+
     </fieldset>
     <fieldset>
         <legend>Composición</legend>
@@ -37,9 +37,60 @@
         <label>Min: <input name="min" type="number" ng-model="unit.composition.min" ng-readonly="unit.unique" required></label>
         <label>Max: <input name="min" type="number" ng-model="unit.composition.max" ng-readonly="unit.unique" required></label>
     </fieldset>
-    <fieldset>
+    <fieldset ng-switch on="unit.type">
         <legend>Stats</legend>
-        <table border="1" ng-show="unit.type != 'vehicle'">
+            <table border="1" ng-switch-when="troop">
+                <thead>
+                <tr>
+                    <th>HA</th>
+                    <th>HP</th>
+                    <th>F</th>
+                    <th>R</th>
+                    <th>H</th>
+                    <th>I</th>
+                    <th>A</th>
+                    <th>L</th>
+                    <th>S</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <!-- TODO: type=dice -->
+                    <td><input name="ws" ng-model="unit.stats.ws"></td>
+                    <td><input name="bs" ng-model="unit.stats.bs"></td>
+                    <td><input name="s" ng-model="unit.stats.s"></td>
+                    <td><input name="t" ng-model="unit.stats.t"></td>
+                    <td><input name="w" ng-model="unit.stats.w"></td>
+                    <td><input name="i" ng-model="unit.stats.i"></td>
+                    <td><input name="a" ng-model="unit.stats.a"></td>
+                    <td><input name="ld" ng-model="unit.stats.ld"></td>
+                    <td><input name="sv" ng-model="unit.stats.sv"></td>
+                </tr>
+                </tbody>
+            </table>
+            <table border="1" ng-switch-when="vehicle">
+                <thead>
+                <tr>
+                    <th>HP</th>
+                    <th>BF</th>
+                    <th>BL</th>
+                    <th>BP</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="ws" ng-model="unit.stats.ws" type="number"></td>
+                    <td><input name="bs" ng-model="unit.stats.bs" type="number"></td>
+                    <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="s" ng-model="unit.stats.s" type="number"></td>
+                    <td><input name="f" ng-model="unit.stats.f" type="number"></td>
+                    <td><input name="s" ng-model="unit.stats.s" type="number"></td>
+                    <td><input name="r" ng-model="unit.stats.r" type="number"></td>
+                    <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="i" ng-model="unit.stats.i" type="number"></td>
+                    <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="a" ng-model="unit.stats.a" type="number"></td>
+                </tr>
+                </tbody>
+            </table>
+        <!--<table border="1" ng-show="unit.type != 'vehicle'">
             <thead>
                 <tr>
                     <th>HA</th>
@@ -88,7 +139,7 @@
                 <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="a" ng-model="unit.stats.a" type="number"></td>
             </tr>
             </tbody>
-        </table>
+        </table>-->
     </fieldset>
     <fieldset>
         <legend>Equipo</legend>
