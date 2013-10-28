@@ -37,6 +37,7 @@
         <label>Min: <input name="min" type="number" ng-model="unit.composition.min" ng-readonly="unit.unique" required></label>
         <label>Max: <input name="min" type="number" ng-model="unit.composition.max" ng-readonly="unit.unique" required></label>
     </fieldset>
+    <editable-grid data="unit"></editable-grid>
     <fieldset ng-switch on="unit.type">
         <legend>Stats</legend>
             <table border="1" ng-switch-when="troop">
