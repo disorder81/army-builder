@@ -1,3 +1,53 @@
-<div id="messages">
-    <h2>{{ data.name }}</h2>
+<div id="messages" ng-switch on="data.type">
+    <table border="1" ng-switch-when="troop">
+        <thead>
+        <tr>
+            <th><label for="ws">HA</label></th>
+            <th><label for="bs">HP</label></th>
+            <th><label for="s">F</label></th>
+            <th><label for="t">R</label></th>
+            <th><label for="w">H</label></th>
+            <th><label for="i">I</label></th>
+            <th><label for="a">A</label></th>
+            <th><label for="ld">L</label></th>
+            <th><label for="sv">S</label></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <!-- TODO: type=dice -->
+            <td><input id="ws" name="ws" ng-model="data.stats.ws"></td>
+            <td><input id="bs" name="bs" ng-model="data.stats.bs"></td>
+            <td><input id="s" name="s" ng-model="data.stats.s"></td>
+            <td><input id="t" name="t" ng-model="data.stats.t"></td>
+            <td><input id="w" name="w" ng-model="data.stats.w"></td>
+            <td><input id="i" name="i" ng-model="data.stats.i"></td>
+            <td><input id="a" name="a" ng-model="data.stats.a"></td>
+            <td><input id="ld" name="ld" ng-model="data.stats.ld"></td>
+            <td><input id="sv" name="sv" ng-model="data.stats.sv"></td>
+        </tr>
+        </tbody>
+    </table>
+    <table border="1" ng-switch-when="vehicle">
+        <thead>
+        <tr>
+            <th>HP</th>
+            <th>BF</th>
+            <th>BL</th>
+            <th>BP</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td ng-show="data.subtypes.indexOf('walker') != -1"><input name="ws" ng-model="data.stats.ws" type="number"></td>
+            <td><input name="bs" ng-model="data.stats.bs" type="number"></td>
+            <td ng-show="data.subtypes.indexOf('walker') != -1"><input name="s" ng-model="data.stats.s" type="number"></td>
+            <td><input name="f" ng-model="data.stats.f" type="number"></td>
+            <td><input name="s" ng-model="data.stats.s" type="number"></td>
+            <td><input name="r" ng-model="data.stats.r" type="number"></td>
+            <td ng-show="data.subtypes.indexOf('walker') != -1"><input name="i" ng-model="data.stats.i" type="number"></td>
+            <td ng-show="data.subtypes.indexOf('walker') != -1"><input name="a" ng-model="data.stats.a" type="number"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>

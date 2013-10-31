@@ -9,7 +9,8 @@
     <fieldset>
         <legend>Seccion</legend>
         <label ng-repeat="section in sections">
-            <input type="radio" name="seccion" value="{{ section.value }}" ng-model="unit.section">{{ section.name }}</input>
+            <input type="radio" name="seccion" value="{{ section.value }}" ng-model="unit.section" />
+            {{ section.name }}
         </label>
     </fieldset>
     <fieldset>
@@ -37,110 +38,10 @@
         <label>Min: <input name="min" type="number" ng-model="unit.composition.min" ng-readonly="unit.unique" required></label>
         <label>Max: <input name="min" type="number" ng-model="unit.composition.max" ng-readonly="unit.unique" required></label>
     </fieldset>
-    <editable-grid data="unit"></editable-grid>
+
     <fieldset ng-switch on="unit.type">
         <legend>Stats</legend>
-            <table border="1" ng-switch-when="troop">
-                <thead>
-                <tr>
-                    <th>HA</th>
-                    <th>HP</th>
-                    <th>F</th>
-                    <th>R</th>
-                    <th>H</th>
-                    <th>I</th>
-                    <th>A</th>
-                    <th>L</th>
-                    <th>S</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <!-- TODO: type=dice -->
-                    <td><input name="ws" ng-model="unit.stats.ws"></td>
-                    <td><input name="bs" ng-model="unit.stats.bs"></td>
-                    <td><input name="s" ng-model="unit.stats.s"></td>
-                    <td><input name="t" ng-model="unit.stats.t"></td>
-                    <td><input name="w" ng-model="unit.stats.w"></td>
-                    <td><input name="i" ng-model="unit.stats.i"></td>
-                    <td><input name="a" ng-model="unit.stats.a"></td>
-                    <td><input name="ld" ng-model="unit.stats.ld"></td>
-                    <td><input name="sv" ng-model="unit.stats.sv"></td>
-                </tr>
-                </tbody>
-            </table>
-            <table border="1" ng-switch-when="vehicle">
-                <thead>
-                <tr>
-                    <th>HP</th>
-                    <th>BF</th>
-                    <th>BL</th>
-                    <th>BP</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="ws" ng-model="unit.stats.ws" type="number"></td>
-                    <td><input name="bs" ng-model="unit.stats.bs" type="number"></td>
-                    <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="s" ng-model="unit.stats.s" type="number"></td>
-                    <td><input name="f" ng-model="unit.stats.f" type="number"></td>
-                    <td><input name="s" ng-model="unit.stats.s" type="number"></td>
-                    <td><input name="r" ng-model="unit.stats.r" type="number"></td>
-                    <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="i" ng-model="unit.stats.i" type="number"></td>
-                    <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="a" ng-model="unit.stats.a" type="number"></td>
-                </tr>
-                </tbody>
-            </table>
-        <!--<table border="1" ng-show="unit.type != 'vehicle'">
-            <thead>
-                <tr>
-                    <th>HA</th>
-                    <th>HP</th>
-                    <th>F</th>
-                    <th>R</th>
-                    <th>H</th>
-                    <th>I</th>
-                    <th>A</th>
-                    <th>L</th>
-                    <th>S</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input name="ws" ng-model="unit.stats.ws" type="number" min="1" max="10"></td>
-                    <td><input name="bs" ng-model="unit.stats.bs" type="number" min="1" max="10"></td>
-                    <td><input name="s" ng-model="unit.stats.s" type="number" min="1" max="10"></td>
-                    <td><input name="t" ng-model="unit.stats.t" type="number" min="1" max="10"></td>
-                    <td><input name="w" ng-model="unit.stats.w" type="number" min="1" max="10"></td>
-                    <td><input name="i" ng-model="unit.stats.i" type="number" min="1" max="10"></td>
-                    <td><input name="a" ng-model="unit.stats.a" type="number" min="1" max="10"></td>
-                    <td><input name="ld" ng-model="unit.stats.ld" type="number" min="1" max="10"></td>
-                    <td><input name="sv" ng-model="unit.stats.sv" type="number" min="1" max="10"></td>
-                </tr>
-            </tbody>
-        </table>
-        <table border="1" ng-show="unit.type == 'vehicle'">
-            <thead>
-            <tr>
-                <th>HP</th>
-                <th>BF</th>
-                <th>BL</th>
-                <th>BP</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="ws" ng-model="unit.stats.ws" type="number"></td>
-                <td><input name="bs" ng-model="unit.stats.bs" type="number"></td>
-                <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="s" ng-model="unit.stats.s" type="number"></td>
-                <td><input name="f" ng-model="unit.stats.f" type="number"></td>
-                <td><input name="s" ng-model="unit.stats.s" type="number"></td>
-                <td><input name="r" ng-model="unit.stats.r" type="number"></td>
-                <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="i" ng-model="unit.stats.i" type="number"></td>
-                <td ng-show="unit.subtypes.indexOf('walker') != -1"><input name="a" ng-model="unit.stats.a" type="number"></td>
-            </tr>
-            </tbody>
-        </table>-->
+        <editable-grid data="unit"></editable-grid>
     </fieldset>
     <fieldset>
         <legend>Equipo</legend>
