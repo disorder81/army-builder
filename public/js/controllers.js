@@ -16,10 +16,14 @@ angular.module('armyBuilder')
         }
     })
 
-    .controller('UnitDetailCtrl', function($scope, $routeParams, Unit) {
-         $scope.unit = Unit.get({unitId: $routeParams.unitId}, function(unit) {
+    .controller('UnitDetailCtrl', function($scope, $routeParams, Unit, CoreService) {
+        $scope.unit = Unit.get({unitId: $routeParams.unitId}, function(unit) {
 
-         });
+
+        });
+
+        $scope.sections = CoreService.sections;
+        $scope.types = CoreService.types;
     })
 
     .controller('UnitCreationCtrl', function($scope, $location, Unit, CoreService) {
