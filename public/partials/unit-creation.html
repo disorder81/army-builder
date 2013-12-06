@@ -1,55 +1,6 @@
 <form ng-submit="save(unit)" xmlns="http://www.w3.org/1999/html">
-<!--<form action="/api/units" method="POST">-->
-    <fieldset>
-        <legend>Detalles</legend>
-        <p><label>Nombre: <input name="nombre" type="text" ng-model="unit.name" required></label></p>
-        <p><label>Coste: <input name="coste" type="number" ng-model="unit.cost" required></label></p>
-        <p><label>Descripcion: <textarea name="descripcion" ng-model="unit.description"></textarea></label></p>
-    </fieldset>
-    <fieldset>
-        <legend>Seccion</legend>
-        <label ng-repeat="section in sections">
-            <input type="radio" name="seccion" value="{{ section.value }}" ng-model="unit.section" />
-            {{ section.name }}
-        </label>
-    </fieldset>
-    <fieldset>
-        <legend>Tipo</legend>
-        <!--<ul>
-            <li ng-repeat="type in types">
-                {{ type.name }}
-                <ul ng-switch="type.subtypes">
-                    <li ng-repeat="subtype in type.subtypes">{{ subtype.name }}</li>
-                </ul>
-            </li>
-        </ul>-->
-
-        <label ng-repeat="type in types">
-            <input type="radio" name="type" value="{{ type.value }}" ng-model="unit.type">{{ type.name }}</input>
-            <select ng-model="unit.subtypes" multiple>
-                <option ng-repeat="subtype in type.subtypes" value="{{ subtype.value }}">{{ subtype.name }}</option>
-            </select>
-        </label>
-
-    </fieldset>
-    <fieldset>
-        <legend>Composición</legend>
-        <input type="checkbox" name="composition" ng-model="unit.unique">Único</input>
-        <label>Min: <input name="min" type="number" ng-model="unit.composition.min" ng-readonly="unit.unique" required></label>
-        <label>Max: <input name="min" type="number" ng-model="unit.composition.max" ng-readonly="unit.unique" required></label>
-    </fieldset>
-
-    <fieldset>
-        <legend>Stats</legend>
-        <editable-grid data="unit"></editable-grid>
-    </fieldset>
-    <fieldset>
-        <legend>Equipo</legend>
-        <a href="" ng-click="add()">Añadir</a>
-        <p ng-repeat="gear in unit.wargear">Cosa</p>
-    </fieldset>
+    <unit-form></unit-form>
     <!--<button ng-click="save(unit)">Guardar</button>-->
     <button type="submit">Guardar</button>
     <button ng-click="cancel()" type="button">Cancelar</button>
 </form>
-<pre>{{ unit }}</pre>

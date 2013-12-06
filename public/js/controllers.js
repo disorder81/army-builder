@@ -16,7 +16,7 @@ angular.module('armyBuilder')
         }
     })
 
-    .controller('UnitDetailCtrl', function($scope, $routeParams, Unit, CoreService) {
+    .controller('UnitDetailCtrl', function($scope, $location, $routeParams, Unit, CoreService) {
         $scope.unit = Unit.get({unitId: $routeParams.unitId}, function(unit) {
 
 
@@ -24,6 +24,11 @@ angular.module('armyBuilder')
 
         $scope.sections = CoreService.sections;
         $scope.types = CoreService.types;
+        $scope.update = function(unit) {
+            unit.$update({unitId: unit._id.$oid});
+            // TODO: OK / KO
+            $location.path('/');
+        }
     })
 
     .controller('UnitCreationCtrl', function($scope, $location, Unit, CoreService) {

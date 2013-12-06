@@ -52,6 +52,15 @@ post '/api/units' do
   #"{\"id\": \"#{oid.to_s}\"}"
 end
 
+put '/api/units/:id' do
+  content_type :json
+  puts BSON::ObjectId(params[:id])
+  # collection.update() when used with $set (as covered earlier) allows us to set single values
+  # in this case, the put request body is converted to a string, rejecting keys with the name 'id' for security purposes
+  #DB.collection(params[:thing]).update({'id' => tobsonid(params[:id])}, {'$set' => JSON.parse(request.body.read.tos).reject{|k,v| k == 'id'}})
+  UNITS.update({_id: BSON::ObjectId(params[:id])}, {'$set' => JSON.parse(request.body.read.to_s).reject{|k,v| k == '_id'}})
+end
+
 get '/api/units/:id' do
   content_type :json
   #@units = UNITS.find_one({_id: params[:id]}).to_json
@@ -61,17 +70,13 @@ end
 
 delete '/api/units/:id' do
   content_type :json
-  #puts params[:id]
+  puts params[:id]
   #DB.collection('units').remove({_id: params[:id]})
   #UNITS.remove("name" => "test")
   @return = UNITS.remove({_id: BSON::ObjectId(params[:id])})
 
   puts @return
   {:success => true}.to_json
-end
-
-put '/api/units/:id' do
-  puts 'put'
 end
 
 get '/api/weapons' do
