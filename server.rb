@@ -5,7 +5,6 @@ require 'json'
 
 #set :environment => 'local'
 
-=begin
 configure do
   CONNECTION  = Mongo::Connection.from_uri('mongodb://test:test@ds043158.mongolab.com:43158/heroku_app17961664')
   DB 				  = CONNECTION.db('heroku_app17961664')
@@ -15,8 +14,8 @@ configure do
   #SPECIAL_RULES 	= DB["special_rules"]
 #  set :haml, :format => :html5
 end
-=end
 
+=begin
 # RACK_ENV=local
 configure do
   #system('mongod --dbpath c:\dev\data\mongodb')
@@ -25,6 +24,7 @@ configure do
   UNITS 			= DB['units']
   WEAPONS     = DB['weapons']
 end
+=end
 
 # De momento todas las respuestas son json
 before do
