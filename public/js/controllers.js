@@ -1,6 +1,10 @@
 
 angular.module('armyBuilder')
 
+    .controller('MainCtrl', function($scope) {
+
+    })
+
     .controller('ArmyCtrl', function($scope, $location, $routeParams, Unit){
         $scope.units = Unit.query();
         $scope.orderProp = 'name';
