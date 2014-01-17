@@ -1,5 +1,14 @@
 angular.module('armyBuilderServices', ['ngResource']).
-    factory('Unit', function($resource){
+
+    factory('Rule', function($resource) {
+        return $resource('/api/rules/:ruleId',
+            {ruleId: '@_id'}, {
+            query: {method: 'GET', isArray: true},
+            update: {method: 'PUT'}
+        });
+    })
+
+    .factory('Unit', function($resource){
         return $resource('/api/units/:unitId',
             {unitId: '@_id'}, {
             query: {method: 'GET', isArray: true},

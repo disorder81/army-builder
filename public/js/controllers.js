@@ -5,6 +5,20 @@ angular.module('armyBuilder')
 
     })
 
+    .controller('RuleCtrl', function($scope, $location, Rule) {
+        $scope.rules = Rule.query();
+
+        $scope.newRule = function() {
+            $location.path('/rules/new');
+        }
+
+        $scope.deleteRule = function(rule) {
+            //Unit.delete({id: unit._id.$oid});
+            rule.$delete({ruleId: rule._id.$oid}, function(){console.log('ok');}, function(){console.log('ko');});
+            console.log(rule._id.$oid);
+        }
+    })
+
     .controller('ArmyCtrl', function($scope, $location, $routeParams, Unit){
         $scope.units = Unit.query();
         $scope.orderProp = 'name';
@@ -20,22 +34,34 @@ angular.module('armyBuilder')
         }
     })
 
-    .controller('UnitDetailCtrl', function($scope, $location, $routeParams, Unit, CoreService) {
-        $scope.unit = Unit.get({unitId: $routeParams.unitId}, function(unit) {
+    .controller('RuleCreationCtrl', function($scope, $location, Rule, CoreService) {
 
-
-        });
-
-        $scope.sections = CoreService.sections;
-        $scope.types = CoreService.types;
-        $scope.update = function(unit) {
-            unit.$update({unitId: unit._id.$oid});
-            // TODO: OK / KO
-            $location.path('/');
+        var master = {
+            name: 'nombre',
+            description: 'descripcion'
         }
+
+        $scope.save = function(rule) {
+            var r = new Rule(rule);
+            r.$save([],
+                function() {
+                    console.log('ok');
+                    $location.path('/rules');
+                },
+                function(){
+                    console.log('ko');
+                }
+            );
+        }
+
+        $scope.cancel = function() {
+            $scope.rule = angular.copy(master);
+        }
+
+        $scope.cancel();
     })
 
-    .controller('UnitCreationCtrl', function($scope, $location, Unit, CoreService) {
+    .controller('UnitCtrl', function($scope, $location, $routeParams, Unit, Rule, CoreService) {
 
         $scope.sections = CoreService.sections;
         $scope.types = CoreService.types;
@@ -76,7 +102,7 @@ angular.module('armyBuilder')
             u.$save([],
                 function() {
                     console.log('ok');
-                    $location.path('/');
+                    $location.path('/units');
                 },
                 function(){
                     console.log('ko');
@@ -84,19 +110,45 @@ angular.module('armyBuilder')
             );
         }
 
-        $scope.add = function() {
+        $scope.rules = Rule.query();
+
+        $scope.update = function(unit) {
+            unit.$update({unitId: unit._id.$oid});
+            // TODO: OK / KO
+            $location.path('/');
+        }
+
+        $scope.addWargear = function() {
             $scope.unit.wargear.push({id:'id'});
+        }
+
+        $scope.removeWargear = function(index) {
+            $scope.unit.wargear.splice(index, 1);
+        }
+
+        $scope.addSpecialRule = function(id) {
+            console.log(id);
+            $scope.unit.specialRules.push(id._id);
+        }
+
+        $scope.removeSpecialRule = function(index) {
+            $scope.unit.specialRules.splice(index, 1);
         }
 
         $scope.cancel = function() {
             $scope.unit = angular.copy(master);
         }
 
+        if($routeParams.unitId) {
+            $scope.unit = Unit.get({unitId: $routeParams.unitId});
+        } else {
+            $scope.cancel();
+        }
+
         $scope.$watch('unit.type', function(){
-            $scope.unit.stats = {};
+            //$scope.unit.stats = {};
         });
 
-        $scope.cancel();
     })
 
     .controller('WeaponCtrl', function($scope, $location, Weapon){

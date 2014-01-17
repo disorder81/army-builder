@@ -44,7 +44,23 @@
     </fieldset>
     <fieldset>
         <legend>Equipo</legend>
-        <a href="" ng-click="add()">Añadir</a>
-        <p ng-repeat="gear in unit.wargear">Cosa</p>
+        <a href="" ng-click="addWargear()">Añadir</a>
+        <ul>
+            <li ng-repeat="gear in unit.wargear">
+                Equipo [<a href="" ng-click="removeWargear($index)">X</a>]
+            </li>
+        </ul>
+    </fieldset>
+    <fieldset>
+        <legend>Reglas especiales</legend>
+        <div>
+            <input ng-model="query">
+            <p ng-repeat="rule in rules | filter:query">{{ rule.name }} <a href="" ng-click="addSpecialRule(rule)">Añadir</a></p>
+        </div>
+        <ul>
+            <li ng-repeat="rule in unit.specialRules">
+                {{ rule.$oid }} [<a href="" ng-click="removeSpecialRule($index)">X</a>]
+            </li>
+        </ul>
     </fieldset>
 <pre>{{ unit }}</pre>

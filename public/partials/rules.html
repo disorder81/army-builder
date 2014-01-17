@@ -1,0 +1,13 @@
+<input ng-model="query">
+<select ng-model="orderProp">
+    <option value="name">Alphabetical</option>
+</select>
+<ul class="rules">
+    <li ng-repeat="rule in rules | filter:query | orderBy:orderProp" class="thumbnail">
+        <!--<a href="#/units/{{unit._id}}" class="thumb"><img ng-src="{{phone.imageUrl}}"></a>  -->
+        <a href="#/rules/{{rule._id.$oid}}/slug">{{ rule.name }}</a>
+        [<a href="" ng-click="deleteRule(rule)">X</a>]
+    </li>
+</ul>
+<p>Total number of rules: {{ rules.length }}</p>
+<button ng-click="newRule()">Crear nuevo</button>

@@ -25,6 +25,7 @@ configure do
   DB 				  = CONNECTION.db('w40')
   UNITS 			= DB['units']
   WEAPONS     = DB['weapons']
+  RULES       = DB['rules']
 end
 
 
@@ -45,11 +46,26 @@ get '/api/units' do
   #JSON.pretty_generate(@units)
 end
 
+get '/api/rules' do
+  content_type :json
+  @rules = RULES.find.to_a.to_json
+  #JSON.pretty_generate(@units)
+end
+
 post '/api/units' do
   # Probar > http://stackoverflow.com/questions/12131763/sinatra-controller-params-method-coming-in-empty-on-json-post-request
   #@json = JSON.parse(request.body.read)
   content_type :json
   oid = UNITS.insert(JSON.parse(request.body.read.to_s))
+  puts oid
+  #"{\"id\": \"#{oid.to_s}\"}"
+end
+
+post '/api/rules' do
+  # Probar > http://stackoverflow.com/questions/12131763/sinatra-controller-params-method-coming-in-empty-on-json-post-request
+  #@json = JSON.parse(request.body.read)
+  content_type :json
+  oid = RULES.insert(JSON.parse(request.body.read.to_s))
   puts oid
   #"{\"id\": \"#{oid.to_s}\"}"
 end
@@ -60,7 +76,8 @@ put '/api/units/:id' do
   # collection.update() when used with $set (as covered earlier) allows us to set single values
   # in this case, the put request body is converted to a string, rejecting keys with the name 'id' for security purposes
   #DB.collection(params[:thing]).update({'id' => tobsonid(params[:id])}, {'$set' => JSON.parse(request.body.read.tos).reject{|k,v| k == 'id'}})
-  UNITS.update({_id: BSON::ObjectId(params[:id])}, {'$set' => JSON.parse(request.body.read.to_s).reject{|k,v| k == '_id'}})
+  #UNITS.update({_id: BSON::ObjectId(params[:id])}, {'$set' => JSON.parse(request.body.read.to_s).reject{|k,v| k == '_id'}})
+  UNITS.update({_id: BSON::ObjectId(params[:id])}, {'$set' => JSON.parse(request.body.read.to_s)})
 end
 
 get '/api/units/:id' do
@@ -76,6 +93,17 @@ delete '/api/units/:id' do
   #DB.collection('units').remove({_id: params[:id]})
   #UNITS.remove("name" => "test")
   @return = UNITS.remove({_id: BSON::ObjectId(params[:id])})
+
+  puts @return
+  {:success => true}.to_json
+end
+
+delete '/api/rules/:id' do
+  content_type :json
+  puts params[:id]
+  #DB.collection('units').remove({_id: params[:id]})
+  #UNITS.remove("name" => "test")
+  @return = RULES.remove({_id: BSON::ObjectId(params[:id])})
 
   puts @return
   {:success => true}.to_json
