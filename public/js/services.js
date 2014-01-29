@@ -12,7 +12,19 @@ angular.module('armyBuilderServices', ['ngResource']).
         return $resource('/api/units/:unitId',
             {unitId: '@_id'}, {
             query: {method: 'GET', isArray: true},
-            update: {method: 'PUT'}
+            update: {method: 'PUT', isArray: false, transformRequest: function(data) {
+                // Función para permitir pasar la propiedad $oid en el JSON
+                // Quita también también propiedades que Angular añade al objeto: $promise, etc.
+                return JSON.stringify(data, function(key, value) {
+                    var val = value;
+
+                    if(/^\$+/.test(key) && key !== '$oid') {
+                        val = undefined;
+                    }
+
+                    return val;
+                });
+            }}
         });
     })
 

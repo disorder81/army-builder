@@ -32,6 +32,8 @@ end
 # De momento todas las respuestas son json
 before do
   #content_type :json
+  #request.body.rewind
+  #@request_payload = JSON.parse(request.body.read)
 end
 
 get '/' do
@@ -72,17 +74,36 @@ end
 
 put '/api/units/:id' do
   content_type :json
-  puts BSON::ObjectId(params[:id])
+  #puts BSON::ObjectId(params[:id])
+
+  #request.body.rewind
+
+  request.body.rewind
+
+  logger.info request.body.read
+
+  id = BSON::ObjectId(params[:id])
+
+  #request.body.rewind
+
+  #logger.info JSON.parse(request.body.read.to_s).reject{|k,v| k == '_id'}
+
+  #request.body.rewind
+  #puts BSON::serialize(JSON.parse(request.body.read.to_s))
   # collection.update() when used with $set (as covered earlier) allows us to set single values
   # in this case, the put request body is converted to a string, rejecting keys with the name 'id' for security purposes
   #DB.collection(params[:thing]).update({'id' => tobsonid(params[:id])}, {'$set' => JSON.parse(request.body.read.tos).reject{|k,v| k == 'id'}})
+  # Sin rewind da el error de "a JSON text must at least contain two octets" porque intenta parsear una request vacía...
+  request.body.rewind
   #UNITS.update({_id: BSON::ObjectId(params[:id])}, {'$set' => JSON.parse(request.body.read.to_s).reject{|k,v| k == '_id'}})
-  UNITS.update({_id: BSON::ObjectId(params[:id])}, {'$set' => JSON.parse(request.body.read.to_s)})
+  UNITS.update({_id: id}, {'$set' => JSON.parse(request.body.read.to_s).reject{|k,v| k == '_id'}})
+  #UNITS.update({_id: BSON::ObjectId(params[:id])}, {'$set' => JSON.parse(request.body.read.to_s)})
 end
 
 get '/api/units/:id' do
   content_type :json
   #@units = UNITS.find_one({_id: params[:id]}).to_json
+  #puts UNITS.find_one({_id: BSON::ObjectId(params[:id])}).to_json
   @units = UNITS.find_one({_id: BSON::ObjectId(params[:id])}).to_json
   #JSON.pretty_generate(@units)
 end

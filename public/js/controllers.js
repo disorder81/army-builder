@@ -126,9 +126,10 @@ angular.module('armyBuilder')
             $scope.unit.wargear.splice(index, 1);
         }
 
-        $scope.addSpecialRule = function(id) {
-            console.log(id);
-            $scope.unit.specialRules.push(id._id);
+        $scope.addSpecialRule = function(rule) {
+            console.log(rule._id);
+            $scope.unit.specialRules.push({_id: rule._id, name: rule.name});
+            console.log($scope.unit.specialRules);
         }
 
         $scope.removeSpecialRule = function(index) {
