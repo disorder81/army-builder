@@ -33,7 +33,7 @@ end
 before do
   #content_type :json
   #request.body.rewind
-  #@request_payload = JSON.parse(request.body.read)
+  #@request_payload = JSON.parse(request.body.read.to_s)
 end
 
 get '/' do
@@ -44,7 +44,17 @@ end
 
 get '/api/units' do
   content_type :json
-  @units = UNITS.find.to_a.to_json
+  # En la lista sólo id, nombre y coste
+  @units = UNITS.find({}, {:fields => ["name", "cost"]}).to_a.to_json
+end
+
+get '/api/units/:id' do
+  content_type :json
+  unit = UNITS.find_one({_id: BSON::ObjectId(params[:id])})
+  puts unit["specialRules"]
+  unit["specialRules"].map!{|rule| RULES.find_one({_id: rule}, {:fields => ["name"]})}
+  unit.to_json
+  #@unit = UNITS.find_one({_id: BSON::ObjectId(params[:id])}).to_json
   #JSON.pretty_generate(@units)
 end
 
@@ -76,37 +86,27 @@ put '/api/units/:id' do
   content_type :json
   #puts BSON::ObjectId(params[:id])
 
-  #request.body.rewind
+  @request_payload = JSON.parse(request.body.read.to_s)
+  @id = BSON::ObjectId(@request_payload["_id"]["$oid"])
+  @special_rules = @request_payload["specialRules"].map!{|rule| BSON::ObjectId(rule["_id"]["$oid"])}
 
-  request.body.rewind
-
-  logger.info request.body.read
-
-  id = BSON::ObjectId(params[:id])
-
-  #request.body.rewind
-
+  #JSON.parse(request.body.read.to_s)["specialRules"].each{|rule| puts BSON::ObjectId(rule["_id"]["$oid"])}
   #logger.info JSON.parse(request.body.read.to_s).reject{|k,v| k == '_id'}
 
-  #request.body.rewind
-  #puts BSON::serialize(JSON.parse(request.body.read.to_s))
   # collection.update() when used with $set (as covered earlier) allows us to set single values
   # in this case, the put request body is converted to a string, rejecting keys with the name 'id' for security purposes
   #DB.collection(params[:thing]).update({'id' => tobsonid(params[:id])}, {'$set' => JSON.parse(request.body.read.tos).reject{|k,v| k == 'id'}})
   # Sin rewind da el error de "a JSON text must at least contain two octets" porque intenta parsear una request vacía...
-  request.body.rewind
+  #request.body.rewind
   #UNITS.update({_id: BSON::ObjectId(params[:id])}, {'$set' => JSON.parse(request.body.read.to_s).reject{|k,v| k == '_id'}})
-  UNITS.update({_id: id}, {'$set' => JSON.parse(request.body.read.to_s).reject{|k,v| k == '_id'}})
+  #UNITS.update({_id: @id}, {'$set' => JSON.parse(request.body.read.to_s).reject{|k,v| k == '_id'}})
+  UNITS.update({_id: @id}, {'$set' => @request_payload.reject{|k,v| k == '_id'}})
+  #@special_rules.each{|rule| UNITS.update({_id: @id}, {'$addToSet' => {'specialRules' => BSON::ObjectId(rule["_id"]["$oid"])}}) }
+
   #UNITS.update({_id: BSON::ObjectId(params[:id])}, {'$set' => JSON.parse(request.body.read.to_s)})
 end
 
-get '/api/units/:id' do
-  content_type :json
-  #@units = UNITS.find_one({_id: params[:id]}).to_json
-  #puts UNITS.find_one({_id: BSON::ObjectId(params[:id])}).to_json
-  @units = UNITS.find_one({_id: BSON::ObjectId(params[:id])}).to_json
-  #JSON.pretty_generate(@units)
-end
+
 
 delete '/api/units/:id' do
   content_type :json
