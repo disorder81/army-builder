@@ -8,6 +8,7 @@ angular.module('armyBuilder', ['phonecatFilters', 'armyBuilderServices', 'ngRout
             when('/weapons', {templateUrl: 'partials/weapons.html', controller: 'WeaponCtrl'}).
             when('/rules', {templateUrl: 'partials/rules.html', controller: 'RuleCtrl'}).
             when('/rules/new', {templateUrl: 'partials/rule-creation.html', controller: 'RuleCreationCtrl'}).
+            when('/rules/:ruleId/:ruleSlug', {templateUrl: 'partials/rule-detail.html', controller: 'RuleCtrl'}).
             otherwise({redirectTo: '/'});
 
         //TODO: Esto necesita un rewrite de URLs en el servidor > http://docs.angularjs.org/guide/dev_guide.services.$location (Server side)

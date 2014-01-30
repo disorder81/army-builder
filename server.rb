@@ -51,7 +51,7 @@ end
 get '/api/units/:id' do
   content_type :json
   unit = UNITS.find_one({_id: BSON::ObjectId(params[:id])})
-  puts unit["specialRules"]
+  #sputs unit["specialRules"]
   unit["specialRules"].map!{|rule| RULES.find_one({_id: rule}, {:fields => ["name"]})}
   unit.to_json
   #@unit = UNITS.find_one({_id: BSON::ObjectId(params[:id])}).to_json
@@ -60,8 +60,14 @@ end
 
 get '/api/rules' do
   content_type :json
-  @rules = RULES.find.to_a.to_json
+  @rules = RULES.find({}, {:fields => ["name"]}).to_a.to_json
+  #@rules = RULES.find.to_a.to_json
   #JSON.pretty_generate(@units)
+end
+
+get '/api/rules/:id' do
+  content_type :json
+  @rule = RULES.find_one({_id: BSON::ObjectId(params[:id])}).to_json
 end
 
 post '/api/units' do

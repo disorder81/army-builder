@@ -59,7 +59,7 @@
         </div>
         <ul>
             <li ng-repeat="rule in unit.specialRules">
-                <a href="/rules/{{ rule._id.$oid }}">{{ rule.name }}</a> [<a href="" ng-click="removeSpecialRule($index)">X</a>]
+                <a href="#/rules/{{ rule._id.$oid }}/slug">{{ rule.name }}</a> [<a href="" ng-click="removeSpecialRule($index)">X</a>]
             </li>
         </ul>
     </fieldset>

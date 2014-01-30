@@ -5,8 +5,12 @@ angular.module('armyBuilder')
 
     })
 
-    .controller('RuleCtrl', function($scope, $location, Rule) {
+    .controller('RuleCtrl', function($scope, $location, $routeParams, Rule) {
+
+        // TODO: Esto tiene que ir en otro lado que si no se carga cada vez
         $scope.rules = Rule.query();
+
+        $scope.rule = Rule.get({ruleId: $routeParams.ruleId});
 
         $scope.newRule = function() {
             $location.path('/rules/new');
@@ -127,9 +131,7 @@ angular.module('armyBuilder')
         }
 
         $scope.addSpecialRule = function(rule) {
-            console.log(rule._id);
             $scope.unit.specialRules.push({_id: rule._id, name: rule.name});
-            console.log($scope.unit.specialRules);
         }
 
         $scope.removeSpecialRule = function(index) {
