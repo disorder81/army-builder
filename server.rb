@@ -58,36 +58,6 @@ get '/api/units/:id' do
   #JSON.pretty_generate(@units)
 end
 
-get '/api/rules' do
-  content_type :json
-  @rules = RULES.find({}, {:fields => ["name"]}).to_a.to_json
-  #@rules = RULES.find.to_a.to_json
-  #JSON.pretty_generate(@units)
-end
-
-get '/api/rules/:id' do
-  content_type :json
-  @rule = RULES.find_one({_id: BSON::ObjectId(params[:id])}).to_json
-end
-
-post '/api/units' do
-  # Probar > http://stackoverflow.com/questions/12131763/sinatra-controller-params-method-coming-in-empty-on-json-post-request
-  #@json = JSON.parse(request.body.read)
-  content_type :json
-  oid = UNITS.insert(JSON.parse(request.body.read.to_s))
-  puts oid
-  #"{\"id\": \"#{oid.to_s}\"}"
-end
-
-post '/api/rules' do
-  # Probar > http://stackoverflow.com/questions/12131763/sinatra-controller-params-method-coming-in-empty-on-json-post-request
-  #@json = JSON.parse(request.body.read)
-  content_type :json
-  oid = RULES.insert(JSON.parse(request.body.read.to_s))
-  puts oid
-  #"{\"id\": \"#{oid.to_s}\"}"
-end
-
 put '/api/units/:id' do
   content_type :json
   #puts BSON::ObjectId(params[:id])
@@ -112,7 +82,14 @@ put '/api/units/:id' do
   #UNITS.update({_id: BSON::ObjectId(params[:id])}, {'$set' => JSON.parse(request.body.read.to_s)})
 end
 
-
+post '/api/units' do
+  # Probar > http://stackoverflow.com/questions/12131763/sinatra-controller-params-method-coming-in-empty-on-json-post-request
+  #@json = JSON.parse(request.body.read)
+  content_type :json
+  oid = UNITS.insert(JSON.parse(request.body.read.to_s))
+  puts oid
+  #"{\"id\": \"#{oid.to_s}\"}"
+end
 
 delete '/api/units/:id' do
   content_type :json
@@ -125,14 +102,39 @@ delete '/api/units/:id' do
   {:success => true}.to_json
 end
 
+##
+
+get '/api/rules' do
+  content_type :json
+  @rules = RULES.find({}, {:fields => ["name"]}).to_a.to_json
+  #@rules = RULES.find.to_a.to_json
+  #JSON.pretty_generate(@units)
+end
+
+get '/api/rules/:id' do
+  content_type :json
+  @rule = RULES.find_one({_id: BSON::ObjectId(params[:id])}).to_json
+end
+
+post '/api/rules' do
+  # Probar > http://stackoverflow.com/questions/12131763/sinatra-controller-params-method-coming-in-empty-on-json-post-request
+  #@json = JSON.parse(request.body.read)
+  content_type :json
+  oid = RULES.insert(JSON.parse(request.body.read.to_s))
+  puts oid
+  #"{\"id\": \"#{oid.to_s}\"}"
+end
+
 delete '/api/rules/:id' do
   content_type :json
-  puts params[:id]
-  #DB.collection('units').remove({_id: params[:id]})
+  id = BSON::ObjectId(params[:id])
   #UNITS.remove("name" => "test")
-  @return = RULES.remove({_id: BSON::ObjectId(params[:id])})
 
-  puts @return
+  # Quitar primero la referencia de la regla de las unidades que la contengan
+  UNITS.update({specialRules: id}, {:$pull => {"specialRules" => id}}, :multi => true)
+  # Después quitar la regla misma
+  @return = RULES.remove({_id: id})
+
   {:success => true}.to_json
 end
 
