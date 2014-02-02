@@ -2,7 +2,12 @@
     <fieldset>
         <legend>Detalles</legend>
         <p><label>Nombre: <input name="nombre" type="text" ng-model="rule.name" required></label></p>
-        <p><label>Descripcion: <textarea name="descripcion" ng-model="rule.description"></textarea></label></p>
+        <p><label>Tipo: <select>
+            <option>Core</option>
+            <option>Ejército</option>
+            <option>Unidad</option>
+        </select></label></p>
+        <p><label>Descripcion: <textarea ckeditor="editorOptions" name="descripcion" ng-model="rule.description"></textarea></label></p>
     </fieldset>
     <!--<button ng-click="save(unit)">Guardar</button>-->
     <button type="submit">Guardar</button>

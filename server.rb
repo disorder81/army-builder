@@ -88,7 +88,6 @@ post '/api/units' do
   content_type :json
   oid = UNITS.insert(JSON.parse(request.body.read.to_s))
   puts oid
-  #"{\"id\": \"#{oid.to_s}\"}"
 end
 
 delete '/api/units/:id' do
@@ -105,10 +104,10 @@ end
 ##
 
 get '/api/rules' do
-  content_type :json
-  @rules = RULES.find({}, {:fields => ["name"]}).to_a.to_json
   #@rules = RULES.find.to_a.to_json
   #JSON.pretty_generate(@units)
+  content_type :json
+  @rules = RULES.find({}, {:fields => ["name"]}).to_a.to_json
 end
 
 get '/api/rules/:id' do

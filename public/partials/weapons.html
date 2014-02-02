@@ -1,13 +1,31 @@
 <h2>weapons</h2>
-<ul class="weapons">
-    <li ng-repeat="weapon in weapons" class="thumbnail">
-        <p>{{ weapon.name }}</p>
-        <p>{{ weapon.range }}</p>
-        <p>{{ weapon.f }}</p>
-        <p>{{ weapon.fp }}</p>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Rango</th>
+            <th>Fuerza</th>
+            <th>Factor de penetración</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="weapon in weapons">
+            <td>{{ weapon.name }}</td>
+            <td>{{ weapon.range }}</td>
+            <td>{{ weapon.f }}</td>
+            <td>{{ weapon.fp }}</td>
+        </tr>
+    </tbody>
+</table>
+<!--<ul class="weapons">-->
+    <!--<li ng-repeat="weapon in weapons" class="thumbnail">-->
+        <!--<p>{{ weapon.name }}</p>-->
+        <!--<p>{{ weapon.range }}</p>-->
+        <!--<p>{{ weapon.f }}</p>-->
+        <!--<p>{{ weapon.fp }}</p>-->
         <!--<a href="#/units/{{unit._id}}" class="thumb"><img ng-src="{{phone.imageUrl}}"></a>  -->
         <!--<a href="#/units/{{unit._id.$oid}}/slug">{{ unit.name }}</a>
         <span>{{ unit.cost }}</span>
         [<a href="" ng-click="deleteUnit(unit)">X</a>]  -->
-    </li>
-</ul>
+    <!--</li>-->
+<!--</ul>-->

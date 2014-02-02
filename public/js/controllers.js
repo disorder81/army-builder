@@ -10,7 +10,7 @@ angular.module('armyBuilder')
         // TODO: Esto tiene que ir en otro lado que si no se carga cada vez
         $scope.rules = Rule.query();
 
-        $scope.rule = Rule.get({ruleId: $routeParams.ruleId});
+        //$scope.rule = Rule.get({ruleId: $routeParams.ruleId});
 
         $scope.newRule = function() {
             $location.path('/rules/new');
@@ -38,7 +38,9 @@ angular.module('armyBuilder')
         }
     })
 
-    .controller('RuleCreationCtrl', function($scope, $location, Rule, CoreService) {
+    .controller('RuleCreationCtrl', function($scope, $location, Rule, CoreService, ckEditorConfig) {
+
+        $scope.editorOptions = ckEditorConfig;
 
         var master = {
             name: 'nombre',
@@ -65,10 +67,49 @@ angular.module('armyBuilder')
         $scope.cancel();
     })
 
-    .controller('UnitCtrl', function($scope, $location, $routeParams, Unit, Rule, CoreService) {
+    .controller('UnitCtrl', function($scope, $location, $routeParams, Unit, Rule, CoreService, ckEditorConfig) {
 
         $scope.sections = CoreService.sections;
         $scope.types = CoreService.types;
+        $scope.editorOptions = ckEditorConfig;
+
+        $scope.cancel = function() {
+            $scope.unit = angular.copy(master);
+        }
+
+        $scope.cancel();
+
+        if($routeParams.unitId) {
+            $scope.unit = Unit.get({unitId: $routeParams.unitId});
+            $scope.unit.$promise.then(function(unit) {
+                console.log('cargado: ' + unit.name);
+                $scope.rules = Rule.query();
+                $scope.rules.$promise.then(function() {
+                    angular.forEach($scope.unit.specialRules, function(rule) {
+                        // TODO: Refactor
+                        // TODO: Filtro
+                        var r = $scope.rules;
+                        var i=0, len=r.length;
+
+                        for (; i<len; i++) {
+                            if (r[i]._id.$oid == rule._id.$oid) {
+                                console.log(angular.equals(rule, r[i]));
+                                r[i].selected = true;
+                            }
+                        }
+                    });
+                });
+            })
+        }
+
+//        if($routeParams.unitId) {
+//            $scope.unit = Unit.get({unitId: $routeParams.unitId});
+//            /*$scope.unit.$promise.then(function() {
+//                console.log('cargada');
+//            });  */
+//        } else {
+//            $scope.cancel();
+//        }
 
         var master = {
             name: 'nombre',
@@ -114,7 +155,14 @@ angular.module('armyBuilder')
             );
         }
 
-        $scope.rules = Rule.query();
+        /*$scope.rules = Rule.query({}, function(){
+            angular.forEach($scope.rules, function(rule) {
+                console.log('mirar si están seleccionadas');
+            });
+        });*/
+
+        //$scope.rules = Rule.query();
+
 
         $scope.update = function(unit) {
             unit.$update({unitId: unit._id.$oid});
@@ -131,22 +179,38 @@ angular.module('armyBuilder')
         }
 
         $scope.addSpecialRule = function(rule) {
-            $scope.unit.specialRules.push({_id: rule._id, name: rule.name});
+            $scope.unit.specialRules.push(rule);
+            rule.selected = true;
         }
 
-        $scope.removeSpecialRule = function(index) {
-            $scope.unit.specialRules.splice(index, 1);
+        $scope.ruleNotSelected = function(rule) {
+            return typeof(rule.selected) === 'undefined' || rule.selected === false;
         }
 
-        $scope.cancel = function() {
-            $scope.unit = angular.copy(master);
+        $scope.removeSpecialRule = function(rule) {
+            // TODO: Refactor
+            // TODO: Filtro
+            var r = $scope.rules;
+            var i=0, len=r.length;
+
+            for (; i<len; i++) {
+                if (r[i]._id.$oid == rule._id.$oid) {
+                    //console.log(angular.equals(rule, r[i]));
+                    $scope.unit.specialRules.splice($scope.unit.specialRules.indexOf(rule), 1);
+                    r[i].selected = false;
+                    //return r[i];
+                }
+            }
+
+//            var index = $scope.unit.specialRules.indexOf(rule);
+//            if (index != -1) {
+//                $scope.unit.specialRules.splice(index, 1);
+//            }
+//
+//            rule.selected = false;
         }
 
-        if($routeParams.unitId) {
-            $scope.unit = Unit.get({unitId: $routeParams.unitId});
-        } else {
-            $scope.cancel();
-        }
+
 
         $scope.$watch('unit.type', function(){
             //$scope.unit.stats = {};

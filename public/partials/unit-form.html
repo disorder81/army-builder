@@ -3,7 +3,7 @@
         <legend>Detalles</legend>
         <p><label>Nombre: <input name="nombre" type="text" ng-model="unit.name" required></label></p>
         <p><label>Coste: <input name="coste" type="number" ng-model="unit.cost" required></label></p>
-        <p><label>Descripcion: <textarea name="descripcion" ng-model="unit.description"></textarea></label></p>
+        <p><label>Descripcion: <textarea ckeditor="editorOptions" name="descripcion" ng-model="unit.description"></textarea></label></p>
     </fieldset>
     <fieldset>
         <legend>Seccion</legend>
@@ -53,13 +53,18 @@
     </fieldset>
     <fieldset>
         <legend>Reglas especiales</legend>
-        <div>
-            <input ng-model="query">
-            <p ng-repeat="rule in rules | filter:query">{{ rule.name }} <a href="" ng-click="addSpecialRule(rule)">Añadir</a></p>
+        <input ng-model="query.name">
+        <div style="height: 125px; width: 300px; overflow-y: auto">
+            <ul>
+                <!-- en ng-class, el nombre de la clase tiene que ir entre '' para que deje pasar el hyphen -->
+                <!-- ¿cómo c... se niega el predicado del filtro si es una función...? -->
+                <li ng-repeat="rule in rules | filter:query | filter:ruleNotSelected" ng-class="{'is-disabled': rule.selected}">{{ rule.name }} <a href="" ng-click="addSpecialRule(rule)">Añadir</a></li>
+            </ul>
         </div>
         <ul>
             <li ng-repeat="rule in unit.specialRules">
-                <a href="#/rules/{{ rule._id.$oid }}/slug">{{ rule.name }}</a> [<a href="" ng-click="removeSpecialRule($index)">X</a>]
+                <!--<a href="#/rules/{{ rule._id.$oid }}/slug">{{ rule.name }}</a> [<a href="" ng-click="removeSpecialRule($index)">X</a>]-->
+                <a href="#/rules/{{ rule._id.$oid }}/slug">{{ rule.name }}</a> [<a href="" ng-click="removeSpecialRule(rule)">X</a>]
             </li>
         </ul>
     </fieldset>

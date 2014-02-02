@@ -1,4 +1,4 @@
-angular.module('armyBuilder', ['phonecatFilters', 'armyBuilderServices', 'ngRoute']).
+angular.module('armyBuilder', ['phonecatFilters', 'armyBuilderServices', 'ngRoute', 'ngCkeditor', 'ngSanitize']).
     config(['$routeProvider','$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider.
             when('/', {templateUrl: 'partials/main.html', controller: 'MainCtrl'}).
@@ -13,7 +13,22 @@ angular.module('armyBuilder', ['phonecatFilters', 'armyBuilderServices', 'ngRout
 
         //TODO: Esto necesita un rewrite de URLs en el servidor > http://docs.angularjs.org/guide/dev_guide.services.$location (Server side)
         //$locationProvider.html5Mode(true);
-    }]);
+    }])
+
+    .value('ckEditorConfig', {
+        language: 'es',
+        toolbar_full: [
+            { name: 'basicstyles',
+                items: [ 'Bold', 'Italic'] },
+            { name: 'paragraph', items: [ 'BulletedList', 'NumberedList'] },
+            { name: 'links', items: [ 'Link', 'Unlink'] },
+            { name: 'tools', items: [ 'SpellChecker', 'Maximize' ] },
+            //'/',
+            { name: 'styles', items: [ 'PasteText', 'RemoveFormat' ] },
+            { name: 'clipboard', items: [ 'Undo', 'Redo' ] },
+            { name: 'document', items: [ 'PageBreak', 'Source' ] }
+        ]
+    });
 
 
 
