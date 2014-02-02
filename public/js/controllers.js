@@ -67,7 +67,7 @@ angular.module('armyBuilder')
         $scope.cancel();
     })
 
-    .controller('UnitCtrl', function($scope, $location, $routeParams, Unit, Rule, CoreService, ckEditorConfig) {
+    .controller('UnitCtrl', function($scope, $location, $routeParams, Unit, Rule, CoreService, ckEditorConfig, $filter) {
 
         $scope.sections = CoreService.sections;
         $scope.types = CoreService.types;
@@ -87,16 +87,18 @@ angular.module('armyBuilder')
                 $scope.rules.$promise.then(function() {
                     angular.forEach($scope.unit.specialRules, function(rule) {
                         // TODO: Refactor
-                        // TODO: Filtro
-                        var r = $scope.rules;
-                        var i=0, len=r.length;
-
-                        for (; i<len; i++) {
-                            if (r[i]._id.$oid == rule._id.$oid) {
-                                console.log(angular.equals(rule, r[i]));
-                                r[i].selected = true;
-                            }
-                        }
+                        $filter('filter')($scope.rules, {'_id.$oid': rule._id.$oid}, true)[0].selected = true;
+//
+//                        // TODO: Filtro
+//                        var r = $scope.rules;
+//                        var i=0, len=r.length;
+//
+//                        for (; i<len; i++) {
+//                            if (r[i]._id.$oid == rule._id.$oid) {
+//                                console.log(angular.equals(rule, r[i]));
+//                                r[i].selected = true;
+//                            }
+//                        }
                     });
                 });
             })
@@ -189,18 +191,21 @@ angular.module('armyBuilder')
 
         $scope.removeSpecialRule = function(rule) {
             // TODO: Refactor
-            // TODO: Filtro
-            var r = $scope.rules;
-            var i=0, len=r.length;
+            $filter('filter')($scope.rules, {'_id.$oid': rule._id.$oid}, true)[0].selected = false;
+            $scope.unit.specialRules.splice($scope.unit.specialRules.indexOf(rule), 1);
 
-            for (; i<len; i++) {
+            // TODO: Filtro
+            //var r = $scope.rules;
+            //var i=0, len=r.length;
+
+            /*for (; i<len; i++) {
                 if (r[i]._id.$oid == rule._id.$oid) {
                     //console.log(angular.equals(rule, r[i]));
                     $scope.unit.specialRules.splice($scope.unit.specialRules.indexOf(rule), 1);
                     r[i].selected = false;
                     //return r[i];
                 }
-            }
+            }*/
 
 //            var index = $scope.unit.specialRules.indexOf(rule);
 //            if (index != -1) {

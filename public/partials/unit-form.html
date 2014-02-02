@@ -53,19 +53,26 @@
     </fieldset>
     <fieldset>
         <legend>Reglas especiales</legend>
-        <input ng-model="query.name">
-        <div style="height: 125px; width: 300px; overflow-y: auto">
-            <ul>
-                <!-- en ng-class, el nombre de la clase tiene que ir entre '' para que deje pasar el hyphen -->
-                <!-- ¿cómo c... se niega el predicado del filtro si es una función...? -->
-                <li ng-repeat="rule in rules | filter:query | filter:ruleNotSelected" ng-class="{'is-disabled': rule.selected}">{{ rule.name }} <a href="" ng-click="addSpecialRule(rule)">Añadir</a></li>
-            </ul>
+        <button type="button">Añadir regla universal</button>
+        <button type="button">Crear regla propia</button>
+        <div style="display: flex; flex-wrap: wrap">
+        <div style="border: 1px solid; flex: 0 0 300px">
+            <span>Buscador paginado, etc.</span>
+            <input ng-model="query.name">
+            <div style="height: 125px; overflow-y: auto">
+                <ul>
+                    <!-- en ng-class, el nombre de la clase tiene que ir entre '' para que deje pasar el hyphen -->
+                    <!-- ¿cómo c... se niega el predicado del filtro si es una función...? -->
+                    <li ng-repeat="rule in rules | filter:query | filter:ruleNotSelected" ng-class="{'is-disabled': rule.selected}">{{ rule.name }} <a href="" ng-click="addSpecialRule(rule)">Añadir</a></li>
+                </ul>
+            </div>
         </div>
-        <ul>
+        <ul style="border: 1px solid; flex: 0 0 300px">
             <li ng-repeat="rule in unit.specialRules">
                 <!--<a href="#/rules/{{ rule._id.$oid }}/slug">{{ rule.name }}</a> [<a href="" ng-click="removeSpecialRule($index)">X</a>]-->
                 <a href="#/rules/{{ rule._id.$oid }}/slug">{{ rule.name }}</a> [<a href="" ng-click="removeSpecialRule(rule)">X</a>]
             </li>
         </ul>
+        </div>
     </fieldset>
 <pre>{{ unit }}</pre>
