@@ -73,8 +73,42 @@ angular.module('armyBuilder')
         $scope.types = CoreService.types;
         $scope.editorOptions = ckEditorConfig;
 
+        var master = {
+            name: 'nombre',
+            cost: 0,
+            description: 'descripcion',
+            section: $scope.sections[0].value,
+            type: $scope.types[0].value,
+            subtypes: [],
+            unique: false,
+            composition: {
+                min: 1,
+                max: 3
+            },
+            stats: {
+                ws: 3,
+                bs: 3,
+                s: 3,
+                t: 3,
+                w: 3,
+                i: 3,
+                a: 3,
+                ld: 3,
+                sv: 3
+            },
+            wargear: [
+                {id: 'id'}
+            ],
+            specialRules: [],
+            options: []
+
+        }
+
+
+
         $scope.cancel = function() {
             $scope.unit = angular.copy(master);
+            console.log($scope.unit);
         }
 
         $scope.cancel();
@@ -113,36 +147,7 @@ angular.module('armyBuilder')
 //            $scope.cancel();
 //        }
 
-        var master = {
-            name: 'nombre',
-            cost: 0,
-            description: 'descripcion',
-            section: $scope.sections[0].value,
-            type: $scope.types[0].value,
-            subtypes: [],
-            unique: false,
-            composition: {
-                min: 1,
-                max: 3
-            },
-            stats: {
-                ws: 3,
-                bs: 3,
-                s: 3,
-                t: 3,
-                w: 3,
-                i: 3,
-                a: 3,
-                ld: 3,
-                sv: 3
-            },
-            wargear: [
-                {id: 'id'}
-            ],
-            specialRules: [],
-            options: []
 
-        }
 
         $scope.save = function(unit) {
             var u = new Unit(unit);
