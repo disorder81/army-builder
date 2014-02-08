@@ -80,6 +80,11 @@ put '/api/units/:id' do
   #@special_rules.each{|rule| UNITS.update({_id: @id}, {'$addToSet' => {'specialRules' => BSON::ObjectId(rule["_id"]["$oid"])}}) }
 
   #UNITS.update({_id: BSON::ObjectId(params[:id])}, {'$set' => JSON.parse(request.body.read.to_s)})
+
+  # Devolver ok y body vacío, se supone que PUT es igual que POST. El body vacío evita que Angular vacié el
+  # $resource al recibir la respuesta
+  status 200
+  body ''
 end
 
 post '/api/units' do
@@ -87,18 +92,23 @@ post '/api/units' do
   #@json = JSON.parse(request.body.read)
   content_type :json
   oid = UNITS.insert(JSON.parse(request.body.read.to_s))
-  puts oid
+  logger.info "created unit #{oid}"
 end
 
 delete '/api/units/:id' do
   content_type :json
-  puts params[:id]
+  logger.info "deleting unit: #{params[:id]}"
+  #puts params[:id]
   #DB.collection('units').remove({_id: params[:id]})
   #UNITS.remove("name" => "test")
   @return = UNITS.remove({_id: BSON::ObjectId(params[:id])})
 
   puts @return
-  {:success => true}.to_json
+  #{:success => true}.to_json
+  # Devolver ok y body vacío. El body vacío evita que Angular vacié el
+  # $resource al recibir la respuesta y se supone que borra bien el item de la lista...
+  status 200
+  body ''
 end
 
 ##
@@ -121,7 +131,6 @@ post '/api/rules' do
   content_type :json
   oid = RULES.insert(JSON.parse(request.body.read.to_s))
   puts oid
-  #"{\"id\": \"#{oid.to_s}\"}"
 end
 
 delete '/api/rules/:id' do

@@ -5,6 +5,10 @@ ol, ul {
     list-style: none;
 }
 
+button {
+    cursor: pointer;
+}
+
 .is-disabled {
     background: red;
 }

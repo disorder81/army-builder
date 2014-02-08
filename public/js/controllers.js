@@ -5,26 +5,26 @@ angular.module('armyBuilder')
 
     })
 
-    .controller('RuleCtrl', function($scope, $location, $routeParams, Rule) {
-
-        // TODO: Esto tiene que ir en otro lado que si no se carga cada vez
+    .controller('RuleListCtrl', function($scope, $location, $routeParams, Rule) {
         $scope.rules = Rule.query();
 
-        //$scope.rule = Rule.get({ruleId: $routeParams.ruleId});
+        //console.log(Rule.paco);
 
         $scope.newRule = function() {
             $location.path('/rules/new');
         }
 
         $scope.deleteRule = function(rule) {
-            //Unit.delete({id: unit._id.$oid});
             rule.$delete({ruleId: rule._id.$oid}, function(){console.log('ok');}, function(){console.log('ko');});
-            console.log(rule._id.$oid);
         }
     })
 
+    .controller('RuleCtrl', function($scope, $location, $routeParams, Rule) {
+
+    })
+
     .controller('ArmyCtrl', function($scope, $location, $routeParams, Unit){
-        $scope.units = Unit.query();
+        /*$scope.units = Unit.query();
         $scope.orderProp = 'name';
 
         $scope.newUnit = function() {
@@ -33,12 +33,15 @@ angular.module('armyBuilder')
 
         $scope.deleteUnit = function(unit) {
             //Unit.delete({id: unit._id.$oid});
-            unit.$delete({unitId: unit._id.$oid}, function(){console.log('ok');}, function(){console.log('ko');});
-            console.log(unit._id.$oid);
-        }
+            //unit.$delete({unitId: unit._id.$oid}, function(){console.log('ok');}, function(){console.log('ko');});
+            //console.log(unit._id.$oid);
+
+        } */
     })
 
     .controller('RuleCreationCtrl', function($scope, $location, Rule, CoreService, ckEditorConfig) {
+
+        //console.log(Rule.paco);
 
         $scope.editorOptions = ckEditorConfig;
 
@@ -67,20 +70,38 @@ angular.module('armyBuilder')
         $scope.cancel();
     })
 
-    .controller('UnitCtrl', function($scope, $location, $routeParams, Unit, Rule, CoreService, ckEditorConfig, $filter) {
+    .controller('UnitListCtrl', function($scope, $location, $routeParams, UnitService) {
+        $scope.units = UnitService.getAll();
+        /*$scope.$watchCollection('units', function(){
+            console.log('algo');
+        });*/
+        $scope.orderProp = 'name';
+
+        $scope.newUnit = function() {
+            $location.path('/units/new');
+        }
+
+        $scope.deleteUnit = function(unit) {
+            UnitService.delete(unit);
+        }
+
+    })
+
+    .controller('UnitCtrl', function($log, $scope, $q, $location, $routeParams, Unit, Rule, CoreService, ckEditorConfig, $filter, UnitService) {
 
         $scope.sections = CoreService.sections;
         $scope.types = CoreService.types;
         $scope.editorOptions = ckEditorConfig;
 
         $scope.cancel = function() {
-            $scope.unit = angular.copy(master);
+            $scope.unit = angular.copy(CoreService.unit);
         }
 
         $scope.cancel();
 
         if($routeParams.unitId) {
-            $scope.unit = Unit.get({unitId: $routeParams.unitId});
+            //$scope.unit = Unit.get({unitId: $routeParams.unitId});
+            $scope.unit = UnitService.getById($routeParams.unitId);
             $scope.unit.$promise.then(function(unit) {
                 console.log('cargado: ' + unit.name);
                 $scope.rules = Rule.query();
@@ -113,48 +134,15 @@ angular.module('armyBuilder')
 //            $scope.cancel();
 //        }
 
-        var master = {
-            name: 'nombre',
-            cost: 0,
-            description: 'descripcion',
-            section: $scope.sections[0].value,
-            type: $scope.types[0].value,
-            subtypes: [],
-            unique: false,
-            composition: {
-                min: 1,
-                max: 3
-            },
-            stats: {
-                ws: 3,
-                bs: 3,
-                s: 3,
-                t: 3,
-                w: 3,
-                i: 3,
-                a: 3,
-                ld: 3,
-                sv: 3
-            },
-            wargear: [
-                {id: 'id'}
-            ],
-            specialRules: [],
-            options: []
-
-        }
-
         $scope.save = function(unit) {
             var u = new Unit(unit);
-            u.$save([],
-                function() {
-                    console.log('ok');
-                    $location.path('/units');
-                },
-                function(){
-                    console.log('ko');
-                }
-            );
+            var p = UnitService.save(u);
+            p.then(function (){
+                $log.log('ok, volver a la lista');
+                $location.path('/units');
+            }, function() {
+                $log.error('error');
+            });
         }
 
         /*$scope.rules = Rule.query({}, function(){
@@ -165,11 +153,18 @@ angular.module('armyBuilder')
 
         //$scope.rules = Rule.query();
 
+        $scope.ownRule = function() {
+            $location.path('/rules/new');
+        }
 
         $scope.update = function(unit) {
-            unit.$update({unitId: unit._id.$oid});
-            // TODO: OK / KO
-            $location.path('/');
+            var p = UnitService.update(unit);
+            p.then(function() {
+                console.log('ok, volver');
+                $location.path('/units');
+            }, function(reason) {
+                console.log('error: ' + reason)
+            });
         }
 
         $scope.addWargear = function() {

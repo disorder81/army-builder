@@ -2,11 +2,11 @@ angular.module('armyBuilder', ['phonecatFilters', 'armyBuilderServices', 'ngRout
     config(['$routeProvider','$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider.
             when('/', {templateUrl: 'partials/main.html', controller: 'MainCtrl'}).
-            when('/units', {templateUrl: 'partials/army-detail.html', controller: 'ArmyCtrl'}).
+            when('/units', {templateUrl: 'partials/units.html', controller: 'UnitListCtrl'}).
             when('/units/new', {templateUrl: 'partials/unit-creation.html', controller: 'UnitCtrl'}).
             when('/units/:unitId/:unitSlug', {templateUrl: 'partials/unit-detail.html', controller: 'UnitCtrl'}).
             when('/weapons', {templateUrl: 'partials/weapons.html', controller: 'WeaponCtrl'}).
-            when('/rules', {templateUrl: 'partials/rules.html', controller: 'RuleCtrl'}).
+            when('/rules', {templateUrl: 'partials/rules.html', controller: 'RuleListCtrl'}).
             when('/rules/new', {templateUrl: 'partials/rule-creation.html', controller: 'RuleCreationCtrl'}).
             when('/rules/:ruleId/:ruleSlug', {templateUrl: 'partials/rule-detail.html', controller: 'RuleCtrl'}).
             otherwise({redirectTo: '/'});
