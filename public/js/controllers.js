@@ -5,12 +5,17 @@ angular.module('armyBuilder')
 
     })
 
-    .controller('RuleListCtrl', function($scope, $location, $routeParams, Rule) {
+    .controller('ArmyCtrl', function($scope, $location, $routeParams, Unit){
+
+    })
+
+    .controller('RuleListCtrl', function($scope, $location, $routeParams, Rule, RuleService) {
         $scope.rules = Rule.query();
 
         //console.log(Rule.paco);
 
         $scope.newRule = function() {
+            RuleService.reset();
             $location.path('/rules/new');
         }
 
@@ -23,32 +28,30 @@ angular.module('armyBuilder')
 
     })
 
-    .controller('ArmyCtrl', function($scope, $location, $routeParams, Unit){
-        /*$scope.units = Unit.query();
-        $scope.orderProp = 'name';
-
-        $scope.newUnit = function() {
-            $location.path('/units/new');
-        }
-
-        $scope.deleteUnit = function(unit) {
-            //Unit.delete({id: unit._id.$oid});
-            //unit.$delete({unitId: unit._id.$oid}, function(){console.log('ok');}, function(){console.log('ko');});
-            //console.log(unit._id.$oid);
-
-        } */
-    })
-
-    .controller('RuleCreationCtrl', function($scope, $location, Rule, CoreService, ckEditorConfig) {
-
-        //console.log(Rule.paco);
-
-        $scope.editorOptions = ckEditorConfig;
+    .controller('RuleCreationCtrl', function($scope, $location, Rule, CoreService, RuleService, ckEditorConfig) {
 
         var master = {
             name: 'nombre',
             description: 'descripcion'
         }
+
+        $scope.cancel = function() {
+            $scope.rule = angular.copy(master);
+        }
+
+        $scope.testRetorno = function() {
+            console.log($scope.selectedUnit._id.$oid)
+            RuleService.testUnidad();
+            $location.path('/units/' + $scope.selectedUnit._id.$oid + '/slug');
+        }
+
+        $scope.cancel();
+
+        if(RuleService.getUnit()) {
+            $scope.selectedUnit = RuleService.getUnit();
+        }
+
+        $scope.editorOptions = ckEditorConfig;
 
         $scope.save = function(rule) {
             var r = new Rule(rule);
@@ -62,12 +65,6 @@ angular.module('armyBuilder')
                 }
             );
         }
-
-        $scope.cancel = function() {
-            $scope.rule = angular.copy(master);
-        }
-
-        $scope.cancel();
     })
 
     .controller('UnitListCtrl', function($scope, $location, $routeParams, UnitService) {
@@ -87,7 +84,7 @@ angular.module('armyBuilder')
 
     })
 
-    .controller('UnitCtrl', function($log, $scope, $q, $location, $routeParams, Unit, Rule, CoreService, ckEditorConfig, $filter, UnitService) {
+    .controller('UnitCtrl', function($log, $scope, $q, $location, $routeParams, Unit, Rule, CoreService, ckEditorConfig, $filter, UnitService, RuleService) {
 
         $scope.sections = CoreService.sections;
         $scope.types = CoreService.types;
@@ -100,7 +97,6 @@ angular.module('armyBuilder')
         $scope.cancel();
 
         if($routeParams.unitId) {
-            //$scope.unit = Unit.get({unitId: $routeParams.unitId});
             $scope.unit = UnitService.getById($routeParams.unitId);
             $scope.unit.$promise.then(function(unit) {
                 console.log('cargado: ' + unit.name);
@@ -125,15 +121,6 @@ angular.module('armyBuilder')
             })
         }
 
-//        if($routeParams.unitId) {
-//            $scope.unit = Unit.get({unitId: $routeParams.unitId});
-//            /*$scope.unit.$promise.then(function() {
-//                console.log('cargada');
-//            });  */
-//        } else {
-//            $scope.cancel();
-//        }
-
         $scope.save = function(unit) {
             var u = new Unit(unit);
             var p = UnitService.save(u);
@@ -151,19 +138,21 @@ angular.module('armyBuilder')
             });
         });*/
 
-        //$scope.rules = Rule.query();
-
-        $scope.ownRule = function() {
+        $scope.createUnitRule = function() {
+            var p = RuleService.createUnitRule($scope.unit);
+            p.then(function(r) {
+                $log.log('ok, regla devuelta: ' + r);
+            });
             $location.path('/rules/new');
         }
 
         $scope.update = function(unit) {
             var p = UnitService.update(unit);
             p.then(function() {
-                console.log('ok, volver');
+                $log.log('ok, volver');
                 $location.path('/units');
             }, function(reason) {
-                console.log('error: ' + reason)
+                $log.error('error: ' + reason)
             });
         }
 

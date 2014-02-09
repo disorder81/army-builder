@@ -124,6 +124,7 @@ angular.module('armyBuilderServices', ['ngResource']).
         }
     })
 
+    // TODO: Refactor
     .service('UnitService', function($log, Unit) {
 
         var units = Unit.query(),
@@ -198,6 +199,46 @@ angular.module('armyBuilderServices', ['ngResource']).
             }
 
         }
+    })
+
+    .service('RuleService', function($log, $q, Rule) {
+
+        var rules = Rule.query(),
+            unit,
+            unitRulePromise;
+
+        return {
+
+            getAll: function() {
+                return rules;
+            },
+
+            getUnit: function() {
+                return this.unit;
+            },
+
+            createUnitRule: function(unit) {
+                this.unit = unit;
+                unitRulePromise = $q.defer();
+
+                //setTimeout(function() {
+
+                //}, 5000);
+
+                return unitRulePromise.promise;
+                this.unit = unit;
+            },
+
+            testUnidad: function() {
+                unitRulePromise.resolve('paco');
+            },
+
+            reset: function() {
+                this.unit = undefined;
+            }
+
+        }
+
     });
 
 
