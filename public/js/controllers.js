@@ -39,9 +39,9 @@ angular.module('armyBuilder')
             $scope.rule = angular.copy(master);
         }
 
-        $scope.testRetorno = function() {
+        $scope.endEdition = function() {
             console.log($scope.selectedUnit._id.$oid)
-            RuleService.testUnidad();
+            RuleService.endEdition();
             $location.path('/units/' + $scope.selectedUnit._id.$oid + '/slug');
         }
 

@@ -205,7 +205,8 @@ angular.module('armyBuilderServices', ['ngResource']).
 
         var rules = Rule.query(),
             unit,
-            unitRulePromise;
+            unitRulePromise,
+            rule;
 
         return {
 
@@ -219,17 +220,12 @@ angular.module('armyBuilderServices', ['ngResource']).
 
             createUnitRule: function(unit) {
                 this.unit = unit;
+                this.rule = new Rule();
                 unitRulePromise = $q.defer();
-
-                //setTimeout(function() {
-
-                //}, 5000);
-
                 return unitRulePromise.promise;
-                this.unit = unit;
             },
 
-            testUnidad: function() {
+            endEdition: function() {
                 unitRulePromise.resolve('paco');
             },
 
