@@ -179,13 +179,6 @@ angular.module('armyBuilderServices', ['ngResource']).
                 });
 
                 return p;
-
-                // TODO: mirar las $q
-                /*var d = $q.defer(),
-                result = unit.$update({unitId: unit._id.$oid}, function () {
-                    d.resolve(result);
-                });
-                return d.promise; */
             },
 
             delete: function(unit) {
