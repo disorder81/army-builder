@@ -113,7 +113,10 @@ angular.module('armyBuilderServices', ['ngResource']).
                     sv: 3
                 },
                 wargear: [],
-                specialRules: [],
+                specialRules: {
+                    universal: [],
+                    individual: []
+                },
                 options: []
             };
 
@@ -136,7 +139,8 @@ angular.module('armyBuilderServices', ['ngResource']).
             p.$promise.then(function(v) {
                 angular.copy(v, units);
             }, function() {
-                console.log('error');
+                // TODO: Excepciones
+                $log.error('error');
             });
         }
 
@@ -219,7 +223,8 @@ angular.module('armyBuilderServices', ['ngResource']).
             },
 
             endEdition: function() {
-                unitRulePromise.resolve('paco');
+                unitRulePromise.resolve({ _id: 'id', name: 'test'});
+                this.unit.specialRulesOwn.push({ _id: 'id', name: 'test'});
             },
 
             reset: function() {

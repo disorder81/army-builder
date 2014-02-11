@@ -11,9 +11,6 @@ angular.module('armyBuilder')
 
     .controller('RuleListCtrl', function($scope, $location, $routeParams, Rule, RuleService) {
         $scope.rules = Rule.query();
-
-        //console.log(Rule.paco);
-
         $scope.newRule = function() {
             RuleService.reset();
             $location.path('/rules/new');
@@ -40,7 +37,7 @@ angular.module('armyBuilder')
         }
 
         $scope.endEdition = function() {
-            console.log($scope.selectedUnit._id.$oid)
+            //console.log($scope.selectedUnit._id.$oid)
             RuleService.endEdition();
             $location.path('/units/' + $scope.selectedUnit._id.$oid + '/slug');
         }
@@ -99,7 +96,14 @@ angular.module('armyBuilder')
         if($routeParams.unitId) {
             $scope.unit = UnitService.getById($routeParams.unitId);
             $scope.unit.$promise.then(function(unit) {
-                console.log('cargado: ' + unit.name);
+                $log.info('cargado: ' + unit.name);
+
+                // TODO: quitar
+                if(!$scope.unit.specialRulesOwn) {
+                    $scope.unit.specialRulesOwn = [];
+                }
+
+                //$scope.unit.specialRulesOwn = [{_id: 'id', name:'paco'}];
                 $scope.rules = Rule.query();
                 $scope.rules.$promise.then(function() {
                     angular.forEach($scope.unit.specialRules, function(rule) {
@@ -141,7 +145,8 @@ angular.module('armyBuilder')
         $scope.createUnitRule = function() {
             var p = RuleService.createUnitRule($scope.unit);
             p.then(function(r) {
-                $log.log('ok, regla devuelta: ' + r);
+                $log.log(r);
+                //$scope.unit.specialRulesOwn.push(r);
             });
             $location.path('/rules/new');
         }
@@ -175,6 +180,7 @@ angular.module('armyBuilder')
 
         $scope.removeSpecialRule = function(rule) {
             // TODO: Refactor
+            // TODO: mirar el $digest, esta linea se ejecuta demasiado...
             $filter('filter')($scope.rules, {'_id.$oid': rule._id.$oid}, true)[0].selected = false;
             $scope.unit.specialRules.splice($scope.unit.specialRules.indexOf(rule), 1);
 
