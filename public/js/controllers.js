@@ -33,7 +33,8 @@ angular.module('armyBuilder')
         }
 
         $scope.cancel = function() {
-            $scope.rule = angular.copy(master);
+            //$scope.rule = angular.copy(master);
+            $scope.rule = RuleService.rule;
         }
 
         $scope.endEdition = function() {
@@ -98,15 +99,9 @@ angular.module('armyBuilder')
             $scope.unit.$promise.then(function(unit) {
                 $log.info('cargado: ' + unit.name);
 
-                // TODO: quitar
-                if(!$scope.unit.specialRulesOwn) {
-                    $scope.unit.specialRulesOwn = [];
-                }
-
-                //$scope.unit.specialRulesOwn = [{_id: 'id', name:'paco'}];
                 $scope.rules = Rule.query();
                 $scope.rules.$promise.then(function() {
-                    angular.forEach($scope.unit.specialRules, function(rule) {
+                    angular.forEach($scope.unit.specialRules.universal, function(rule) {
                         // TODO: Refactor
                         $filter('filter')($scope.rules, {'_id.$oid': rule._id.$oid}, true)[0].selected = true;
 //
@@ -170,7 +165,7 @@ angular.module('armyBuilder')
         }
 
         $scope.addSpecialRule = function(rule) {
-            $scope.unit.specialRules.push(rule);
+            $scope.unit.specialRules.universal.push(rule);
             rule.selected = true;
         }
 
@@ -182,7 +177,7 @@ angular.module('armyBuilder')
             // TODO: Refactor
             // TODO: mirar el $digest, esta linea se ejecuta demasiado...
             $filter('filter')($scope.rules, {'_id.$oid': rule._id.$oid}, true)[0].selected = false;
-            $scope.unit.specialRules.splice($scope.unit.specialRules.indexOf(rule), 1);
+            $scope.unit.specialRules.universal.splice($scope.unit.specialRules.universal.indexOf(rule), 1);
 
             // TODO: Filtro
             //var r = $scope.rules;

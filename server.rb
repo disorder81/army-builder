@@ -52,7 +52,7 @@ get '/api/units/:id' do
   content_type :json
   unit = UNITS.find_one({_id: BSON::ObjectId(params[:id])})
   #sputs unit["specialRules"]
-  unit["specialRules"].map!{|rule| RULES.find_one({_id: rule}, {:fields => ["name"]})}
+  unit["specialRules"]["universal"].map!{|rule| RULES.find_one({_id: rule}, {:fields => ["name"]})}
   unit.to_json
   #@unit = UNITS.find_one({_id: BSON::ObjectId(params[:id])}).to_json
   #JSON.pretty_generate(@units)
@@ -64,7 +64,7 @@ put '/api/units/:id' do
 
   @request_payload = JSON.parse(request.body.read.to_s)
   @id = BSON::ObjectId(@request_payload["_id"]["$oid"])
-  @special_rules = @request_payload["specialRules"].map!{|rule| BSON::ObjectId(rule["_id"]["$oid"])}
+  @special_rules = @request_payload["specialRules"]["universal"].map!{|rule| BSON::ObjectId(rule["_id"]["$oid"])}
 
   #JSON.parse(request.body.read.to_s)["specialRules"].each{|rule| puts BSON::ObjectId(rule["_id"]["$oid"])}
   #logger.info JSON.parse(request.body.read.to_s).reject{|k,v| k == '_id'}
@@ -139,7 +139,7 @@ delete '/api/rules/:id' do
   #UNITS.remove("name" => "test")
 
   # Quitar primero la referencia de la regla de las unidades que la contengan
-  UNITS.update({specialRules: id}, {:$pull => {"specialRules" => id}}, :multi => true)
+  UNITS.update({"specialRules.universal" => id}, {:$pull => {"specialRules" => id}}, :multi => true)
   # Después quitar la regla misma
   @return = RULES.remove({_id: id})
 

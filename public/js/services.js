@@ -203,9 +203,11 @@ angular.module('armyBuilderServices', ['ngResource']).
         var rules = Rule.query(),
             unit,
             unitRulePromise,
-            rule;
+            rule = {};
 
         return {
+
+            rule: rule,
 
             getAll: function() {
                 return rules;
@@ -224,7 +226,7 @@ angular.module('armyBuilderServices', ['ngResource']).
 
             endEdition: function() {
                 unitRulePromise.resolve({ _id: 'id', name: 'test'});
-                this.unit.specialRulesOwn.push({ _id: 'id', name: 'test'});
+                this.unit.specialRules.individual.push(this.rule);
             },
 
             reset: function() {

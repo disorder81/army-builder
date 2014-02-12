@@ -70,13 +70,13 @@
             </div>
         </div>
         <ul style="border: 1px solid; flex: 0 0 300px">
-            <li ng-repeat="rule in unit.specialRules">
+            <li ng-repeat="rule in unit.specialRules.universal">
                 <!--<a href="#/rules/{{ rule._id.$oid }}/slug">{{ rule.name }}</a> [<a href="" ng-click="removeSpecialRule($index)">X</a>]-->
                 <a href="#/rules/{{ rule._id.$oid }}/slug">{{ rule.name }}</a> [<a href="" ng-click="removeSpecialRule(rule)">X</a>]
             </li>
         </ul>
         <ul style="border: 1px solid; flex: 0 0 300px">
-            <li ng-repeat="rule in unit.specialRulesOwn">
+            <li ng-repeat="rule in unit.specialRules.individual">
                 <!--<a href="#/rules/{{ rule._id.$oid }}/slug">{{ rule.name }}</a> [<a href="" ng-click="removeSpecialRule($index)">X</a>]-->
                 <a href="#/rules/{{ rule._id.$oid }}/slug">{{ rule.name }}</a> [<a href="" ng-click="removeSpecialRule(rule)">X</a>]
             </li>
