@@ -63,8 +63,15 @@ put '/api/units/:id' do
   #puts BSON::ObjectId(params[:id])
 
   @request_payload = JSON.parse(request.body.read.to_s)
+
+  p @request_payload
+
   @id = BSON::ObjectId(@request_payload["_id"]["$oid"])
   @special_rules = @request_payload["specialRules"]["universal"].map!{|rule| BSON::ObjectId(rule["_id"]["$oid"])}
+  #@individual_rules = @request_payload["specialRules"]["individual"].map{|rule| rule["_id"] = BSON::ObjectId.new if !rule.has_key?("_id")}
+  @individual_rules = @request_payload["specialRules"]["individual"].each do |rule|
+    rule["_id"] = rule.has_key?("_id") ? BSON::ObjectId(rule["_id"]["$oid"]) : BSON::ObjectId.new
+  end
 
   #JSON.parse(request.body.read.to_s)["specialRules"].each{|rule| puts BSON::ObjectId(rule["_id"]["$oid"])}
   #logger.info JSON.parse(request.body.read.to_s).reject{|k,v| k == '_id'}

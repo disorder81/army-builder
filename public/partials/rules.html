@@ -4,7 +4,6 @@
 </select>
 <ul class="rules">
     <li ng-repeat="rule in rules | filter:query | orderBy:orderProp" class="thumbnail">
-        <!--<a href="#/units/{{unit._id}}" class="thumb"><img ng-src="{{phone.imageUrl}}"></a>  -->
         <a href="#/rules/{{rule._id.$oid}}/slug">{{ rule.name }}</a>
         [<a href="" ng-click="deleteRule(rule)">X</a>]
     </li>

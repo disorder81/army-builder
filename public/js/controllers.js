@@ -22,6 +22,7 @@ angular.module('armyBuilder')
     })
 
     .controller('RuleCtrl', function($scope, $location, $routeParams, Rule) {
+        $scope.rule = Rule.get({ruleId: $routeParams.ruleId});
 
     })
 

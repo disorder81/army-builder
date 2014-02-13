@@ -65,7 +65,8 @@
                 <ul>
                     <!-- en ng-class, el nombre de la clase tiene que ir entre '' para que deje pasar el hyphen -->
                     <!-- ¿cómo c... se niega el predicado del filtro si es una función...? -->
-                    <li ng-repeat="rule in rules | filter:query | filter:ruleNotSelected" ng-class="{'is-disabled': rule.selected}">{{ rule.name }} <a href="" ng-click="addSpecialRule(rule)">Añadir</a></li>
+                    <li ng-repeat="rule in rules | filter:query | filter:ruleNotSelected" ng-class="{'is-disabled': rule.selected}">
+                        <a href="#/rules/{{ rule._id.$oid }}/slug">{{ rule.name }}</a> <a href="" ng-click="addSpecialRule(rule)">Añadir</a></li>
                 </ul>
             </div>
         </div>
