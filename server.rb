@@ -64,7 +64,7 @@ put '/api/units/:id' do
 
   @request_payload = JSON.parse(request.body.read.to_s)
 
-  p @request_payload
+  #p @request_payload
 
   @id = BSON::ObjectId(@request_payload["_id"]["$oid"])
   @special_rules = @request_payload["specialRules"]["universal"].map!{|rule| BSON::ObjectId(rule["_id"]["$oid"])}
@@ -86,12 +86,15 @@ put '/api/units/:id' do
   UNITS.update({_id: @id}, {'$set' => @request_payload.reject{|k,v| k == '_id'}})
   #@special_rules.each{|rule| UNITS.update({_id: @id}, {'$addToSet' => {'specialRules' => BSON::ObjectId(rule["_id"]["$oid"])}}) }
 
+  #puts unit
   #UNITS.update({_id: BSON::ObjectId(params[:id])}, {'$set' => JSON.parse(request.body.read.to_s)})
 
-  # Devolver ok y body vacío, se supone que PUT es igual que POST. El body vacío evita que Angular vacié el
+  # Devolver ok y body vacío, se supone que PUT es igual que POST. El body vacío evita que Angular vacie el
   # $resource al recibir la respuesta
   status 200
-  body ''
+  #unit.to_json
+  #body ''
+  UNITS.find_one(:_id => @id).to_json
 end
 
 post '/api/units' do
@@ -100,6 +103,8 @@ post '/api/units' do
   content_type :json
   oid = UNITS.insert(JSON.parse(request.body.read.to_s))
   logger.info "created unit #{oid}"
+  headers "Location" => "http://localhost:4567/api/units/#{oid}"
+  status 201
 end
 
 delete '/api/units/:id' do
@@ -114,7 +119,7 @@ delete '/api/units/:id' do
   #{:success => true}.to_json
   # Devolver ok y body vacío. El body vacío evita que Angular vacié el
   # $resource al recibir la respuesta y se supone que borra bien el item de la lista...
-  status 200
+  status 204
   body ''
 end
 
