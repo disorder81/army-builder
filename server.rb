@@ -22,10 +22,10 @@ end
 configure do
   #system('mongod --dbpath c:\dev\data\mongodb')
   CONNECTION  = Mongo::Connection.from_uri('mongodb://test:test@localhost/w40')
-  DB 				  = CONNECTION.db('w40')
-  UNITS 			= DB['units']
-  WEAPONS     = DB['weapons']
-  RULES       = DB['rules']
+  DATABASE 		= CONNECTION.db('w40')
+  UNITS 			= DATABASE['units']
+  WEAPONS     = DATABASE['weapons']
+  RULES       = DATABASE['rules']
 end
 
 helpers do
@@ -66,9 +66,9 @@ end
 
 get '/api/units/:id' do
   content_type :json
-  unit = UNITS.find_one({_id: BSON::ObjectId(params[:id])})
-  #sputs unit["specialRules"]
-  unit["specialRules"]["universal"].map!{|rule| RULES.find_one({_id: rule}, {:fields => ["name"]})}
+  unit = UNITS.find_one({:_id => bson_id(params[:id])})
+  #sputs unit['specialRules']
+  unit['specialRules']['universal'].map!{|rule| RULES.find_one({_id: rule}, {:fields => ['name']})}
   unit.to_json
   #@unit = UNITS.find_one({_id: BSON::ObjectId(params[:id])}).to_json
   #JSON.pretty_generate(@units)
@@ -82,25 +82,25 @@ put '/api/units/:id' do
 
   #p @request_payload
 
-  @id = BSON::ObjectId(@request_payload["_id"]["$oid"])
-  @special_rules = @request_payload["specialRules"]["universal"].map!{|rule| BSON::ObjectId(rule["_id"]["$oid"])}
-  #@individual_rules = @request_payload["specialRules"]["individual"].map{|rule| rule["_id"] = BSON::ObjectId.new if !rule.has_key?("_id")}
-  @individual_rules = @request_payload["specialRules"]["individual"].each do |rule|
-    rule["_id"] = rule.has_key?("_id") ? BSON::ObjectId(rule["_id"]["$oid"]) : BSON::ObjectId.new
+  @id = BSON::ObjectId(@request_payload['_id']['$oid'])
+  @special_rules = @request_payload['specialRules']['universal'].map!{|rule| BSON::ObjectId(rule['_id']['$oid'])}
+  #@individual_rules = @request_payload['specialRules']['individual'].map{|rule| rule['_id'] = BSON::ObjectId.new if !rule.has_key?('_id')}
+  @individual_rules = @request_payload['specialRules']['individual'].each do |rule|
+    rule['_id'] = rule.has_key?('_id') ? BSON::ObjectId(rule['_id']['$oid']) : BSON::ObjectId.new
   end
 
-  #JSON.parse(request.body.read.to_s)["specialRules"].each{|rule| puts BSON::ObjectId(rule["_id"]["$oid"])}
+  #JSON.parse(request.body.read.to_s)['specialRules'].each{|rule| puts BSON::ObjectId(rule['_id']['$oid'])}
   #logger.info JSON.parse(request.body.read.to_s).reject{|k,v| k == '_id'}
 
   # collection.update() when used with $set (as covered earlier) allows us to set single values
   # in this case, the put request body is converted to a string, rejecting keys with the name 'id' for security purposes
   #DB.collection(params[:thing]).update({'id' => tobsonid(params[:id])}, {'$set' => JSON.parse(request.body.read.tos).reject{|k,v| k == 'id'}})
-  # Sin rewind da el error de "a JSON text must at least contain two octets" porque intenta parsear una request vacía...
+  # Sin rewind da el error de 'a JSON text must at least contain two octets' porque intenta parsear una request vacía...
   #request.body.rewind
   #UNITS.update({_id: BSON::ObjectId(params[:id])}, {'$set' => JSON.parse(request.body.read.to_s).reject{|k,v| k == '_id'}})
   #UNITS.update({_id: @id}, {'$set' => JSON.parse(request.body.read.to_s).reject{|k,v| k == '_id'}})
   UNITS.update({_id: @id}, {'$set' => @request_payload.reject{|k,v| k == '_id'}})
-  #@special_rules.each{|rule| UNITS.update({_id: @id}, {'$addToSet' => {'specialRules' => BSON::ObjectId(rule["_id"]["$oid"])}}) }
+  #@special_rules.each{|rule| UNITS.update({_id: @id}, {'$addToSet' => {'specialRules' => BSON::ObjectId(rule['_id']['$oid'])}}) }
 
   #puts unit
   #UNITS.update({_id: BSON::ObjectId(params[:id])}, {'$set' => JSON.parse(request.body.read.to_s)})
@@ -119,7 +119,7 @@ post '/api/units' do
   content_type :json
   oid = UNITS.insert(JSON.parse(request.body.read.to_s))
   logger.info "created unit #{oid}"
-  headers "Location" => "http://localhost:4567/api/units/#{oid}"
+  headers 'Location' => "http://localhost:4567/api/units/#{oid}"
   status 201
 end
 
@@ -144,7 +144,7 @@ end
 
 get '/api/rules/:id' do
   content_type :json
-  @rule = RULES.find_one({_id: BSON::ObjectId(params[:id])}).to_json
+  @rule = RULES.find_one({:_id => bson_id(params[:id])}).to_json
 end
 
 post '/api/rules' do
@@ -157,7 +157,7 @@ end
 
 delete '/api/rules/:id' do
   content_type :json
-  id = BSON::ObjectId(params[:id])
+  id = bson_id(params[:id])
   #UNITS.remove("name" => "test")
 
   # Quitar primero la referencia de la regla de las unidades que la contengan
@@ -165,7 +165,7 @@ delete '/api/rules/:id' do
   # Después quitar la regla misma
   @return = RULES.remove({_id: id})
 
-  {:success => true}.to_json
+  status 204
 end
 
 get '/api/weapons' do
