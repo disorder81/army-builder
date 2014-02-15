@@ -130,7 +130,7 @@ angular.module('armyBuilderServices', ['ngResource']).
     // TODO: Refactor
     .service('UnitService', function($log, Unit) {
 
-        var units = Unit.query(),
+        var units = Unit.query({'fields': 'name,cost'}),
             unitCache = {};
 
         var reload = function() {

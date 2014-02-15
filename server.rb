@@ -44,8 +44,16 @@ end
 
 get '/api/units' do
   content_type :json
-  # En la lista sólo id, nombre y coste
-  @units = UNITS.find({}, {:fields => ["name", "cost"]}).to_a.to_json
+
+  # TODO: Refactor
+  if params.has_key?("fields")
+    fields = params["fields"].split(",")
+    status 200
+    @units = UNITS.find({}, {:fields => fields}).to_a.to_json
+  else
+    status 200
+    @units = UNITS.find().to_a.to_json
+  end
 end
 
 get '/api/units/:id' do
