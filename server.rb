@@ -28,6 +28,14 @@ configure do
   RULES       = DB['rules']
 end
 
+helpers do
+
+  def bson_id(val)
+    BSON::ObjectId(val)
+  end
+
+end
+
 
 # De momento todas las respuestas son json
 before do
@@ -46,13 +54,13 @@ get '/api/units' do
   content_type :json
 
   # TODO: Refactor
-  if params.has_key?("fields")
-    fields = params["fields"].split(",")
+  if params.has_key?('fields')
+    fields = params['fields'].split(',')
     status 200
     @units = UNITS.find({}, {:fields => fields}).to_a.to_json
   else
     status 200
-    @units = UNITS.find().to_a.to_json
+    @units = UNITS.find.to_a.to_json
   end
 end
 
@@ -118,17 +126,11 @@ end
 delete '/api/units/:id' do
   content_type :json
   logger.info "deleting unit: #{params[:id]}"
-  #puts params[:id]
-  #DB.collection('units').remove({_id: params[:id]})
-  #UNITS.remove("name" => "test")
-  @return = UNITS.remove({_id: BSON::ObjectId(params[:id])})
 
-  puts @return
-  #{:success => true}.to_json
-  # Devolver ok y body vacío. El body vacío evita que Angular vacié el
-  # $resource al recibir la respuesta y se supone que borra bien el item de la lista...
+  # TODO: chequear error y devolver status si error
+  UNITS.remove({:_id => bson_id(params[:id])})
+  # Devolver no content. Y si no, angular interpreta la respuesta y no borra bien el item
   status 204
-  body ''
 end
 
 ##
@@ -137,7 +139,7 @@ get '/api/rules' do
   #@rules = RULES.find.to_a.to_json
   #JSON.pretty_generate(@units)
   content_type :json
-  @rules = RULES.find({}, {:fields => ["name"]}).to_a.to_json
+  @rules = RULES.find({}, {:fields => ['name']}).to_a.to_json
 end
 
 get '/api/rules/:id' do
@@ -159,7 +161,7 @@ delete '/api/rules/:id' do
   #UNITS.remove("name" => "test")
 
   # Quitar primero la referencia de la regla de las unidades que la contengan
-  UNITS.update({"specialRules.universal" => id}, {:$pull => {"specialRules" => id}}, :multi => true)
+  UNITS.update({'specialRules.universal' => id}, {:$pull => {'specialRules' => id}}, :multi => true)
   # Después quitar la regla misma
   @return = RULES.remove({_id: id})
 
