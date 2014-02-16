@@ -24,10 +24,11 @@ angular.module('armyBuilder', ['phonecatFilters', 'armyBuilderServices', 'ngRout
             { name: 'links', items: [ 'Link', 'Unlink'] },
             { name: 'tools', items: [ 'SpellChecker', 'Maximize' ] },
             //'/',
-            { name: 'styles', items: [ 'PasteText', 'RemoveFormat' ] },
+            { name: 'styles', items: [ 'PasteText', 'Format', 'RemoveFormat' ] },
             { name: 'clipboard', items: [ 'Undo', 'Redo' ] },
             { name: 'document', items: [ 'PageBreak', 'Source' ] }
-        ]
+        ],
+        format_tags: 'h1;h2;h3;p'
     });
 
 
