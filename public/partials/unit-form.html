@@ -70,14 +70,14 @@
                 </ul>
             </div>
         </div>
-        <ul style="border: 1px solid; flex: 0 0 300px">
-            <li ng-repeat="rule in unit.specialRules.universal">
+        <ul style="border: 1px solid red; flex: 0 0 300px">
+            <li ng-repeat="rule in unit.specialRules | filter: {type: 'universal'}">
                 <!--<a href="#/rules/{{ rule._id.$oid }}/slug">{{ rule.name }}</a> [<a href="" ng-click="removeSpecialRule($index)">X</a>]-->
                 <a href="#/rules/{{ rule._id.$oid }}/slug">{{ rule.name }}</a> [<a href="" ng-click="removeSpecialRule(rule)">X</a>]
             </li>
         </ul>
         <ul style="border: 1px solid; flex: 0 0 300px">
-            <li ng-repeat="rule in unit.specialRules.individual">
+            <li ng-repeat="rule in unit.specialRules | filter: {type: 'individual'}">
                 <!--<a href="#/rules/{{ rule._id.$oid }}/slug">{{ rule.name }}</a> [<a href="" ng-click="removeSpecialRule($index)">X</a>]-->
                 <a href="#/rules/{{ rule._id.$oid }}/slug">{{ rule.name }}</a> [<a href="" ng-click="removeSpecialRule(rule)">X</a>]
             </li>

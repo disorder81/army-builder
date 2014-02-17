@@ -68,7 +68,7 @@ get '/api/units/:id' do
   content_type :json
   unit = UNITS.find_one({:_id => bson_id(params[:id])})
   #sputs unit['specialRules']
-  unit['specialRules']['universal'].map!{|rule| RULES.find_one({_id: rule}, {:fields => ['name']})}
+  unit['specialRules'].map!{|rule| RULES.find_one({_id: rule}, {:fields => ['name','type']})}
   unit.to_json
   #@unit = UNITS.find_one({_id: BSON::ObjectId(params[:id])}).to_json
   #JSON.pretty_generate(@units)
@@ -83,11 +83,13 @@ put '/api/units/:id' do
   #p @request_payload
 
   @id = BSON::ObjectId(@request_payload['_id']['$oid'])
-  @special_rules = @request_payload['specialRules']['universal'].map!{|rule| BSON::ObjectId(rule['_id']['$oid'])}
+  @special_rules = @request_payload['specialRules'].map!{|rule| BSON::ObjectId(rule['_id']['$oid'])}
   #@individual_rules = @request_payload['specialRules']['individual'].map{|rule| rule['_id'] = BSON::ObjectId.new if !rule.has_key?('_id')}
-  @individual_rules = @request_payload['specialRules']['individual'].each do |rule|
+=begin
+  individual_rules = @request_payload['specialRules']['individual'].each do |rule|
     rule['_id'] = rule.has_key?('_id') ? BSON::ObjectId(rule['_id']['$oid']) : BSON::ObjectId.new
   end
+=end
 
   #JSON.parse(request.body.read.to_s)['specialRules'].each{|rule| puts BSON::ObjectId(rule['_id']['$oid'])}
   #logger.info JSON.parse(request.body.read.to_s).reject{|k,v| k == '_id'}
@@ -139,7 +141,8 @@ get '/api/rules' do
   #@rules = RULES.find.to_a.to_json
   #JSON.pretty_generate(@units)
   content_type :json
-  @rules = RULES.find({}, {:fields => ['name']}).to_a.to_json
+  # TODO: Filtrar por fields
+  @rules = RULES.find({}, {:fields => ['name', 'type']}).to_a.to_json
 end
 
 get '/api/rules/:id' do
@@ -161,7 +164,7 @@ delete '/api/rules/:id' do
   #UNITS.remove("name" => "test")
 
   # Quitar primero la referencia de la regla de las unidades que la contengan
-  UNITS.update({'specialRules.universal' => id}, {:$pull => {'specialRules' => id}}, :multi => true)
+  UNITS.update({'specialRules.universal' => id}, {:$pull => {'specialRules.universal' => id}}, :multi => true)
   # Después quitar la regla misma
   @return = RULES.remove({_id: id})
 

@@ -3,7 +3,7 @@
     <fieldset>
         <legend>Detalles</legend>
         <p><label>Nombre: <input name="nombre" type="text" ng-model="rule.name" required></label></p>
-        <p><label>Tipo: <select>
+        <p><label>Tipo: <select ng-model="rule.name">
             <option>Universal</option>
             <option>Ejército</option>
             <option>Facción</option>
@@ -16,3 +16,4 @@
     <button ng-click="cancel()" type="button">Cancelar</button>
     <button ng-click="endEdition()" type="button">test retorno</button>
 </form>
+<pre ng-bind="rule | json"></pre>

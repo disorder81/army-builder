@@ -118,6 +118,10 @@ angular.module('armyBuilderServices', ['ngResource']).
                     individual: []
                 },
                 options: []
+            },
+
+            rule = {
+                types: ['universal', 'army', 'faction', 'individual']
             };
 
         return {
