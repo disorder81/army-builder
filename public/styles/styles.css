@@ -1,3 +1,7 @@
+section {
+    border: 1px solid grey;
+}
+
 ol, ul {
     padding: 0;
     margin: 0;
@@ -9,6 +13,27 @@ button {
     cursor: pointer;
 }
 
+.army-selection {
+    display: flex;
+    justify-content: center;
+}
+
+.army-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 12rem;
+    height: 12rem;
+
+    border: 1px solid grey;
+}
+
+.army-icon:hover {
+    background: #808080;
+}
+
 .is-disabled {
     background: red;
 }
+

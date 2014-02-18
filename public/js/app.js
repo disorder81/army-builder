@@ -2,6 +2,7 @@ angular.module('armyBuilder', ['phonecatFilters', 'armyBuilderServices', 'ngRout
     config(['$routeProvider','$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider.
             when('/', {templateUrl: 'partials/main.html', controller: 'MainCtrl'}).
+            when('/armies/:armyId/:armySlug', {templateUrl: 'partials/army-detail.html', controller: 'ArmyCtrl'}).
             when('/units', {templateUrl: 'partials/units.html', controller: 'UnitListCtrl'}).
             when('/units/new', {templateUrl: 'partials/unit-creation.html', controller: 'UnitCtrl'}).
             when('/units/:unitId/:unitSlug', {templateUrl: 'partials/unit-detail.html', controller: 'UnitCtrl'}).

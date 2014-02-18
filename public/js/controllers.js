@@ -1,11 +1,12 @@
 
 angular.module('armyBuilder')
 
-    .controller('MainCtrl', function($scope) {
-
+    .controller('MainCtrl', function($scope, Army) {
+        $scope.armies = Army.query();
     })
 
     .controller('ArmyCtrl', function($scope, $location, $routeParams, Unit){
+        $scope.units = Unit.query({army: $routeParams.armyId, fields: 'name,cost'});
 
     })
 

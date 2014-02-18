@@ -1,6 +1,14 @@
 angular.module('armyBuilderServices', ['ngResource']).
 
-    factory('Rule', function($resource) {
+    factory('Army', function($resource) {
+        return $resource('/api/armies/:armieId',
+            {armieId: '@_id'}, {
+                query: {method: 'GET', isArray: true},
+                update: {method: 'PUT'}
+            });
+    })
+
+    .factory('Rule', function($resource) {
         return $resource('/api/rules/:ruleId',
             {ruleId: '@_id'}, {
             query: {method: 'GET', isArray: true},
@@ -91,6 +99,7 @@ angular.module('armyBuilderServices', ['ngResource']).
 
             unit = {
                 name: 'nombre',
+                army: {},
                 cost: 0,
                 description: 'descripcion',
                 section: sections[0].value,
@@ -113,10 +122,7 @@ angular.module('armyBuilderServices', ['ngResource']).
                     sv: 3
                 },
                 wargear: [],
-                specialRules: {
-                    universal: [],
-                    individual: []
-                },
+                specialRules: [],
                 options: []
             },
 

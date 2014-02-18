@@ -23,6 +23,7 @@ configure do
   #system('mongod --dbpath c:\dev\data\mongodb')
   CONNECTION  = Mongo::Connection.from_uri('mongodb://test:test@localhost/w40')
   DATABASE 		= CONNECTION.db('w40')
+  ARMIES      = DATABASE['armies']
   UNITS 			= DATABASE['units']
   WEAPONS     = DATABASE['weapons']
   RULES       = DATABASE['rules']
@@ -50,18 +51,36 @@ get '/' do
   send_file File.expand_path('index.html', settings.public_folder)
 end
 
+get '/api/armies' do
+  content_type :json
+  ARMIES.find.to_a.to_json
+end
+
+get '/api/armies/:id' do
+  content_type :json
+  ARMIES.find_one({:_id => bson_id(params[:id])})
+end
+
 get '/api/units' do
+  # TODO: A un before o algo...
   content_type :json
 
+  army = params['army'] ? {:army => bson_id(params['army'])} : {}
+  fields = params['fields'] ? {:fields => params['fields'].split(',')} : []
+
   # TODO: Refactor
-  if params.has_key?('fields')
-    fields = params['fields'].split(',')
+  units = UNITS.find(army, fields).to_a.to_json
+
+  if units
     status 200
-    @units = UNITS.find({}, {:fields => fields}).to_a.to_json
-  else
-    status 200
-    @units = UNITS.find.to_a.to_json
+    units
   end
+end
+
+# Alias para lista de unidades
+get '/api/unit_list' do
+  content_type :json
+  UNITS.find({}, {:fields => %w(name cost)}).to_a.to_json
 end
 
 get '/api/units/:id' do
@@ -80,10 +99,13 @@ put '/api/units/:id' do
 
   @request_payload = JSON.parse(request.body.read.to_s)
 
+  p @request_payload
+
   #p @request_payload
 
   @id = BSON::ObjectId(@request_payload['_id']['$oid'])
   @special_rules = @request_payload['specialRules'].map!{|rule| BSON::ObjectId(rule['_id']['$oid'])}
+  @army = @request_payload['army'] = bson_id(@request_payload['army']['$oid'])
   #@individual_rules = @request_payload['specialRules']['individual'].map{|rule| rule['_id'] = BSON::ObjectId.new if !rule.has_key?('_id')}
 =begin
   individual_rules = @request_payload['specialRules']['individual'].each do |rule|

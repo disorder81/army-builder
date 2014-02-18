@@ -1,3 +1,8 @@
+<ul class="army-selection">
+    <li ng-repeat="army in armies">
+        <a class="army-icon" href="#/armies/{{army._id.$oid}}/slug">{{ army.name }}</a>
+    </li>
+</ul>
 <ul>
     <li><a href="#/units">Unidades</a></li>
     <li><a href="#/weapons">Armas</a></li>
