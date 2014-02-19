@@ -190,6 +190,7 @@ angular.module('armyBuilderServices', ['ngResource']).
                 var p = unit.$update();
                 p.then(function() {
                     $log.log('ok, limpiar');
+                    delete unitCache[unit._id.$oid];
                 });
 
                 return p;

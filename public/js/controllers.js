@@ -102,9 +102,11 @@ angular.module('armyBuilder')
                 $log.info('cargado: ' + unit.name);
 
                 $scope.rules = Rule.query();
+
                 $scope.rules.$promise.then(function() {
                     angular.forEach($scope.unit.specialRules, function(rule) {
                         // TODO: Refactor
+
                         $filter('filter')($scope.rules, {'_id.$oid': rule._id.$oid}, true)[0].selected = true;
 //
 //                        // TODO: Filtro
