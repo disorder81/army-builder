@@ -1,4 +1,4 @@
-angular.module('armyBuilder', ['phonecatFilters', 'armyBuilderServices', 'ngRoute', 'ngCkeditor', 'ngSanitize']).
+angular.module('armyBuilder', ['phonecatFilters', 'armyBuilderServices', 'ngRoute', 'ngCkeditor', 'ngSanitize', 'ngAnimate']).
     config(['$routeProvider','$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider.
             when('/', {templateUrl: 'partials/main.html', controller: 'MainCtrl'}).

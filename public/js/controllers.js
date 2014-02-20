@@ -1,13 +1,26 @@
 
 angular.module('armyBuilder')
 
-    .controller('MainCtrl', function($scope, Army) {
+    .controller('MainCtrl', function($scope, Army, ArmyService) {
+
+        ArmyService.selectedArmy = {};
+
         $scope.armies = Army.query();
+
+        $scope.selectArmy = function(army) {
+            ArmyService.selectedArmy = army;
+        }
+
+        console.log(ArmyService.selectedArmy);
+
+
     })
 
-    .controller('ArmyCtrl', function($scope, $location, $routeParams, Unit){
-        $scope.units = Unit.query({army: $routeParams.armyId, fields: 'name,cost'});
+    .controller('ArmyCtrl', function($scope, $location, $routeParams, Unit, ArmyService){
 
+        console.log(ArmyService.selectedArmy);
+
+        $scope.units = Unit.query({army: $routeParams.armyId, fields: 'name,cost'});
     })
 
     .controller('RuleListCtrl', function($scope, $location, $routeParams, Rule, RuleService) {

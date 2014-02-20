@@ -25,12 +25,34 @@ button {
 
     width: 12rem;
     height: 12rem;
+    margin-right: 1em;
 
-    border: 1px solid grey;
+    border: 1px solid lightgrey;
+
+    -webkit-transition: background .2s ease-in-out;
+}
+
+.repeat-item.ng-enter,
+.repeat-item.ng-leave {
+    -webkit-transition:0.2s linear all;
+    transition:0.2s linear all;
+}
+
+.repeat-item.ng-enter,
+.repeat-item.ng-leave.ng-leave-active {
+    opacity:0;
+}
+.repeat-item.ng-leave,
+.repeat-item.ng-enter.ng-enter-active {
+    opacity:1;
 }
 
 .army-icon:hover {
-    background: #808080;
+    background: lightgrey;
+}
+
+.army-icon:active {
+    -webkit-transform: scale(0.8);
 }
 
 .is-disabled {

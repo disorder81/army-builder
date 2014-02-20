@@ -137,6 +137,16 @@ angular.module('armyBuilderServices', ['ngResource']).
         }
     })
 
+    .service('ArmyService', function($log) {
+
+        var selectedArmy = {};
+
+        return {
+            selectedArmy: selectedArmy
+        }
+
+    })
+
     // TODO: Refactor
     .service('UnitService', function($log, Unit) {
 
