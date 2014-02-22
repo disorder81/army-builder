@@ -10,7 +10,8 @@
             <li ng-repeat="unit in units | filter:query | orderBy:orderProp"
                 class="repeat-item">
                 <!--<a href="#/units/{{unit._id}}" class="thumb"><img ng-src="{{phone.imageUrl}}"></a>  -->
-                <a href="#/units/{{unit._id.$oid}}/slug">{{ unit.name }}</a>
+                <!--<a href="#/units/{{unit._id.$oid}}/slug">{{ unit.name }}</a>-->
+                <a href="" ng-click="viewUnit(unit)">{{ unit.name }}</a>
                 <span>{{ unit.cost }}</span>
                 [<a href="" ng-click="deleteUnit(unit)">X</a>]
             </li>
@@ -19,5 +20,8 @@
     <p>Total: {{ units.length }}</p>
 </section>
 <section>
-    <p>Detalle</p>
+    <h3>{{ selectedUnit.name }}</h3>
+    <span>{{ selectedUnit.cost }}</span>
+    <editable-grid data="selectedUnit"></editable-grid>
+    <div ng-bind-html="selectedUnit.description"></div>
 </section>

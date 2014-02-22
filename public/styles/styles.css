@@ -59,3 +59,21 @@ button {
     background: red;
 }
 
+.unit-stats {
+    border-collapse: collapse;
+}
+
+.unit-stats td,
+.unit-stats th {
+    border: 1px solid gray;
+}
+
+.unit-stats input {
+    width: 2rem;
+
+    border: none;
+    text-align: center;
+}
+
+
+

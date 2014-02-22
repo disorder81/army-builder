@@ -1,5 +1,5 @@
 <div id="messages" ng-switch on="data.type">
-    <table border="1" ng-switch-when="troop">
+    <table class="unit-stats" ng-switch-when="troop">
         <thead>
         <tr>
             <th><label for="ws">HA</label></th>
@@ -28,7 +28,7 @@
         </tr>
         </tbody>
     </table>
-    <table border="1" ng-switch-when="vehicle">
+    <table ng-switch-when="vehicle">
         <thead>
         <tr>
             <th>HP</th>

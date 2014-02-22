@@ -3,11 +3,11 @@
     <fieldset>
         <legend>Detalles</legend>
         <p><label>Nombre: <input name="nombre" type="text" ng-model="rule.name" required></label></p>
-        <p><label>Tipo: <select ng-model="rule.name">
-            <option>Universal</option>
-            <option>Ejército</option>
-            <option>Facción</option>
-            <option>Unidad</option>
+        <p><label>Tipo: <select ng-model="rule.type">
+            <option value="universal">Universal</option>
+            <option value="army">Ejército</option>
+            <option value="faction">Facción</option>
+            <option value="unit">Unidad</option>
         </select></label></p>
         <p><label>Descripcion: <textarea ckeditor="editorOptions" name="descripcion" ng-model="rule.description"></textarea></label></p>
     </fieldset>
