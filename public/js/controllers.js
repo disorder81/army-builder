@@ -1,22 +1,23 @@
 
 angular.module('armyBuilder')
 
-    .controller('MainCtrl', function($scope, Army, ArmyService) {
-
-        ArmyService.selectedArmy = {};
-
-        $scope.armies = Army.query();
-
-        $scope.selectArmy = function(army) {
-            ArmyService.selectedArmy = army;
-        }
+    .controller('MainCtrl', function($scope, ArmyService) {
+        $scope.armies = ArmyService.getArmyList();
     })
 
     .controller('ArmyCtrl', function($scope, $location, $routeParams, Unit, UnitService, ArmyService){
-        $scope.units = Unit.query({army: $routeParams.armyId, fields: 'name,cost'});
+
+        var p = ArmyService.getArmy($routeParams.armyId);
+        p.$promise.then(function(army) {
+           $scope.army = army;
+        });
 
         $scope.createUnit = function() {
             $location.path('/units/new');
+        }
+
+        $scope.removeUnit = function(unit) {
+            ArmyService.removeUnit(unit);
         }
 
         $scope.viewUnit = function(unit) {
@@ -92,7 +93,7 @@ angular.module('armyBuilder')
             $location.path('/units/new');
         }
 
-        $scope.deleteUnit = function(unit) {
+        $scope.removeUnit = function(unit) {
             UnitService.delete(unit);
         }
 
@@ -109,7 +110,7 @@ angular.module('armyBuilder')
 
             console.log(ArmyService.selectedArmy);
 
-            $scope.unit.army.$oid = ArmyService.selectedArmy._id.$oid;
+            $scope.unit.army.$oid = ArmyService.getSelectedArmy()._id.$oid;
         }
 
         $scope.cancel();

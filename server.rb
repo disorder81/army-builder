@@ -58,7 +58,7 @@ end
 
 get '/api/armies/:id' do
   content_type :json
-  ARMIES.find_one({:_id => bson_id(params[:id])})
+  ARMIES.find_one({:_id => bson_id(params[:id])}).to_json
 end
 
 get '/api/units' do

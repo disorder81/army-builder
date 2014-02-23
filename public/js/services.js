@@ -1,8 +1,8 @@
 angular.module('armyBuilderServices', ['ngResource']).
 
     factory('Army', function($resource) {
-        return $resource('/api/armies/:armieId',
-            {armieId: '@_id'}, {
+        return $resource('/api/armies/:armyId',
+            {armyId: '@_id'}, {
                 query: {method: 'GET', isArray: true, cache: true},
                 update: {method: 'PUT'}
             });
@@ -141,14 +141,42 @@ angular.module('armyBuilderServices', ['ngResource']).
         }
     })
 
-    .service('ArmyService', function($log) {
+    .service('ArmyService', function($log, Army, Unit) {
 
-        var armies,
-            selectedArmy;
+        var selectedArmy = {};
 
         return {
-            selectedArmy: selectedArmy,
-            armies: armies
+            getSelectedArmy: function() {
+                return selectedArmy;
+            },
+
+            getArmy: function(id) {
+                var p = Army.get({armyId: id});
+                p.$promise.then(function(army) {
+                    // TODO: Se debe poder hacer en una query y pasar un objeto al constructor de Unit
+                    army.units = Unit.query({army: id, fields: 'name,cost'});
+
+                    selectedArmy = army;
+                });
+
+                return p;
+            },
+
+            getArmyList: function() {
+                //TODO: fields
+                return Army.query();
+            },
+
+            removeUnit: function(unit) {
+                var p = unit.$delete();
+                p.then(function() {
+                    $log.log('ok, sacar de la lista');
+                    selectedArmy.units.splice(selectedArmy.units.indexOf(unit), 1);
+                }, function() {
+                    $log.error('error al borrar');
+                });
+            }
+
         }
 
     })

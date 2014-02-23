@@ -1,6 +1,6 @@
 <ul class="army-selection">
     <li ng-repeat="army in armies">
-        <a class="army-icon" ng-click="selectArmy(army)" href="#/armies/{{army._id.$oid}}/slug">{{ army.name }}</a>
+        <a class="army-icon" href="#/armies/{{army._id.$oid}}/slug">{{ army.name }}</a>
     </li>
 </ul>
 <ul>
