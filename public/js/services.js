@@ -3,7 +3,7 @@ angular.module('armyBuilderServices', ['ngResource']).
     factory('Army', function($resource) {
         return $resource('/api/armies/:armieId',
             {armieId: '@_id'}, {
-                query: {method: 'GET', isArray: true},
+                query: {method: 'GET', isArray: true, cache: true},
                 update: {method: 'PUT'}
             });
     })
@@ -45,6 +45,10 @@ angular.module('armyBuilderServices', ['ngResource']).
                 query: {
                     method: 'GET',
                     isArray: true},
+                save: {
+                    method: 'POST',
+                    transformRequest: transformData
+                },
                 update: {
                     method: 'PUT',
                     //params: {unitId: '@_id.$oid'},
@@ -139,10 +143,12 @@ angular.module('armyBuilderServices', ['ngResource']).
 
     .service('ArmyService', function($log) {
 
-        var selectedArmy = {};
+        var armies,
+            selectedArmy;
 
         return {
-            selectedArmy: selectedArmy
+            selectedArmy: selectedArmy,
+            armies: armies
         }
 
     })

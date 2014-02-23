@@ -15,6 +15,10 @@ angular.module('armyBuilder')
     .controller('ArmyCtrl', function($scope, $location, $routeParams, Unit, UnitService, ArmyService){
         $scope.units = Unit.query({army: $routeParams.armyId, fields: 'name,cost'});
 
+        $scope.createUnit = function() {
+            $location.path('/units/new');
+        }
+
         $scope.viewUnit = function(unit) {
             $scope.selectedUnit = UnitService.getById(unit._id.$oid);
         }
@@ -94,7 +98,7 @@ angular.module('armyBuilder')
 
     })
 
-    .controller('UnitCtrl', function($log, $scope, $q, $location, $routeParams, Unit, Rule, CoreService, ckEditorConfig, $filter, UnitService, RuleService) {
+    .controller('UnitCtrl', function($log, $scope, $q, $location, $routeParams, Unit, Rule, CoreService, ArmyService, ckEditorConfig, $filter, UnitService, RuleService) {
 
         $scope.sections = CoreService.sections;
         $scope.types = CoreService.types;
@@ -102,6 +106,10 @@ angular.module('armyBuilder')
 
         $scope.cancel = function() {
             $scope.unit = angular.copy(CoreService.unit);
+
+            console.log(ArmyService.selectedArmy);
+
+            $scope.unit.army.$oid = ArmyService.selectedArmy._id.$oid;
         }
 
         $scope.cancel();

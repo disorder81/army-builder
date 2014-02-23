@@ -141,7 +141,13 @@ post '/api/units' do
   # Probar > http://stackoverflow.com/questions/12131763/sinatra-controller-params-method-coming-in-empty-on-json-post-request
   #@json = JSON.parse(request.body.read)
   content_type :json
-  oid = UNITS.insert(JSON.parse(request.body.read.to_s))
+
+  @request_payload = JSON.parse(request.body.read.to_s)
+  @request_payload['army'] = bson_id(@request_payload['army']['$oid'])
+
+  p @request_payload
+
+  oid = UNITS.insert(@request_payload)
   logger.info "created unit #{oid}"
   headers 'Location' => "http://localhost:4567/api/units/#{oid}"
   status 201
