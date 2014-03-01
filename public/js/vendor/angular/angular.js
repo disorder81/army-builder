@@ -17604,7 +17604,7 @@ var ngCloakDirective = ngDirective({
  * easily be called from the angular markup. Notice that the scope becomes the `this` for the
  * controller's instance. This allows for easy access to the view data from the controller. Also
  * notice that any changes to the data are automatically reflected in the View without the need
- * for a manual update. The example is shown in two different declaration styles you may use
+ * for a manual update. The example is shown in two different declaration stylesheets you may use
  * according to preference.
    <doc:example>
      <doc:source>
@@ -19315,13 +19315,13 @@ var ngRepeatDirective = ['$parse', '$animate', function($parse, $animate) {
  * This also becomes a bigger issue when dealing with CSS frameworks.
  *
  * By using !important, the show and hide behavior will work as expected despite any clash between CSS selector
- * specificity (when !important isn't used with any conflicting styles). If a developer chooses to override the
+ * specificity (when !important isn't used with any conflicting stylesheets). If a developer chooses to override the
  * styling to change how to hide an element then it is just a matter of using !important in their own CSS code.
  *
  * ### Overriding .ng-hide
  *
  * If you wish to change the hide behavior with ngShow/ngHide then this can be achieved by
- * restating the styles for the .ng-hide class in CSS:
+ * restating the stylesheets for the .ng-hide class in CSS:
  * <pre>
  * .ng-hide {
  *   //!annotate CSS Specificity|Not to worry, this will override the AngularJS default...
@@ -19469,13 +19469,13 @@ var ngShowDirective = ['$animate', function($animate) {
  * This also becomes a bigger issue when dealing with CSS frameworks.
  *
  * By using !important, the show and hide behavior will work as expected despite any clash between CSS selector
- * specificity (when !important isn't used with any conflicting styles). If a developer chooses to override the
+ * specificity (when !important isn't used with any conflicting stylesheets). If a developer chooses to override the
  * styling to change how to hide an element then it is just a matter of using !important in their own CSS code.
  *
  * ### Overriding .ng-hide
  *
  * If you wish to change the hide behavior with ngShow/ngHide then this can be achieved by
- * restating the styles for the .ng-hide class in CSS:
+ * restating the stylesheets for the .ng-hide class in CSS:
  * <pre>
  * .ng-hide {
  *   //!annotate CSS Specificity|Not to worry, this will override the AngularJS default...

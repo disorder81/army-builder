@@ -160,7 +160,7 @@
  *   transition-duration: 0s;
  * }
  * .my-animation.ng-enter.ng-enter-active {
- *   /&#42; standard transition styles &#42;/
+ *   /&#42; standard transition stylesheets &#42;/
  *   opacity:1;
  * }
  * </pre>
@@ -390,7 +390,7 @@ angular.module('ngAnimate', ['ng'])
          * | 2. element is inserted into the parentElement element or beside the afterElement element     | class="my-animation"                        |
          * | 3. $animate runs any JavaScript-defined animations on the element                            | class="my-animation ng-animate"             |
          * | 4. the .ng-enter class is added to the element                                               | class="my-animation ng-animate ng-enter"    |
-         * | 5. $animate scans the element styles to get the CSS transition/animation duration and delay  | class="my-animation ng-animate ng-enter"    |
+         * | 5. $animate scans the element stylesheets to get the CSS transition/animation duration and delay  | class="my-animation ng-animate ng-enter"    |
          * | 6. $animate waits for 10ms (this performs a reflow)                                          | class="my-animation ng-animate ng-enter"    |
          * | 7. the .ng-enter-active and .ng-animate-active classes are added (this triggers the CSS transition/animation) | class="my-animation ng-animate ng-animate-active ng-enter ng-enter-active" |
          * | 8. $animate waits for X milliseconds for the animation to complete                           | class="my-animation ng-animate ng-animate-active ng-enter ng-enter-active" |
@@ -427,7 +427,7 @@ angular.module('ngAnimate', ['ng'])
          * | 1. $animate.leave(...) is called                                                             | class="my-animation"                        |
          * | 2. $animate runs any JavaScript-defined animations on the element                            | class="my-animation ng-animate"             |
          * | 3. the .ng-leave class is added to the element                                               | class="my-animation ng-animate ng-leave"    |
-         * | 4. $animate scans the element styles to get the CSS transition/animation duration and delay  | class="my-animation ng-animate ng-leave"    |
+         * | 4. $animate scans the element stylesheets to get the CSS transition/animation duration and delay  | class="my-animation ng-animate ng-leave"    |
          * | 5. $animate waits for 10ms (this performs a reflow)                                          | class="my-animation ng-animate ng-leave"    |
          * | 6. the .ng-leave-active and .ng-animate-active classes is added (this triggers the CSS transition/animation) | class="my-animation ng-animate ng-animate-active ng-leave ng-leave-active" |
          * | 7. $animate waits for X milliseconds for the animation to complete                           | class="my-animation ng-animate ng-animate-active ng-leave ng-leave-active" |
@@ -467,7 +467,7 @@ angular.module('ngAnimate', ['ng'])
          * | 2. element is moved into the parentElement element or beside the afterElement element        | class="my-animation"                        |
          * | 3. $animate runs any JavaScript-defined animations on the element                            | class="my-animation ng-animate"             |
          * | 4. the .ng-move class is added to the element                                                | class="my-animation ng-animate ng-move"     |
-         * | 5. $animate scans the element styles to get the CSS transition/animation duration and delay  | class="my-animation ng-animate ng-move"     |
+         * | 5. $animate scans the element stylesheets to get the CSS transition/animation duration and delay  | class="my-animation ng-animate ng-move"     |
          * | 6. $animate waits for 10ms (this performs a reflow)                                          | class="my-animation ng-animate ng-move"     |
          * | 7. the .ng-move-active and .ng-animate-active classes is added (this triggers the CSS transition/animation) | class="my-animation ng-animate ng-animate-active ng-move ng-move-active" |
          * | 8. $animate waits for X milliseconds for the animation to complete                           | class="my-animation ng-animate ng-animate-active ng-move ng-move-active" |
@@ -506,7 +506,7 @@ angular.module('ngAnimate', ['ng'])
          * | 1. $animate.addClass(element, 'super') is called                                               | class="my-animation"                        |
          * | 2. $animate runs any JavaScript-defined animations on the element                              | class="my-animation ng-animate"             |
          * | 3. the .super-add class are added to the element                                               | class="my-animation ng-animate super-add"   |
-         * | 4. $animate scans the element styles to get the CSS transition/animation duration and delay    | class="my-animation ng-animate super-add"   |
+         * | 4. $animate scans the element stylesheets to get the CSS transition/animation duration and delay    | class="my-animation ng-animate super-add"   |
          * | 5. $animate waits for 10ms (this performs a reflow)                                            | class="my-animation ng-animate super-add"   |
          * | 6. the .super, .super-add-active and .ng-animate-active classes are added (this triggers the CSS transition/animation) | class="my-animation ng-animate ng-animate-active super super-add super-add-active"          |
          * | 7. $animate waits for X milliseconds for the animation to complete                             | class="my-animation super-add super-add-active"  |
@@ -542,7 +542,7 @@ angular.module('ngAnimate', ['ng'])
          * | 1. $animate.removeClass(element, 'super') is called                                           | class="my-animation super"                  |
          * | 2. $animate runs any JavaScript-defined animations on the element                             | class="my-animation super ng-animate"       |
          * | 3. the .super-remove class are added to the element                                           | class="my-animation super ng-animate super-remove"|
-         * | 4. $animate scans the element styles to get the CSS transition/animation duration and delay   | class="my-animation super ng-animate super-remove"   |
+         * | 4. $animate scans the element stylesheets to get the CSS transition/animation duration and delay   | class="my-animation super ng-animate super-remove"   |
          * | 5. $animate waits for 10ms (this performs a reflow)                                           | class="my-animation super ng-animate super-remove"   |
          * | 6. the .super-remove-active and .ng-animate-active classes are added and .super is removed (this triggers the CSS transition/animation) | class="my-animation ng-animate ng-animate-active super-remove super-remove-active"          |
          * | 7. $animate waits for X milliseconds for the animation to complete                            | class="my-animation ng-animate ng-animate-active super-remove super-remove-active"   |
@@ -706,7 +706,7 @@ angular.module('ngAnimate', ['ng'])
                                           ngAnimateState.className == className &&
                                           animationEvent != ngAnimateState.event;
 
-          //if the class is removed during the reflow then it will revert the styles temporarily
+          //if the class is removed during the reflow then it will revert the stylesheets temporarily
           //back to the base class CSS styling causing a jump-like effect to occur. This check
           //here ensures that the domOperation is only performed after the reflow has commenced
           if(ngAnimateState.beforeComplete || isRevertingClassAnimation) {
@@ -1058,7 +1058,7 @@ angular.module('ngAnimate', ['ng'])
           var transitionDurationStyle;
           var transitionPropertyStyle;
 
-          //we want all the styles defined before and after
+          //we want all the stylesheets defined before and after
           forEach(element, function(element) {
             if (element.nodeType == ELEMENT_NODE) {
               var elementStyles = $window.getComputedStyle(element) || {};
@@ -1144,7 +1144,7 @@ angular.module('ngAnimate', ['ng'])
         }
 
         /* the animation itself may need to add/remove special CSS classes
-         * before calculating the anmation styles */
+         * before calculating the anmation stylesheets */
         calculationDecorator = calculationDecorator ||
                                function(fn) { return fn(); };
 
@@ -1165,7 +1165,7 @@ angular.module('ngAnimate', ['ng'])
           return false;
         }
 
-        //temporarily disable the transition so that the enter styles
+        //temporarily disable the transition so that the enter stylesheets
         //don't animate twice (this is here to avoid a bug in Chrome/FF).
         var activeClassName = '';
         timings.transitionDuration > 0 ?
@@ -1260,7 +1260,7 @@ angular.module('ngAnimate', ['ng'])
         if(appliedStyles.length > 0) {
           //the element being animated may sometimes contain comment nodes in
           //the jqLite object, so we're safe to use a single variable to house
-          //the styles since there is always only one element being animated
+          //the stylesheets since there is always only one element being animated
           var oldStyle = node.getAttribute('style') || '';
           node.setAttribute('style', oldStyle + ' ' + style);
         }
