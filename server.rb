@@ -8,7 +8,7 @@ require 'json'
 
 configure do
   CONNECTION  = Mongo::Connection.from_uri('mongodb://test:test@ds043158.mongolab.com:43158/heroku_app17961664')
-  DB 				  = CONNECTION.db('heroku_app17961664')
+  DATABASE 		= CONNECTION.db('heroku_app17961664')
   ARMIES      = DATABASE['armies']
   UNITS 			= DATABASE['units']
   WEAPONS     = DATABASE['weapons']
