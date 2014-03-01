@@ -6,6 +6,7 @@ require 'json'
 #set :environment => 'local'
 
 
+
 configure do
   CONNECTION  = Mongo::Connection.from_uri('mongodb://test:test@ds043158.mongolab.com:43158/heroku_app17961664')
   DATABASE 		= CONNECTION.db('heroku_app17961664')
@@ -18,8 +19,8 @@ end
 
 
 
-# RACK_ENV=local
 =begin
+# RACK_ENV=local
 configure do
   #system('mongod --dbpath c:\dev\data\mongodb')
   CONNECTION  = Mongo::Connection.from_uri('mongodb://test:test@localhost/w40')
@@ -30,6 +31,7 @@ configure do
   RULES       = DATABASE['rules']
 end
 =end
+
 
 helpers do
 

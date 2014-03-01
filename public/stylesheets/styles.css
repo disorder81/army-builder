@@ -15,21 +15,41 @@ button {
 
 .army-selection {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.army {
+    display: flex;
+    /*align-items: center;
+    justify-content: center;*/
+
+    width: 8rem;
+    height: 8rem;
+    margin-bottom: 1em;
+    border: 1px solid lightgrey;
+
+    transition: all .2s ease-in-out;
+}
+
+@media all and (min-width: 768px) {
+
+    .army {
+        width: 12rem;
+        height: 12rem;
+    }
+
 }
 
 .army-icon {
+    /*border: 1px solid; */
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
 
-    width: 12rem;
-    height: 12rem;
-    margin-right: 1em;
-
-    border: 1px solid lightgrey;
-
-    -webkit-transition: background .2s ease-in-out;
+    transition: all .2s ease-in-out;
 }
 
 .repeat-item.ng-enter,
