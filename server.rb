@@ -9,10 +9,10 @@ require 'json'
 configure do
   CONNECTION  = Mongo::Connection.from_uri('mongodb://test:test@ds043158.mongolab.com:43158/heroku_app17961664')
   DB 				  = CONNECTION.db('heroku_app17961664')
-  #ARMIES			= DB["armies"]
-  UNITS 			= DB['units']
-  #WEAPONS 		= DB["weapons"]
-  #SPECIAL_RULES 	= DB["special_rules"]
+  ARMIES      = DATABASE['armies']
+  UNITS 			= DATABASE['units']
+  WEAPONS     = DATABASE['weapons']
+  RULES       = DATABASE['rules']
 #  set :haml, :format => :html5
 end
 
