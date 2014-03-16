@@ -81,6 +81,10 @@ button {
     background: red;
 }
 
+.selected {
+    background: green;
+}
+
 .unit-stats {
     border-collapse: collapse;
 }

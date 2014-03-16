@@ -141,7 +141,7 @@ angular.module('armyBuilderServices', ['ngResource']).
         }
     })
 
-    .service('ArmyService', function($log, Army, Unit) {
+    .service('ArmyService', function($q, $log, Army, Unit) {
 
         var selectedArmy = {};
 
@@ -151,7 +151,22 @@ angular.module('armyBuilderServices', ['ngResource']).
             },
 
             getArmy: function(id) {
-                var p = Army.get({armyId: id});
+
+                var deferred = $q.defer();
+
+                var army = Army.get({armyId: id});
+                // TODO: Se debe poder hacer en una query y pasar un objeto al constructor de Unit
+                var units = Unit.query({army: id, fields: 'name,cost'});
+
+                $q.all([army.$promise, units.$promise]).then(function(data) {
+                    data[0].units = data[1];
+                    deferred.resolve(data[0]);
+                });
+
+                return deferred.promise;
+
+
+                /*var p = Army.get({armyId: id});
                 p.$promise.then(function(army) {
                     // TODO: Se debe poder hacer en una query y pasar un objeto al constructor de Unit
                     army.units = Unit.query({army: id, fields: 'name,cost'});
@@ -159,7 +174,7 @@ angular.module('armyBuilderServices', ['ngResource']).
                     selectedArmy = army;
                 });
 
-                return p;
+                return p;*/
             },
 
             getArmyList: function() {

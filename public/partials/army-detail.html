@@ -9,7 +9,7 @@
         <ul class="units">
             <li ng-repeat="unit in army.units | filter:query | orderBy:orderProp"
                 class="repeat-item">
-                <a href="" ng-click="viewUnit(unit)">{{ unit.name }}</a>
+                <a href="#/armies/{{ army._id.$oid }}/units/{{ unit._id.$oid }}" ng-class="{ selected: unit.selected }" ng-click="viewUnit(unit)">{{ unit.name }}</a>
                 <span>{{ unit.cost }}</span>
                 [<a href="" ng-click="removeUnit(unit)">X</a>]
             </li>
@@ -17,9 +17,5 @@
     </div>
     <p>Total: {{ army.units.length }}</p>
 </section>
-<section class="grid-column-9">
-    <h3>{{ selectedUnit.name }}</h3>
-    <span>{{ selectedUnit.cost }}</span>
-    <editable-grid data="selectedUnit"></editable-grid>
-    <div ng-bind-html="selectedUnit.description"></div>
+<section class="grid-column-9" ui-view>
 </section>

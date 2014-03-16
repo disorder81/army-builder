@@ -1,0 +1,9 @@
+<h3>{{ selectedUnit.name }}</h3>
+<span>{{ selectedUnit.cost }}</span>
+<editable-grid data="selectedUnit"></editable-grid>
+<div ng-bind-html="selectedUnit.description"></div>
+<ul>
+    <li ng-repeat="rule in selectedUnit.specialRules">
+        <a href="#/rules/{{rule._id.$oid}}">{{ rule.name }}</a>
+    </li>
+</ul>

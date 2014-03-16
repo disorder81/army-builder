@@ -5,12 +5,30 @@ angular.module('armyBuilder')
         $scope.armies = ArmyService.getArmyList();
     })
 
-    .controller('ArmyCtrl', function($scope, $location, $routeParams, Unit, UnitService, ArmyService){
+    .controller('ArmyCtrl', function($scope, $location, $stateParams, Unit, UnitService, ArmyService) {
+        //if(!$scope.army) {
+            var p = ArmyService.getArmy($stateParams.armyId);
 
-        var p = ArmyService.getArmy($routeParams.armyId);
-        p.$promise.then(function(army) {
-           $scope.army = army;
-        });
+            //p.$promise.then(function(army) {
+            p.then(function(army) {
+                $scope.army = army;
+
+                if($stateParams.unitId) {
+
+                    _.find($scope.army.units, function(unit) {
+                        console.log(unit);
+                        return unit._id.$oid === $stateParams.unitId;
+                    });
+
+                    //$scope.selectedUnit = UnitService.getById($stateParams.unitId);
+                    $scope.selectedUnit = _.find($scope.army.units, function(unit) {
+                        unit.selected = true;
+                        return unit._id.$oid === $stateParams.unitId;
+                    });
+                    //$scope.viewUnit($scope.selectedUnit);
+                }
+            });
+        //}
 
         $scope.createUnit = function() {
             $location.path('/units/new');
@@ -20,8 +38,21 @@ angular.module('armyBuilder')
             ArmyService.removeUnit(unit);
         }
 
-        $scope.viewUnit = function(unit) {
-            $scope.selectedUnit = UnitService.getById(unit._id.$oid);
+        /*if($stateParams.unitId) {
+            //$scope.selectedUnit = UnitService.getById($stateParams.unitId);
+            $scope.selectedUnit = _.find($scope.army.units, function(unit) {
+                return unit._id.$oid === $stateParams.unitId;
+            });
+            $scope.viewUnit($scope.selectedUnit);
+        }  */
+
+        $scope.viewUnit = function(selectedUnit) {
+            _($scope.army.units).each(function(unit) {
+                unit.selected = false;
+                if (selectedUnit === unit) {
+                    selectedUnit.selected = true;
+                }
+            });
         }
     })
 
@@ -37,9 +68,9 @@ angular.module('armyBuilder')
         }
     })
 
-    .controller('RuleCtrl', function($scope, $location, $routeParams, Rule) {
-        $scope.rule = Rule.get({ruleId: $routeParams.ruleId});
-
+    //.controller('RuleCtrl', function($scope, $location, $routeParams, Rule) {
+    .controller('RuleCtrl', function($scope, $location, $stateParams, Rule) {
+        $scope.rule = Rule.get({ruleId: $stateParams.ruleId});
     })
 
     .controller('RuleCreationCtrl', function($scope, $location, Rule, CoreService, RuleService, ckEditorConfig) {
@@ -82,7 +113,8 @@ angular.module('armyBuilder')
         }
     })
 
-    .controller('UnitListCtrl', function($scope, $location, $routeParams, UnitService) {
+    .controller('UnitListCtrl', function($scope, $location, $stateParams, UnitService) {
+    //.controller('UnitListCtrl', function($scope, $location, $routeParams, UnitService) {
         $scope.units = UnitService.getAll();
         /*$scope.$watchCollection('units', function(){
             console.log('algo');
@@ -103,6 +135,8 @@ angular.module('armyBuilder')
 
         $scope.sections = CoreService.sections;
         $scope.types = CoreService.types;
+        $scope.rules = Rule.query();
+
         $scope.editorOptions = ckEditorConfig;
 
         $scope.cancel = function() {
@@ -120,7 +154,7 @@ angular.module('armyBuilder')
             $scope.unit.$promise.then(function(unit) {
                 $log.info('cargado: ' + unit.name);
 
-                $scope.rules = Rule.query();
+                //$scope.rules = Rule.query();
 
                 $scope.rules.$promise.then(function() {
                     angular.forEach($scope.unit.specialRules, function(rule) {
