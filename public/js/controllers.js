@@ -5,46 +5,14 @@ angular.module('armyBuilder')
         $scope.armies = ArmyService.getArmyList();
     })
 
-    .controller('ArmyCtrl', function($scope, $location, $stateParams, Unit, UnitService, ArmyService) {
-        //if(!$scope.army) {
-            var p = ArmyService.getArmy($stateParams.armyId);
+    .controller('ArmyCtrl', function($scope, $filter, $location, $stateParams, army, Unit, UnitService, ArmyService) {
+//        var p = ArmyService.getArmy($routeParams.armyId);
+//
+//        p.then(function(army) {
+//            $scope.army = army;
+//        })
 
-            //p.$promise.then(function(army) {
-            p.then(function(army) {
-                $scope.army = army;
-
-                if($stateParams.unitId) {
-
-                    _.find($scope.army.units, function(unit) {
-                        console.log(unit);
-                        return unit._id.$oid === $stateParams.unitId;
-                    });
-
-                    //$scope.selectedUnit = UnitService.getById($stateParams.unitId);
-                    $scope.selectedUnit = _.find($scope.army.units, function(unit) {
-                        unit.selected = true;
-                        return unit._id.$oid === $stateParams.unitId;
-                    });
-                    //$scope.viewUnit($scope.selectedUnit);
-                }
-            });
-        //}
-
-        $scope.createUnit = function() {
-            $location.path('/units/new');
-        }
-
-        $scope.removeUnit = function(unit) {
-            ArmyService.removeUnit(unit);
-        }
-
-        /*if($stateParams.unitId) {
-            //$scope.selectedUnit = UnitService.getById($stateParams.unitId);
-            $scope.selectedUnit = _.find($scope.army.units, function(unit) {
-                return unit._id.$oid === $stateParams.unitId;
-            });
-            $scope.viewUnit($scope.selectedUnit);
-        }  */
+        $scope.army = army;
 
         $scope.viewUnit = function(selectedUnit) {
             _($scope.army.units).each(function(unit) {
@@ -54,6 +22,91 @@ angular.module('armyBuilder')
                 }
             });
         }
+
+        $scope.createUnit = function() {
+            $location.path('/units/new');
+        }
+
+        $scope.removeUnit = function(unit) {
+            ArmyService.removeUnit(unit);
+        }
+
+        //if(!$scope.army) {
+            //var p = ArmyService.getArmy($stateParams.armyId);
+
+
+        //$scope.army.units[0].selected = true;
+
+        //console.log(typeof $stateParams.unitId);
+
+        //$scope.army.units[0].selected = true;
+
+        //if($stateParams.unitId != '') {
+        /*if(!angular.isUndefined($stateParams.unitId)) {
+            console.log($scope.army.units);
+            $scope.army.units[0].selected = true;
+        } */
+
+
+        //$scope.army.name = 'paco';
+//        if($stateParams.unitId) {
+//            //var filteredGoal = _.where($scope.army.units, {'_id.$oid': $stateParams.unitId});
+//            //console.log($filter('filter')($scope.army.units, {'_id.$oid': $stateParams.unitId}, true)[0].selected = true);
+//
+//            $scope.army.units[0].selected = true;
+//
+//            /*var unit = _.find($scope.army.units, function(unit) {
+//                        //unit.selected = true;
+//                        return unit._id.$oid === $stateParams.unitId;
+//                    });
+//
+//                    $scope.viewUnit(unit); */
+//
+//        }
+//
+////            //p.$promise.then(function(army) {
+////            p.then(function(army) {
+////                $scope.army = army;
+////
+////                if($stateParams.unitId) {
+////
+////                    console.log($scope.army);
+////
+////                    $scope.army.units[0].selected = true;
+////                    $scope.army.name = 'paco';
+////                    $scope.selectedUnit = $scope.army.units[0];
+////
+////                    console.log($scope.army.units[0]);
+////
+//////                    var unit = _.find($scope.army.units, function(unit) {
+//////                        //unit.selected = true;
+//////                        return unit._id.$oid === $stateParams.unitId;
+//////                    });
+//////
+//////                    $scope.viewUnit(unit);
+////
+////
+////                    //console.log(unit);
+////
+////                    //$scope.selectedUnit = UnitService.getById($stateParams.unitId);
+////                    //$scope.selectedUnit = unit;
+////                    //$scope.selectedUnit.selected = true;
+////
+////                    console.log($scope.army.units);
+////
+////                    //$scope.$apply();
+////
+////                    //console.log($scope.selectedUnit);
+////                    //$scope.viewUnit($scope.selectedUnit);
+////                }
+////
+////
+////            });
+//        //}
+
+
+
+
     })
 
     .controller('RuleListCtrl', function($scope, $location, $routeParams, Rule, RuleService) {
@@ -131,7 +184,13 @@ angular.module('armyBuilder')
 
     })
 
-    .controller('UnitCtrl', function($log, $scope, $q, $location, $routeParams, Unit, Rule, CoreService, ArmyService, ckEditorConfig, $filter, UnitService, RuleService) {
+    .controller('UnitCtrl', function($scope, army, unit, $stateParams) {
+        $scope.unit = unit;
+
+        console.log(army);
+    })
+
+/*    .controller('UnitCtrl', function($log, $scope, $q, $location, $routeParams, Unit, Rule, CoreService, ArmyService, ckEditorConfig, $filter, UnitService, RuleService) {
 
         $scope.sections = CoreService.sections;
         $scope.types = CoreService.types;
@@ -188,11 +247,11 @@ angular.module('armyBuilder')
             });
         }
 
-        /*$scope.rules = Rule.query({}, function(){
-            angular.forEach($scope.rules, function(rule) {
-                console.log('mirar si están seleccionadas');
-            });
-        });*/
+//        $scope.rules = Rule.query({}, function(){
+//            angular.forEach($scope.rules, function(rule) {
+//                console.log('mirar si están seleccionadas');
+//            });
+//        });
 
         $scope.createUnitRule = function() {
             var p = RuleService.createUnitRule($scope.unit);
@@ -240,14 +299,14 @@ angular.module('armyBuilder')
             //var r = $scope.rules;
             //var i=0, len=r.length;
 
-            /*for (; i<len; i++) {
-                if (r[i]._id.$oid == rule._id.$oid) {
-                    //console.log(angular.equals(rule, r[i]));
-                    $scope.unit.specialRules.splice($scope.unit.specialRules.indexOf(rule), 1);
-                    r[i].selected = false;
-                    //return r[i];
-                }
-            }*/
+//            for (; i<len; i++) {
+//                if (r[i]._id.$oid == rule._id.$oid) {
+//                    //console.log(angular.equals(rule, r[i]));
+//                    $scope.unit.specialRules.splice($scope.unit.specialRules.indexOf(rule), 1);
+//                    r[i].selected = false;
+//                    //return r[i];
+//                }
+//            }
 
 //            var index = $scope.unit.specialRules.indexOf(rule);
 //            if (index != -1) {
@@ -263,7 +322,7 @@ angular.module('armyBuilder')
             //$scope.unit.stats = {};
         });
 
-    })
+    }) */
 
     .controller('WeaponCtrl', function($scope, $location, Weapon){
         $scope.weapons = Weapon.query();

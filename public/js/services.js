@@ -163,6 +163,19 @@ angular.module('armyBuilderServices', ['ngResource']).
                     deferred.resolve(data[0]);
                 });
 
+//                deferred.resolve(
+//                   {
+//                        _id: {
+//                            $oid: '1'
+//                        },
+//                        name: 'Marines espaciales',
+//                        units: [
+//                            {_id: {$oid: '1'}, name: 'unit 1'},
+//                            {_id: {$oid: '2'}, name: 'unit 2'}
+//                        ]
+//                    }
+//                );
+
                 return deferred.promise;
 
 
