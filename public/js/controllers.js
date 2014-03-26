@@ -5,9 +5,12 @@ angular.module('armyBuilder')
         $scope.armies = ArmyService.getArmyList();
     })
 
-    .controller('ArmyCtrl', function($scope, $location, $stateParams, Unit, UnitService, ArmyService) {
+    .controller('ArmyCtrl', function($scope, $state, $location, $stateParams, army, Unit, UnitService, ArmyService) {
+        $scope.army = army;
+
+        $state.go('army.units')
         //if(!$scope.army) {
-            var p = ArmyService.getArmy($stateParams.armyId);
+            /*var p = ArmyService.getArmy($stateParams.armyId);
 
             //p.$promise.then(function(army) {
             p.then(function(army) {
@@ -27,15 +30,17 @@ angular.module('armyBuilder')
                     });
                     //$scope.viewUnit($scope.selectedUnit);
                 }
-            });
+            }); */
         //}
 
         $scope.createUnit = function() {
-            $location.path('/units/new');
+            /*$location.path('/units/new'); */
+            $scope.army.units.push({ name: 'nombre', cost: 100 });
         }
 
         $scope.removeUnit = function(unit) {
-            ArmyService.removeUnit(unit);
+            /*ArmyService.removeUnit(unit);*/
+            $scope.army.units.splice($scope.army.units.indexOf(unit), 1);
         }
 
         /*if($stateParams.unitId) {
@@ -131,7 +136,11 @@ angular.module('armyBuilder')
 
     })
 
-    .controller('UnitCtrl', function($log, $scope, $q, $location, $routeParams, Unit, Rule, CoreService, ArmyService, ckEditorConfig, $filter, UnitService, RuleService) {
+    .controller('UnitCtrl', function($scope, unit) {
+        $scope.unit = unit;
+    })
+
+    /*.controller('UnitCtrl', function($log, $scope, $q, $location, $routeParams, Unit, Rule, CoreService, ArmyService, ckEditorConfig, $filter, UnitService, RuleService) {
 
         $scope.sections = CoreService.sections;
         $scope.types = CoreService.types;
@@ -188,11 +197,11 @@ angular.module('armyBuilder')
             });
         }
 
-        /*$scope.rules = Rule.query({}, function(){
-            angular.forEach($scope.rules, function(rule) {
-                console.log('mirar si están seleccionadas');
-            });
-        });*/
+//        $scope.rules = Rule.query({}, function(){
+//            angular.forEach($scope.rules, function(rule) {
+//                console.log('mirar si están seleccionadas');
+//            });
+//        });
 
         $scope.createUnitRule = function() {
             var p = RuleService.createUnitRule($scope.unit);
@@ -240,14 +249,14 @@ angular.module('armyBuilder')
             //var r = $scope.rules;
             //var i=0, len=r.length;
 
-            /*for (; i<len; i++) {
-                if (r[i]._id.$oid == rule._id.$oid) {
-                    //console.log(angular.equals(rule, r[i]));
-                    $scope.unit.specialRules.splice($scope.unit.specialRules.indexOf(rule), 1);
-                    r[i].selected = false;
-                    //return r[i];
-                }
-            }*/
+//            for (; i<len; i++) {
+//                if (r[i]._id.$oid == rule._id.$oid) {
+//                    //console.log(angular.equals(rule, r[i]));
+//                    $scope.unit.specialRules.splice($scope.unit.specialRules.indexOf(rule), 1);
+//                    r[i].selected = false;
+//                    //return r[i];
+//                }
+//            }
 
 //            var index = $scope.unit.specialRules.indexOf(rule);
 //            if (index != -1) {
@@ -263,7 +272,7 @@ angular.module('armyBuilder')
             //$scope.unit.stats = {};
         });
 
-    })
+    })*/
 
     .controller('WeaponCtrl', function($scope, $location, Weapon){
         $scope.weapons = Weapon.query();

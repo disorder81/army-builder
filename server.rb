@@ -30,8 +30,6 @@ configure do
   RULES       = DATABASE['rules']
 end
 
-
-
 helpers do
 
   def bson_id(val)

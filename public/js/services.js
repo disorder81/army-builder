@@ -165,7 +165,6 @@ angular.module('armyBuilderServices', ['ngResource']).
 
                 return deferred.promise;
 
-
                 /*var p = Army.get({armyId: id});
                 p.$promise.then(function(army) {
                     // TODO: Se debe poder hacer en una query y pasar un objeto al constructor de Unit

@@ -23,39 +23,50 @@ angular.module('armyBuilder', ['armyBuilderServices', 'ui.router', 'ngCkeditor',
         $urlRouterProvider.otherwise('/');
 
         $stateProvider
-            .state('home', {
-                url: '/',
-                templateUrl: 'partials/main.html'
-            })
-
 //            .state('army', {
 //                url: '/armies/:armyId',
 //                templateUrl: "partials/army-detail.html",
 //                controller: 'ArmyCtrl'
 //            })
+
+            .state('home', { url: '/', templateUrl: 'partials/main.html' })
             .state('army', {
                 url: '/armies/:armyId',
-                templateUrl: "partials/army.html",
-                controller: 'ArmyCtrl'
-            })
+                templateUrl: 'partials/army.html',
+                controller: 'ArmyCtrl',
+                resolve: {
+                    army: function($stateParams, ArmyService) {
+                        return ArmyService.getArmy($stateParams.armyId);
+                    }
+                }})
 
             .state('army.units', {
+                /*abstract: true,*/
                 url: '/units',
-                templateUrl: 'partials/army-detail.html'/*,
-                controller: 'ArmyCtrl'*/
+                templateUrl: 'partials/army-detail.html',
+                controller: function($state, army) {
+                    $state.go('army.units.detail', {unitId: army.units[0]._id.$oid});
+                }
             })
 
-            .state('army.units.unit', {
+            .state('army.units.detail', {
                 url: '/:unitId',
                 templateUrl: 'partials/unit.html',
-                controller: 'ArmyCtrl'
-            })
+                controller: 'UnitCtrl',
+                resolve: {
+                    unit: function($stateParams, army, UnitService) {
+                        _(army.units).each(function(unit) {
+                            unit.selected = unit._id.$oid == $stateParams.unitId;
+                        });
 
-            .state('rule', {
-                url: '/rules/:ruleId',
-                templateUrl: 'partials/rule-detail.html',
-                controller: 'RuleCtrl'
+                        return UnitService.getById($stateParams.unitId);
+                    }
+                }
             })
+            //.state('army.unit', { url: '/units/:unitId', templateUrl: 'partials/army-detail.html', controller: 'ArmyCtrl' })
+            /*.state('army.units', { url: '/units', templateUrl: 'partials/army-detail.html', controller: 'ArmyCtrl' })
+            .state('army.units.unit', { url: '/:unitId', templateUrl: 'partials/unit.html', controller: 'ArmyCtrl' })
+            .state('rule', { url: '/rules/:ruleId', templateUrl: 'partials/rule-detail.html', controller: 'RuleCtrl' }) */
         /*$routeProvider.
             when('/', {templateUrl: 'partials/main.html', controller: 'MainCtrl'}).
             when('/armies/:armyId/:armySlug', {templateUrl: 'partials/army-detail.html', controller: 'ArmyCtrl'}).
