@@ -45,6 +45,11 @@ button {
     clear: both;
 }
 
+/* Componentes */
+.menu > li {
+    display: inline-block;
+}
+
 
 .army-selection {
     display: flex;
