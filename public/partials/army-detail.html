@@ -1,4 +1,3 @@
-<h2>{{ army.name }}</h2>
 <section class="grid-column-3">
     <button ng-click="createUnit()">Crear nuevo</button>
     <div>
@@ -9,9 +8,8 @@
         </select>
         <ul class="units">
             <li ng-repeat="unit in army.units | filter:query | orderBy:orderProp"
-                class="repeat-item">
-                <a href="#/armies/{{ army._id.$oid }}/units/{{ unit._id.$oid }}" ng-class="{ selected: unit.selected }" ng-click="viewUnit(unit)">{{ unit.name }}</a>
-                <!--<a ng-class="{ selected: unit.selected }" ng-click="viewUnit(unit)">{{ unit.name }}</a>-->
+                class="repeat-item" ng-class="{ selected: unit.selected }">
+                <a href="#/armies/{{ army._id.$oid }}/units/{{ unit._id.$oid }}" ng-click="viewUnit(unit)">{{ unit.name }}</a>
                 <span>{{ unit.cost }}</span>
                 [<a href="" ng-click="removeUnit(unit)">X</a>]
             </li>

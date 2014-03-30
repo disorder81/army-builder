@@ -5,14 +5,51 @@ angular.module('armyBuilder')
         $scope.armies = ArmyService.getArmyList();
     })
 
-    .controller('ArmyCtrl', function($scope, $filter, $location, $stateParams, army, Unit, UnitService, ArmyService) {
-//        var p = ArmyService.getArmy($routeParams.armyId);
-//
-//        p.then(function(army) {
-//            $scope.army = army;
-//        })
-
+    .controller('ArmyCtrl', function($scope, $state, $location, $stateParams, army, Unit, UnitService, ArmyService) {
         $scope.army = army;
+
+        $state.go('army.units')
+        //if(!$scope.army) {
+            /*var p = ArmyService.getArmy($stateParams.armyId);
+
+            //p.$promise.then(function(army) {
+            p.then(function(army) {
+                $scope.army = army;
+
+                if($stateParams.unitId) {
+
+                    _.find($scope.army.units, function(unit) {
+                        console.log(unit);
+                        return unit._id.$oid === $stateParams.unitId;
+                    });
+
+                    //$scope.selectedUnit = UnitService.getById($stateParams.unitId);
+                    $scope.selectedUnit = _.find($scope.army.units, function(unit) {
+                        unit.selected = true;
+                        return unit._id.$oid === $stateParams.unitId;
+                    });
+                    //$scope.viewUnit($scope.selectedUnit);
+                }
+            }); */
+        //}
+
+        $scope.createUnit = function() {
+            /*$location.path('/units/new'); */
+            $scope.army.units.push({ name: 'nombre', cost: 100 });
+        }
+
+        $scope.removeUnit = function(unit) {
+            /*ArmyService.removeUnit(unit);*/
+            $scope.army.units.splice($scope.army.units.indexOf(unit), 1);
+        }
+
+        /*if($stateParams.unitId) {
+            //$scope.selectedUnit = UnitService.getById($stateParams.unitId);
+            $scope.selectedUnit = _.find($scope.army.units, function(unit) {
+                return unit._id.$oid === $stateParams.unitId;
+            });
+            $scope.viewUnit($scope.selectedUnit);
+        }  */
 
         $scope.viewUnit = function(selectedUnit) {
             _($scope.army.units).each(function(unit) {
@@ -22,91 +59,6 @@ angular.module('armyBuilder')
                 }
             });
         }
-
-        $scope.createUnit = function() {
-            $location.path('/units/new');
-        }
-
-        $scope.removeUnit = function(unit) {
-            ArmyService.removeUnit(unit);
-        }
-
-        //if(!$scope.army) {
-            //var p = ArmyService.getArmy($stateParams.armyId);
-
-
-        //$scope.army.units[0].selected = true;
-
-        //console.log(typeof $stateParams.unitId);
-
-        //$scope.army.units[0].selected = true;
-
-        //if($stateParams.unitId != '') {
-        /*if(!angular.isUndefined($stateParams.unitId)) {
-            console.log($scope.army.units);
-            $scope.army.units[0].selected = true;
-        } */
-
-
-        //$scope.army.name = 'paco';
-//        if($stateParams.unitId) {
-//            //var filteredGoal = _.where($scope.army.units, {'_id.$oid': $stateParams.unitId});
-//            //console.log($filter('filter')($scope.army.units, {'_id.$oid': $stateParams.unitId}, true)[0].selected = true);
-//
-//            $scope.army.units[0].selected = true;
-//
-//            /*var unit = _.find($scope.army.units, function(unit) {
-//                        //unit.selected = true;
-//                        return unit._id.$oid === $stateParams.unitId;
-//                    });
-//
-//                    $scope.viewUnit(unit); */
-//
-//        }
-//
-////            //p.$promise.then(function(army) {
-////            p.then(function(army) {
-////                $scope.army = army;
-////
-////                if($stateParams.unitId) {
-////
-////                    console.log($scope.army);
-////
-////                    $scope.army.units[0].selected = true;
-////                    $scope.army.name = 'paco';
-////                    $scope.selectedUnit = $scope.army.units[0];
-////
-////                    console.log($scope.army.units[0]);
-////
-//////                    var unit = _.find($scope.army.units, function(unit) {
-//////                        //unit.selected = true;
-//////                        return unit._id.$oid === $stateParams.unitId;
-//////                    });
-//////
-//////                    $scope.viewUnit(unit);
-////
-////
-////                    //console.log(unit);
-////
-////                    //$scope.selectedUnit = UnitService.getById($stateParams.unitId);
-////                    //$scope.selectedUnit = unit;
-////                    //$scope.selectedUnit.selected = true;
-////
-////                    console.log($scope.army.units);
-////
-////                    //$scope.$apply();
-////
-////                    //console.log($scope.selectedUnit);
-////                    //$scope.viewUnit($scope.selectedUnit);
-////                }
-////
-////
-////            });
-//        //}
-
-
-
-
     })
 
     .controller('RuleListCtrl', function($scope, $location, $routeParams, Rule, RuleService) {
@@ -184,13 +136,11 @@ angular.module('armyBuilder')
 
     })
 
-    .controller('UnitCtrl', function($scope, army, unit, $stateParams) {
+    .controller('UnitCtrl', function($scope, unit) {
         $scope.unit = unit;
-
-        console.log(army);
     })
 
-/*    .controller('UnitCtrl', function($log, $scope, $q, $location, $routeParams, Unit, Rule, CoreService, ArmyService, ckEditorConfig, $filter, UnitService, RuleService) {
+    /*.controller('UnitCtrl', function($log, $scope, $q, $location, $routeParams, Unit, Rule, CoreService, ArmyService, ckEditorConfig, $filter, UnitService, RuleService) {
 
         $scope.sections = CoreService.sections;
         $scope.types = CoreService.types;
@@ -322,7 +272,7 @@ angular.module('armyBuilder')
             //$scope.unit.stats = {};
         });
 
-    }) */
+    })*/
 
     .controller('WeaponCtrl', function($scope, $location, Weapon){
         $scope.weapons = Weapon.query();

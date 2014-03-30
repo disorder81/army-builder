@@ -13,6 +13,44 @@ button {
     cursor: pointer;
 }
 
+/* Layout */
+.no-flexbox .grid-column-3 {
+    width: 20%;
+    float: left;
+}
+
+.no-flexbox .grid-column-9 {
+    width: 78%;
+    float: left;
+}
+
+.grid-column-3 {
+    flex: 1;
+
+}
+
+.grid-column-9 {
+    flex: 3;
+}
+
+.group {
+    display: flex;
+
+    padding: 1rem;
+}
+
+.group:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Componentes */
+.menu > li {
+    display: inline-block;
+}
+
+
 .army-selection {
     display: flex;
     justify-content: space-around;
@@ -82,7 +120,7 @@ button {
 }
 
 .selected {
-    background: green;
+    background: #d3d3d3;
 }
 
 .unit-stats {
@@ -101,23 +139,7 @@ button {
     text-align: center;
 }
 
-.grid-column-3 {
-    width: 20%;
-    float: left;
-}
 
-.grid-column-9 {
-    width: 78%;
-    float: left;
-}
-
-.clearfix:after {
-    content: ".";
-    visibility: hidden;
-    display: block;
-    height: 0;
-    clear: both;
-}
 
 
 
