@@ -35,7 +35,8 @@ angular.module('armyBuilder')
 
         $scope.createUnit = function() {
             /*$location.path('/units/new'); */
-            $scope.army.units.push({ name: 'nombre', cost: 100 });
+            /*$scope.army.units.push({ name: 'nombre', cost: 100 });*/
+            $state.go('army.units.new')
         }
 
         $scope.removeUnit = function(unit) {
@@ -58,6 +59,16 @@ angular.module('armyBuilder')
                     selectedUnit.selected = true;
                 }
             });
+        }
+    })
+
+    .controller('UnitCtrl', function($scope, unit) {
+        $scope.unit = unit;
+    })
+
+    .controller('UnitCreationCtrl', function($scope, army) {
+        $scope.createUnit = function() {
+            $scope.army.units.push({ name: 'nombre', cost: 100 });
         }
     })
 
@@ -134,10 +145,6 @@ angular.module('armyBuilder')
             UnitService.delete(unit);
         }
 
-    })
-
-    .controller('UnitCtrl', function($scope, unit) {
-        $scope.unit = unit;
     })
 
     /*.controller('UnitCtrl', function($log, $scope, $q, $location, $routeParams, Unit, Rule, CoreService, ArmyService, ckEditorConfig, $filter, UnitService, RuleService) {

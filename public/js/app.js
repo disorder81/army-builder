@@ -50,19 +50,28 @@ angular.module('armyBuilder', ['armyBuilderServices', 'ui.router', 'ngCkeditor',
             })
 
             .state('army.units.detail', {
-                url: '/:unitId',
+                url: '/{unitId:[0-9a-fA-F]{24}}',
                 templateUrl: 'partials/unit.html',
                 controller: 'UnitCtrl',
                 resolve: {
                     unit: function($stateParams, army, UnitService) {
-                        _(army.units).each(function(unit) {
-                            unit.selected = unit._id.$oid == $stateParams.unitId;
-                        });
-
                         return UnitService.getById($stateParams.unitId);
                     }
+                },
+                onEnter: function(army, $stateParams) {
+                    _(army.units).each(function(unit) {
+                        unit.selected = unit._id.$oid == $stateParams.unitId;
+                    });
                 }
             })
+
+            .state('army.units.new', {
+                url: '/new',
+                templateUrl: 'partials/unit-creation.html',
+                controller: 'UnitCreationCtrl'
+            })
+
+
             //.state('army.unit', { url: '/units/:unitId', templateUrl: 'partials/army-detail.html', controller: 'ArmyCtrl' })
             /*.state('army.units', { url: '/units', templateUrl: 'partials/army-detail.html', controller: 'ArmyCtrl' })
             .state('army.units.unit', { url: '/:unitId', templateUrl: 'partials/unit.html', controller: 'ArmyCtrl' })
