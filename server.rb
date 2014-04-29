@@ -68,12 +68,12 @@ get '/api/units' do
   army = params['army'] ? {:army => bson_id(params['army'])} : {}
   fields = params['fields'] ? {:fields => params['fields'].split(',')} : []
 
-  # TODO: Refactor
+  #TODO: Refactor
   units = UNITS.find(army, fields).to_a.to_json
 
 =begin
-  # Agrupado
-  grupo = UNITS.aggregate(
+  #Agrupado
+  units = UNITS.aggregate(
       [
           {"$match" => army},
           {"$group" => {
@@ -86,9 +86,10 @@ get '/api/units' do
               }
           }}
       ]
-  )
-  p grupo
+  ).to_json
 =end
+
+  p units
 
   if units
     status 200
