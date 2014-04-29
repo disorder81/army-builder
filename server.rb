@@ -38,7 +38,6 @@ helpers do
 
 end
 
-
 # De momento todas las respuestas son json
 before do
   #content_type :json
@@ -72,6 +71,25 @@ get '/api/units' do
   # TODO: Refactor
   units = UNITS.find(army, fields).to_a.to_json
 
+=begin
+  # Agrupado
+  grupo = UNITS.aggregate(
+      [
+          {"$match" => army},
+          {"$group" => {
+              :_id => "$section",
+              "units" => {
+                  "$push" => {
+                      "name" => "$name",
+                      "cost" => "$cost"
+                  }
+              }
+          }}
+      ]
+  )
+  p grupo
+=end
+
   if units
     status 200
     units
@@ -88,7 +106,7 @@ get '/api/units/:id' do
   content_type :json
   unit = UNITS.find_one({:_id => bson_id(params[:id])})
   #sputs unit['specialRules']
-  unit['specialRules'].map!{|rule| RULES.find_one({_id: rule}, {:fields => ['name','type']})}
+  unit['specialRules'].map!{|rule| RULES.find_one({_id: rule}, {:fields => %w(name cost)})}
   unit.to_json
   #@unit = UNITS.find_one({_id: BSON::ObjectId(params[:id])}).to_json
   #JSON.pretty_generate(@units)
@@ -171,7 +189,7 @@ get '/api/rules' do
   #JSON.pretty_generate(@units)
   content_type :json
   # TODO: Filtrar por fields
-  @rules = RULES.find({}, {:fields => ['name', 'type']}).to_a.to_json
+  @rules = RULES.find({}, {:fields => %w(name type)}).to_a.to_json
 end
 
 get '/api/rules/:id' do
