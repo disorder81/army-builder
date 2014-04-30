@@ -66,8 +66,10 @@ angular.module('armyBuilder')
         $scope.unit = unit;
     })
 
-    .controller('UnitCreationCtrl', function($scope, UnitService) {
+    .controller('UnitCreationCtrl', function($scope, CoreService, UnitService) {
         $scope.unit = UnitService.create();
+        $scope.sections = CoreService.sections;
+        $scope.types = CoreService.types;
 
         $scope.saveUnit = function(unit) {
             console.log('guardar');
