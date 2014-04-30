@@ -1,8 +1,8 @@
 
 angular.module('armyBuilder')
 
-    .controller('MainCtrl', function($scope, ArmyService) {
-        $scope.armies = ArmyService.getArmyList();
+    .controller('MainCtrl', function($scope, armies) {
+        $scope.armies = armies;
     })
 
     .controller('ArmyCtrl', function($scope, $state, $location, $stateParams, army, Unit, UnitService, ArmyService) {
@@ -66,10 +66,25 @@ angular.module('armyBuilder')
         $scope.unit = unit;
     })
 
-    .controller('UnitCreationCtrl', function($scope, army) {
-        $scope.createUnit = function() {
-            $scope.army.units.push({ name: 'nombre', cost: 100 });
+    .controller('UnitCreationCtrl', function($scope, UnitService) {
+        $scope.unit = UnitService.create();
+
+        $scope.saveUnit = function(unit) {
+            console.log('guardar');
+            UnitService.save(unit);
+            //$scope.army.units.push({ name: 'nombre', cost: 100 });
         }
+
+//        $scope.save = function(unit) {
+//            var u = new Unit(unit);
+//            var p = UnitService.save(u);
+//            p.then(function (){
+//                $log.log('ok, volver a la lista');
+//                $location.path('/units');
+//            }, function() {
+//                $log.error('error');
+//            });
+//        }
     })
 
     .controller('RuleListCtrl', function($scope, $location, $routeParams, Rule, RuleService) {
@@ -191,17 +206,6 @@ angular.module('armyBuilder')
                     });
                 });
             })
-        }
-
-        $scope.save = function(unit) {
-            var u = new Unit(unit);
-            var p = UnitService.save(u);
-            p.then(function (){
-                $log.log('ok, volver a la lista');
-                $location.path('/units');
-            }, function() {
-                $log.error('error');
-            });
         }
 
 //        $scope.rules = Rule.query({}, function(){

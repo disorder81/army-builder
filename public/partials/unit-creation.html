@@ -1,7 +1,9 @@
 <form ng-submit="save(unit)" xmlns="http://www.w3.org/1999/html">
+    <h2>{{ unit.army.$oid }}</h2>
     <unit-form></unit-form>
     <!--<button ng-click="save(unit)">Guardar</button>-->
-    <button type="submit">Guardar</button>
+    <!--<button type="submit">Guardar</button>-->
+    <button ng-click="saveUnit(unit)" type="button">Guardar</button>
     <button ng-click="cancel()" type="button">Cancelar</button>
-    <button ng-click="createUnit()">test</button>
+    <!--<button ng-click="createUnit()">test</button>-->
 </form>

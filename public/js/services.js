@@ -102,10 +102,10 @@ angular.module('armyBuilderServices', ['ngResource']).
             ],
 
             unit = {
-                name: 'nombre',
+                name: 'Nombre',
                 army: {},
                 cost: 0,
-                description: 'descripcion',
+                description: '<p>Descripcion!</p>',
                 section: sections[0].value,
                 type: types[0].value,
                 subtypes: [],
@@ -146,52 +146,30 @@ angular.module('armyBuilderServices', ['ngResource']).
         var selectedArmy = {};
 
         return {
-            getSelectedArmy: function() {
-                return selectedArmy;
+            selectedArmy: selectedArmy,
+
+            getArmies: function() {
+                //TODO: fields
+                return Army.query();
             },
 
             getArmy: function(id) {
-
                 var deferred = $q.defer();
 
                 var army = Army.get({armyId: id});
                 // TODO: Se debe poder hacer en una query y pasar un objeto al constructor de Unit
                 var units = Unit.query({army: id, fields: 'name,cost'});
 
-                $q.all([army.$promise, units.$promise]).then(function(data) {
-                    data[0].units = data[1];
-                    deferred.resolve(data[0]);
-                });
+                $q.all([army.$promise, units.$promise])
+                    .then(function(data) {
+                        data[0].units = data[1];
+                        this.selectedArmy = data[0];
 
-//                deferred.resolve(
-//                   {
-//                        _id: {
-//                            $oid: '1'
-//                        },
-//                        name: 'Marines espaciales',
-//                        units: [
-//                            {_id: {$oid: '1'}, name: 'unit 1'},
-//                            {_id: {$oid: '2'}, name: 'unit 2'}
-//                        ]
-//                    }
-//                );
+                        deferred.resolve(data[0]);
+                    }.bind(this)
+                );
 
                 return deferred.promise;
-
-                /*var p = Army.get({armyId: id});
-                p.$promise.then(function(army) {
-                    // TODO: Se debe poder hacer en una query y pasar un objeto al constructor de Unit
-                    army.units = Unit.query({army: id, fields: 'name,cost'});
-
-                    selectedArmy = army;
-                });
-
-                return p;*/
-            },
-
-            getArmyList: function() {
-                //TODO: fields
-                return Army.query();
             },
 
             removeUnit: function(unit) {
@@ -209,7 +187,7 @@ angular.module('armyBuilderServices', ['ngResource']).
     })
 
     // TODO: Refactor
-    .service('UnitService', function($log, Unit) {
+    .service('UnitService', function($log, Unit, CoreService, ArmyService) {
 
         var units = Unit.query({'fields': 'name,cost'}),
             unitCache = {};
@@ -226,6 +204,13 @@ angular.module('armyBuilderServices', ['ngResource']).
         }
 
         return {
+
+            create: function() {
+                var unit = new Unit(angular.copy(CoreService.unit));
+                unit.army = ArmyService.selectedArmy._id;
+
+                return unit;
+            },
 
             getAll: function() {
                 return units

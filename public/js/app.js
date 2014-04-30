@@ -29,7 +29,17 @@ angular.module('armyBuilder', ['armyBuilderServices', 'ui.router', 'ngCkeditor',
 //                controller: 'ArmyCtrl'
 //            })
 
-            .state('home', { url: '/', templateUrl: 'partials/main.html' })
+            .state('home', {
+                url: '/',
+                templateUrl: 'partials/main.html',
+                controller: 'MainCtrl',
+                resolve: {
+                    armies: function(ArmyService) {
+                        return ArmyService.getArmies();
+                    }
+                }
+            })
+
             .state('army', {
                 url: '/armies/:armyId',
                 templateUrl: 'partials/army.html',
@@ -38,7 +48,8 @@ angular.module('armyBuilder', ['armyBuilderServices', 'ui.router', 'ngCkeditor',
                     army: function($stateParams, ArmyService) {
                         return ArmyService.getArmy($stateParams.armyId);
                     }
-                }})
+                }
+            })
 
             .state('army.units', {
                 /*abstract: true,*/
@@ -69,7 +80,7 @@ angular.module('armyBuilder', ['armyBuilderServices', 'ui.router', 'ngCkeditor',
                 url: '/new',
                 templateUrl: 'partials/unit-creation.html',
                 controller: 'UnitCreationCtrl'
-            })
+            });
 
 
             //.state('army.unit', { url: '/units/:unitId', templateUrl: 'partials/army-detail.html', controller: 'ArmyCtrl' })
