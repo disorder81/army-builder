@@ -66,10 +66,11 @@ angular.module('armyBuilder')
         $scope.unit = unit;
     })
 
-    .controller('UnitCreationCtrl', function($scope, CoreService, UnitService) {
+    .controller('UnitCreationCtrl', function($scope, CoreService, UnitService, ckEditorConfig) {
         $scope.unit = UnitService.create();
         $scope.sections = CoreService.sections;
         $scope.types = CoreService.types;
+        $scope.editorOptions = ckEditorConfig;
 
         $scope.saveUnit = function(unit) {
             console.log('guardar');
@@ -164,13 +165,9 @@ angular.module('armyBuilder')
 
     })
 
-    /*.controller('UnitCtrl', function($log, $scope, $q, $location, $routeParams, Unit, Rule, CoreService, ArmyService, ckEditorConfig, $filter, UnitService, RuleService) {
+    /*.controller('UnitCtrl', function($log, $scope, $q, $location, $routeParams, Unit, Rule, CoreService, ArmyService, $filter, UnitService, RuleService) {
 
-        $scope.sections = CoreService.sections;
-        $scope.types = CoreService.types;
         $scope.rules = Rule.query();
-
-        $scope.editorOptions = ckEditorConfig;
 
         $scope.cancel = function() {
             $scope.unit = angular.copy(CoreService.unit);
@@ -278,8 +275,6 @@ angular.module('armyBuilder')
 //
 //            rule.selected = false;
         }
-
-
 
         $scope.$watch('unit.type', function(){
             //$scope.unit.stats = {};
