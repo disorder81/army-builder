@@ -168,9 +168,11 @@ post '/api/units' do
   p @request_payload
 
   oid = UNITS.insert(@request_payload)
+  unit = UNITS.find_one({:_id => oid}).to_json
   logger.info "created unit #{oid}"
   headers 'Location' => "http://localhost:4567/api/units/#{oid}"
   status 201
+  unit
 end
 
 delete '/api/units/:id' do

@@ -40,17 +40,17 @@ angular.module('armyBuilder')
         }
 
         $scope.removeUnit = function(unit) {
-            /*ArmyService.removeUnit(unit);*/
-            $scope.army.units.splice($scope.army.units.indexOf(unit), 1);
+            ArmyService.removeUnit(unit);
+//            $scope.army.units.splice($scope.army.units.indexOf(unit), 1);
         }
 
-        /*if($stateParams.unitId) {
-            //$scope.selectedUnit = UnitService.getById($stateParams.unitId);
-            $scope.selectedUnit = _.find($scope.army.units, function(unit) {
-                return unit._id.$oid === $stateParams.unitId;
-            });
-            $scope.viewUnit($scope.selectedUnit);
-        }  */
+//        if($stateParams.unitId) {
+//            //$scope.selectedUnit = UnitService.getById($stateParams.unitId);
+//            $scope.selectedUnit = _.find($scope.army.units, function(unit) {
+//                return unit._id.$oid === $stateParams.unitId;
+//            });
+//            $scope.viewUnit($scope.selectedUnit);
+//        }
 
         $scope.viewUnit = function(selectedUnit) {
             _($scope.army.units).each(function(unit) {
@@ -73,7 +73,7 @@ angular.module('armyBuilder')
         $scope.editorOptions = ckEditorConfig;
 
         $scope.saveUnit = function(unit) {
-            console.log('guardar');
+            //console.log('guardar');
             UnitService.save(unit);
             //$scope.army.units.push({ name: 'nombre', cost: 100 });
         }
@@ -155,13 +155,13 @@ angular.module('armyBuilder')
         });*/
         $scope.orderProp = 'name';
 
-        $scope.newUnit = function() {
-            $location.path('/units/new');
-        }
+//        $scope.newUnit = function() {
+//            $location.path('/units/new');
+//        }
 
-        $scope.removeUnit = function(unit) {
-            UnitService.delete(unit);
-        }
+//        $scope.removeUnit = function(unit) {
+//            UnitService.delete(unit);
+//        }
 
     })
 

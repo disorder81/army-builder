@@ -177,8 +177,8 @@ angular.module('armyBuilderServices', ['ngResource']).
                 var p = unit.$delete();
                 p.then(function() {
                     $log.log('ok, sacar de la lista');
-                    selectedArmy.units.splice(selectedArmy.units.indexOf(unit), 1);
-                }, function() {
+                    this.selectedArmy.units.splice(this.selectedArmy.units.indexOf(unit), 1);
+                }.bind(this), function() {
                     $log.error('error al borrar');
                 });
             }
@@ -230,9 +230,11 @@ angular.module('armyBuilderServices', ['ngResource']).
 
 
                 var p = unit.$save();
-                p.then(function(){
+                p.then(function(data){
+                    console.log(data);
+                    $log.info(ArmyService.selectedArmy.units.push(new Unit(data)));
                     $log.info('guardado ok, recargar lista');
-                    reload();
+                    //reload();
                 }, function() {
                     $log.error('error guardando');
                 });
