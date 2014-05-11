@@ -74,7 +74,10 @@ angular.module('armyBuilder')
 
         $scope.saveUnit = function(unit) {
             //console.log('guardar');
-            UnitService.save(unit);
+            var p = UnitService.save(unit);
+            p.then(function() {
+                console.log('lalalala')
+            });
             //$scope.army.units.push({ name: 'nombre', cost: 100 });
         }
 

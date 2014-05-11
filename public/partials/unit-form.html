@@ -1,17 +1,21 @@
     <!--<form action="/api/units" method="POST">-->
-    <fieldset>
-        <legend>Detalles</legend>
+    <div class="group" role="group">
+        <!--<legend>Detalles</legend>-->
         <p><label>Nombre: <input name="nombre" type="text" ng-model="unit.name" required></label></p>
         <p><label>Coste: <input name="coste" type="number" ng-model="unit.cost" required></label></p>
-        <p><label>Descripcion: <textarea ckeditor="editorOptions" name="descripcion" ng-model="unit.description"></textarea></label></p>
-    </fieldset>
-    <fieldset>
-        <legend>Seccion</legend>
-        <label ng-repeat="section in sections">
-            <input type="radio" name="seccion" value="{{ section.value }}" ng-model="unit.section" />
-            {{ section.name }}
-        </label>
-    </fieldset>
+    </div>
+    <!--<fieldset>-->
+        <!--<legend>Detalles</legend>-->
+        <!--<p><label>Nombre: <input name="nombre" type="text" ng-model="unit.name" required></label></p>-->
+        <!--<p><label>Coste: <input name="coste" type="number" ng-model="unit.cost" required></label></p>-->
+    <!--</fieldset>-->
+    <div class="group" role="group">
+        <editable-grid data="unit"></editable-grid>
+    </div>
+    <!--<fieldset>-->
+        <!--<legend>Stats</legend>-->
+        <!--<editable-grid data="unit"></editable-grid>-->
+    <!--</fieldset>-->
     <fieldset>
         <legend>Tipo</legend>
         <!--<ul>
@@ -37,11 +41,20 @@
         <label>Min: <input name="min" type="number" ng-model="unit.composition.min" ng-readonly="unit.unique" required></label>
         <label>Max: <input name="min" type="number" ng-model="unit.composition.max" ng-readonly="unit.unique" required></label>
     </fieldset>
-
     <fieldset>
-        <legend>Stats</legend>
-        <editable-grid data="unit"></editable-grid>
+        <legend>Seccion</legend>
+        <label ng-repeat="section in sections">
+            <input type="radio" name="seccion" value="{{ section.value }}" ng-model="unit.section" />
+            {{ section.name }}
+        </label>
     </fieldset>
+    <fieldset>
+        <legend>Descripción</legend>
+        <!--<p><label>Descripcion: <textarea ckeditor="editorOptions" name="descripcion" ng-model="unit.description"></textarea></label></p>-->
+        <textarea ckeditor="editorOptions" name="descripcion" ng-model="unit.description"></textarea>
+    </fieldset>
+
+
     <fieldset>
         <legend>Equipo</legend>
         <a href="" ng-click="addWargear()">Añadir</a>
@@ -84,4 +97,4 @@
         </ul>
         </div>
     </fieldset>
-<pre ng-bind="unit | json"></pre>
+<pre class="debug" ng-bind="unit | json"></pre>

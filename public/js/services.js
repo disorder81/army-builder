@@ -209,6 +209,7 @@ angular.module('armyBuilderServices', ['ngResource']).
             create: function() {
                 var unit = new Unit(angular.copy(CoreService.unit));
                 unit.army = ArmyService.selectedArmy._id;
+//                ArmyService.selectedArmy.units.push(unit);
 
                 return unit;
             },
@@ -232,7 +233,7 @@ angular.module('armyBuilderServices', ['ngResource']).
                 var p = unit.$save();
                 p.then(function(data){
                     console.log(data);
-                    $log.info(ArmyService.selectedArmy.units.push(new Unit(data)));
+                    //$log.info(ArmyService.selectedArmy.units.push(new Unit(data)));
                     $log.info('guardado ok, recargar lista');
                     //reload();
                 }, function() {

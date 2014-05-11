@@ -17,6 +17,11 @@ button {
     cursor: pointer;
 }
 
+.group {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Layout */
 .no-flexbox .grid-column-3 {
     width: 20%;
@@ -43,11 +48,11 @@ button {
     padding: 1rem;
 }
 
-.group:after {
-    content: "";
-    display: table;
-    clear: both;
-}
+/*.group:after {*/
+    /*content: "";*/
+    /*display: table;*/
+    /*clear: both;*/
+/*}*/
 
 /* Componentes */
 .menu > li {
@@ -142,6 +147,20 @@ button {
     border: none;
     text-align: center;
 }
+
+.debug {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    margin: 0;
+
+    background: darkblue;
+    color: white;
+    opacity: 0.75;
+}
+
+
 
 
 
