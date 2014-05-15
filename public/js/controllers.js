@@ -1,8 +1,13 @@
 
 angular.module('armyBuilder')
 
-    .controller('MainCtrl', function($scope, armies) {
+    .controller('MainCtrl', function($scope, armies, Army, ArmyService) {
         $scope.armies = armies;
+
+        $scope.createArmy = function() {
+            var army = new Army({name: 'Test'});
+            ArmyService.save(army);
+        }
     })
 
     .controller('ArmyCtrl', function($scope, $state, $location, $stateParams, army, Unit, UnitService, ArmyService) {

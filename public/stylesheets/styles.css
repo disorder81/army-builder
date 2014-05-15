@@ -4,6 +4,11 @@ body {
 
 section {
     border: 1px solid grey;
+    padding: 1rem;
+}
+
+article {
+    /*padding: 1rem;*/
 }
 
 ol, ul {
@@ -130,6 +135,19 @@ button {
 
 .selected {
     background: #d3d3d3;
+}
+
+.unit {
+    /*padding: 1rem;*/
+}
+
+.unit > header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.unit-name {
+    margin: 0;
 }
 
 .unit-stats {

@@ -55,6 +55,16 @@ get '/api/armies' do
   ARMIES.find.to_a.to_json
 end
 
+post '/api/armies' do
+  # Probar > http://stackoverflow.com/questions/12131763/sinatra-controller-params-method-coming-in-empty-on-json-post-request
+  #@json = JSON.parse(request.body.read)
+  content_type :json
+  oid = ARMIES.insert(JSON.parse(request.body.read.to_s))
+  army = ARMIES.find_one({:_id => oid}).to_json
+  puts army
+  army
+end
+
 get '/api/armies/:id' do
   content_type :json
   ARMIES.find_one({:_id => bson_id(params[:id])}).to_json

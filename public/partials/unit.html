@@ -1,6 +1,9 @@
-<h3>{{ unit.name }}</h3>
-<span>{{ unit.cost }}</span>
-<span>{{ unit.section }}</span>
+<article class="unit">
+    <header>
+        <h3 class="unit-name">{{ unit.name }}</h3>
+        <span>{{ unit.cost }}</span>
+    </header>
+<!--<span>{{ unit.section }}</span>-->
 <editable-grid data="unit"></editable-grid>
 <div ng-bind-html="unit.description"></div>
 <ul>
@@ -8,3 +11,4 @@
         <a href="#/rules/{{rule._id.$oid}}">{{ rule.name }}</a>
     </li>
 </ul>
+</article>

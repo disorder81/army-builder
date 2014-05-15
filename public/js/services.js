@@ -144,15 +144,47 @@ angular.module('armyBuilderServices', ['ngResource']).
 
     .service('ArmyService', function($q, $log, Army, Unit) {
 
-        var selectedArmy = {};
+        var
+            armies = [],
+            selectedArmy = {}
 
         return {
+            armies: armies,
             selectedArmy: selectedArmy,
 
             getArmies: function() {
-                //TODO: fields
-                return Army.query();
+//                if(armies.length > 0) {
+//                    return armies;
+//                }
+
+                var deferred = $q.defer();
+                var army = Army.query();
+
+                $q.all([army.$promise])
+                    .then(function(data) {
+                        armies = data[0];
+                        deferred.resolve(armies);
+                    }.bind(this)
+                );
+
+                return deferred.promise;
             },
+
+            save: function(army) {
+                var p = army.$save();
+                p.then(function(data) {
+                    armies.push(data);
+                });
+            },
+
+
+
+//            getArmies: function() {
+//                armies
+//                //TODO: fields
+//            },
+
+
 
             getArmy: function(id) {
                 var deferred = $q.defer();
