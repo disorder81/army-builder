@@ -70,6 +70,16 @@ get '/api/armies/:id' do
   ARMIES.find_one({:_id => bson_id(params[:id])}).to_json
 end
 
+delete '/api/armies/:id' do
+  content_type :json
+  logger.info "deleting army: #{params[:id]}"
+
+  # TODO: chequear error y devolver status si error
+  ARMIES.remove({:_id => bson_id(params[:id])})
+  # Devolver no content. Y si no, angular interpreta la respuesta y no borra bien el item
+  status 204
+end
+
 get '/api/units' do
   # TODO: A un before o algo...
   content_type :json

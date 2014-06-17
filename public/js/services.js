@@ -2,7 +2,7 @@ angular.module('armyBuilderServices', ['ngResource']).
 
     factory('Army', function($resource) {
         return $resource('/api/armies/:armyId',
-            {armyId: '@_id'}, {
+            {armyId: '@_id.$oid'}, {
                 query: {method: 'GET', isArray: true, cache: true},
                 update: {method: 'PUT'}
             });
@@ -132,7 +132,7 @@ angular.module('armyBuilderServices', ['ngResource']).
                 },
 
                 rule = {
-                    types: ['universal', 'army', 'faction', 'individual']
+                    types: ['universal', 'army', 'faction', 'unit']
                 };
 
             return {
@@ -175,6 +175,18 @@ angular.module('armyBuilderServices', ['ngResource']).
                 p.then(function(data) {
                     armies.push(data);
                 });
+            },
+
+            delete: function(army) {
+//                console.log(army);
+                army.$delete({}, function() { armies.splice(armies.indexOf(army), 1);});
+
+//                p.then(function() {
+//                    $log.log('ok, sacar de la lista');
+//                    armies.splice(armies.indexOf(army), 1);
+//                }, function() {
+//                    $log.error('error al borrar');
+//                });
             },
 
 

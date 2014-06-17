@@ -8,6 +8,10 @@ angular.module('armyBuilder')
             var army = new Army({name: 'Test'});
             ArmyService.save(army);
         }
+
+        $scope.deleteArmy = function(army) {
+            ArmyService.delete(army);
+        }
     })
 
     .controller('ArmyCtrl', function($scope, $state, $location, $stateParams, army, Unit, UnitService, ArmyService) {
