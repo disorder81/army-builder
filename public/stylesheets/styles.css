@@ -86,7 +86,8 @@ button {
 }
 
 .delete {
-    border: 1px solid black;
+    color: #d3d3d3;
+    border: 1px solid #d3d3d3;
     background: white;
     position: absolute;
     padding: 0.5em;
@@ -115,7 +116,7 @@ button {
 
     -webkit-tap-highlight-color: rgba(255,0,0, 0.0);
     border: 1px solid lightgrey;
-    border-radius: 1em;
+    /*border-radius: 1em;*/
 
     transition: all .2s ease-in-out;
 }

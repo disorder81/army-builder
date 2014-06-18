@@ -1,7 +1,7 @@
 
 angular.module('armyBuilder')
 
-    .controller('MainCtrl', function($scope, armies, Army, ArmyService) {
+    .controller('MainCtrl', function($scope, $window, armies, Army, ArmyService) {
         $scope.armies = armies;
 
         $scope.createArmy = function() {
@@ -10,14 +10,16 @@ angular.module('armyBuilder')
         }
 
         $scope.deleteArmy = function(army) {
-            ArmyService.delete(army);
+            if($window.confirm('seguro???')) {
+                ArmyService.delete(army);
+            }
         }
     })
 
     .controller('ArmyCtrl', function($scope, $state, $location, $stateParams, army, Unit, UnitService, ArmyService) {
         $scope.army = army;
 
-        $state.go('army.units')
+        $state.go('army.units');
         //if(!$scope.army) {
             /*var p = ArmyService.getArmy($stateParams.armyId);
 
