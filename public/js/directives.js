@@ -30,10 +30,11 @@ angular.module('armyBuilder')
 
         return {
             restrict: 'A',
-//            template: '<p>{{ army.name }}</p>',
+            template: '<p>{{ army.name }}</p>',
+            replace: true,
             link: function(scope, elem, attrs) {
                 elem.on('click', function(e) {
-                    elem.addClass('ey');
+                    // elem.addClass('ey');
                     console.log(elem);
                 });
             }

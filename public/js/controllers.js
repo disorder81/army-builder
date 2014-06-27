@@ -10,7 +10,8 @@ angular.module('armyBuilder')
         };
 
         $scope.createArmy = function() {
-            var army = new Army({name: 'Test'});
+            var name = $window.prompt('nombre?', 'Test');
+            var army = new Army({name: name});
             ArmyService.save(army);
         };
 
