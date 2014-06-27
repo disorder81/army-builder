@@ -1,9 +1,12 @@
 <button ng-click="createArmy()">Nuevo</button>
-<ul class="army-selection">
-    <li class="army" ng-repeat="army in armies">
-        <!--<a class="army-icon" href="#/armies/{{army._id.$oid}}">{{ army.name }}</a>-->
-        <a class="army-icon" ui-sref="army({armyId: army._id.$oid})">{{ army.name }}</a>
-        <a class="delete" ng-click="deleteArmy(army)">X</a>
-        <!--<a class="army-icon">{{ army.name }}</a>-->
+<ul class="tile-container">
+    <li ng-repeat="army in armies" class="tile">
+        <div class="army">
+            <a ui-sref="army({armyId: army._id.$oid})" class="army-icon">
+                <img src="" />
+            </a>
+            <span editable="army.name">{{ army.name }}</span>
+            <button ng-click="deleteArmy(army)">X</button>
+        </div>
     </li>
 </ul>

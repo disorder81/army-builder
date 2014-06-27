@@ -25,6 +25,22 @@ angular.module('armyBuilder')
 
     })
 
+    // TODO: directiva listas editables
+    .directive('editable', function() {
+
+        return {
+            restrict: 'A',
+//            template: '<p>{{ army.name }}</p>',
+            link: function(scope, elem, attrs) {
+                elem.on('click', function(e) {
+                    elem.addClass('ey');
+                    console.log(elem);
+                });
+            }
+        }
+
+    })
+
     .directive('unitForm', function() {
 
         return {

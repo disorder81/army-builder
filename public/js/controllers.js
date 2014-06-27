@@ -4,16 +4,21 @@ angular.module('armyBuilder')
     .controller('MainCtrl', function($scope, $window, armies, Army, ArmyService) {
         $scope.armies = armies;
 
+        $scope.test = function(e) {
+            e.preventDefault();
+            alert('test');
+        };
+
         $scope.createArmy = function() {
             var army = new Army({name: 'Test'});
             ArmyService.save(army);
-        }
+        };
 
         $scope.deleteArmy = function(army) {
             if($window.confirm('seguro???')) {
                 ArmyService.delete(army);
             }
-        }
+        };
     })
 
     .controller('ArmyCtrl', function($scope, $state, $location, $stateParams, army, Unit, UnitService, ArmyService) {

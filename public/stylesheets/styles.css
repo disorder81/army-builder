@@ -64,26 +64,61 @@ button {
     display: inline-block;
 }
 
-
-.army-selection {
+.tile-container {
     display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
+    justify-content: center;
+
+    padding: 1rem 0;
+
+    border: 1px solid #d3d3d3;
+}
+
+.tile {
+    display: flex;
+    flex-direction: column;
 }
 
 .army {
     display: flex;
-    position: relative;
-    /*align-items: center;
-    justify-content: center;*/
+    flex-direction: column;
+    align-items: center;
+}
 
-    width: 8rem;
-    height: 8rem;
-    margin-bottom: 1em;
-    /*border: 1px solid lightgrey;*/
+.army-icon {
+    border: 1px solid #d3d3d3;
+    width: 12rem;
+    height: 12rem;
 
     transition: all .2s ease-in-out;
 }
+
+.army-icon:active {
+    -webkit-transform: scale(0.8);
+}
+
+[editable] {
+    cursor: pointer;
+
+    /* Deshabilita el highlight */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: moz-none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/*.army {*/
+    /*display: flex;*/
+    /*position: relative;*/
+
+    /*width: 8rem;*/
+    /*height: 8rem;*/
+    /*margin-bottom: 1em;*/
+
+    /*transition: all .2s ease-in-out;*/
+/*}*/
 
 .delete {
     color: #d3d3d3;
@@ -97,29 +132,31 @@ button {
     cursor: pointer;
 }
 
+.delete:hover {
+    background: #808080;
+}
+
 @media all and (min-width: 768px) {
 
-    .army {
-        width: 12rem;
-        height: 12rem;
-    }
+    /*.army {*/
+        /*width: 12rem;*/
+        /*height: 12rem;*/
+    /*}*/
 
 }
 
-.army-icon {
-    /*border: 1px solid; */
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+/*.army-icon {*/
+    /*flex: 1;*/
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    /*text-align: center;*/
 
-    -webkit-tap-highlight-color: rgba(255,0,0, 0.0);
-    border: 1px solid lightgrey;
-    /*border-radius: 1em;*/
+    /*-webkit-tap-highlight-color: rgba(255,0,0, 0.0);*/
+    /*border: 1px solid lightgrey;*/
 
-    transition: all .2s ease-in-out;
-}
+    /*transition: all .2s ease-in-out;*/
+/*}*/
 
 .repeat-item.ng-enter,
 .repeat-item.ng-leave {
@@ -140,9 +177,7 @@ button {
     background: lightgrey;
 }
 
-.army-icon:active {
-    -webkit-transform: scale(0.8);
-}
+
 
 .is-disabled {
     background: red;
